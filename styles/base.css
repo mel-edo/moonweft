@@ -3,8 +3,8 @@ body {
     margin: 0;
     padding: 0;
     font-family: sans-serif;
-    background: #faf9ff;
-    color: #222;
+    background: #1e1e2e;
+    color: #cdd6f4;
 }
 
 /* page width */
@@ -23,7 +23,7 @@ header {
 nav a {
     margin: 0 .5rem;
     text-decoration: none;
-    color: #c65ddf; /* accent color */
+    color: #b4befe; /* accent color */
 }
 
 nav a:hover {
