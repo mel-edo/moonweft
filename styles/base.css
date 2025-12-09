@@ -1,10 +1,21 @@
+:root {
+    --lavender: #b4befe;
+    --bg: #faf9ff;
+    --text: #222;
+    --muted: #7b768a;
+}
+
 /* global defaults */
+* { box-sizing: border-box; }
+
 body {
     margin: 0;
     padding: 0;
-    font-family: sans-serif;
-    background: #1e1e2e;
-    color: #cdd6f4;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 /* page width */
@@ -23,16 +34,93 @@ header {
 nav a {
     margin: 0 .5rem;
     text-decoration: none;
-    color: #b4befe; /* accent color */
+    color: var(--lavender); /* accent color */
 }
 
-nav a:hover {
+nav a:hover,
+nav a:focus {
+    text-decoration: underline;
+}
+
+:root {
+    --lavender: #b4befe;
+    --bg: #faf9ff;
+    --text: #222;
+    --muted: #7b768a;
+}
+
+/* global defaults */
+* { box-sizing: border-box; }
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background: var(--bg);
+    color: var(--text);
+}
+
+/* page width */
+main {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 2rem;
+}
+
+/* header */
+header {
+    padding: 1.5rem;
+    text-align: center;
+}
+
+nav a {
+    margin: 0 .5rem;
+    text-decoration: none;
+    color: var(--lavender);
+}
+
+nav a:hover,
+nav a:focus {
     text-decoration: underline;
 }
 
 /* footer */
-footer {
+.site-footer {
+    border-top: 1px solid rgba(180,190,254,0.15);
+    background: #dce0e8;
+    padding: 1.25rem 1rem;
+    margin-top: 3rem;
     text-align: center;
-    padding: 1rem;
-    opacity: 0.7;
+    color: var(--muted);
+}
+
+/* copyright line */
+.site-footer .copyright {
+    margin: 0 0 .5rem 0;
+    font-size: 0.93rem;
+}
+
+/* email / contact line */
+.site-footer .contact {
+    margin: 0;
+    font-size: 0.95rem;
+}
+
+/* minimal static email link */
+.site-footer .email-link {
+    color: var(--muted);
+    text-decoration: none;
+    padding: 0.15rem 0.4rem;
+}
+
+.site-footer .email-link:hover,
+.site-footer .email-link:focus {
+    text-decoration: underline;
+}
+
+/* small screen adjustments */
+@media (max-width: 480px) {
+    .site-footer {
+        padding: 1rem;
+    }
 }
