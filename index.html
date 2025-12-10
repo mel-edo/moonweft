@@ -9,41 +9,66 @@
     </head>
     <body>
 
-        <!-- header -->
-        <header>
-            <h1>moonweft</h1>
-            <nav>
+        <div class="site-container">
+            
+            <!-- top banner -->
+            <header class="site-banner">
+                <img src="assets/banner.png" alt="moonweft banner" class="banner-img">
+            </header>
+
+            <!-- nav bar -->
+            <nav class="top-nav">
                 <a href="index.html">home</a>
                 <a href="about.html">about</a>
                 <a href="projects.html">projects</a>
                 <a href="notes.html">notes</a>
                 <a href="links.html">links</a>
             </nav>
-        </header>
 
-        <!-- main content -->
-        <main>
-            <h2>welcome</h2>
-            <p>this is my little quiet corner on the internet.</p>
+            <!-- 2 columns -->
+            <div class="content-grid">
 
-            <section>
-                <h3>featured</h3>
-                <p>project 1 - desc</p>
-                <p>project 2 - desc</p>
-            </section>
+                <!-- main content -->
+                 <main class="main-grid">
 
-            <section>
-                <h3>now</h3>
-                <p>listening to: nothing yet</p>
-            </section>
-        </main>
+                    <article class="card pastel-1">
+                        <h2>welcome</h2>
+                        <p>this is my little corner on the internet.</p>
+                    </article>
 
-        <!-- footer -->
-        <footer class="site-footer">
-            <p class="copyright">© 2025 moonweft</p>
-            <p class="contact">
-                <a class="email-link" href="mailto:meledo@duck.com">meledo@duck.com</a>
-            </p>
-        </footer>
+                    <article class="card pastel-2">
+                        <h3>featured</h3>
+                        <p>project 1 - desc</p>
+                        <p>project 2 - desc</p>
+                    </article>
+
+                    <article class="card pastel-3">
+                        <h3>now</h3>
+                        <p>listening to: nothing yet</p>
+                    </article>
+
+                </main>
+
+                 <!-- right sidebar -->
+                <aside class="sidebar">
+                    <div class="card pastel-4">
+                        <h3>links</h3>
+                        <p><a href="guestbook.html">guestbook</a></p>
+                    </div>
+
+                    <div class="card pastel-5">
+                        <h3>contact</h3>
+                        <a href="mailto:meledo@duck.com">email me</a>
+                    </div>
+                </aside>
+            </div>
+            <footer class="site-footer">
+                <p class="copyright">© 2025 moonweft</p>
+                <p class="contact">
+                    <a class="email-link" href="mailto:meledo@duck.com">meledo@duck.com</a>
+                </p>
+            </footer>
+        </div>
+        
     </body>
 </html>
