@@ -245,6 +245,34 @@ img {
     border-bottom-color: var(--accent-gold);
 }
 
+.blinkies-panel {
+    background: #000;
+    border: 1px solid #444;
+    padding: 10px;
+    font-family: 'VT323', monospace;
+}
+
+.blinkies-header {
+    color: var(--accent);
+    border-bottom: 1px dashes #333;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.blinkies-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    justify-content: center;;
+}
+
+.blinkies-grid img {
+    height: 31px;
+    width: 88px;
+    image-rendering: pixelated;
+}
+
 .scanlines {
     position: fixed;
     top: 0;
