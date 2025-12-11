@@ -5,6 +5,8 @@
     --container-bg: #1a1a24;
     --text-main: #e0e0e0;
     --accent: #b4befe;
+    --accent-gold: #f9e2af;
+    --accent-flamingo: #f2cdcd;
     --border-color: #4a4a5e;
 }
 
@@ -132,8 +134,12 @@ img {
 .val { color: var(--text-main); }
 
 .val a { 
-    color: #f2cdcd;
+    color: var(--accent-flamingo);
     text-decoration: none;
+}
+
+.val a:hover {
+    color: var(--accent-gold);
 }
 
 .fetch-colors {
@@ -146,6 +152,7 @@ img {
     width: 20px;
     height: 10px;
     background: #555;
+    margin-left: .5rem;
 }
 
 /* Colors - catppuccin palette */
@@ -210,21 +217,32 @@ img {
     color: #666;
     cursor: pointer;
 }
-.mpd-controls:hover { color: #fff; }
+.mpd-controls:hover { color: var(--accent-gold); }
 
 /* FOOTER */
 .site-footer {
     text-align: center;
     font-weight: bold;
-    margin-bottom: 1rem;
+    padding: 1rem 0;
+    margin-top: auto;
     opacity: 1;
     font-size: 0.9rem;
+    color: #6c7086;
+    border-top: 1px dashed var(--border-color);
+    width: 100%;
     line-height: .5rem;
 }
 
 .mail a {
     color: var(--accent);
     text-decoration: none;
+    border-bottom: 1px dotted var(--accent);
+    transition: color 0.2s;
+}
+
+.mail a:hover {
+    color: var(--accent-gold);
+    border-bottom-color: var(--accent-gold);
 }
 
 .scanlines {
