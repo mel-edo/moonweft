@@ -1,74 +1,131 @@
 <!DOCTYPE html>
 <html>
+
     <head>
         <meta charset="UTF-8">
         <title>moonweft</title>
         <link rel="stylesheet" href="styles/base.css">
+        <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
         <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
         <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
     </head>
+
     <body>
-
+        <div class="scanlines"></div>
         <div class="site-container">
-            
-            <!-- top banner -->
-            <header class="site-banner">
-                <img src="assets/banner.png" alt="moonweft banner" class="banner-img">
-            </header>
 
-            <!-- nav bar -->
-            <nav class="top-nav">
-                <a href="index.html">home</a>
-                <a href="about.html">about</a>
-                <a href="projects.html">projects</a>
-                <a href="notes.html">notes</a>
-                <a href="links.html">links</a>
-            </nav>
+            <div class="split-layout">
 
-            <!-- 2 columns -->
-            <div class="content-grid">
+                <div class="main-window">
+                    
+                    <header class="site-banner">
+                        <img src="assets/banner.png" alt="moonweft banner" class="banner-img">
+                    </header>
 
-                <!-- main content -->
-                 <main class="main-grid">
+                    <nav class="top-nav">
+                        <a href="#">[home]</a>
+                        <a href="#">[about]</a>
+                        <a href="#">[links]</a>
+                    </nav>
 
-                    <article class="card pastel-1">
-                        <h2>welcome</h2>
-                        <p>this is my little corner on the internet.</p>
-                    </article>
+                    <main>
+                        <article class="card fetch-card">
+                            <div class="fetch-art">
+<pre>
+      /\
+     /  \
+    /\   \
+   / > ω <\
+  /   __   \
+ / __|  |__-\
+/_-''    ''-_\
+</pre>
+                            </div>
 
-                    <article class="card pastel-2">
-                        <h3>featured</h3>
-                        <p>project 1 - desc</p>
-                        <p>project 2 - desc</p>
-                    </article>
+                            <div class="fetch-info">
+                                <div class="fetch-title">user@moonweft</div>
+                                <div class="fetch-separator">----------</div>
 
-                    <article class="card pastel-3">
-                        <h3>now</h3>
-                        <p>listening to: nothing yet</p>
-                    </article>
+                                <div class="fetch-row">
+                                    <span class="key">OS:</span>
+                                    <span class="val">Arch Linux</span>
+                                </div>
 
-                </main>
+                                <div class="fetch-row">
+                                    <span class="key">Shell:</span>
+                                    <span class="val">zsh</span>
+                                </div>
+                                <div class="fetch-row">
+                                    <span class="key">Github:</span> 
+                                    <span class="val"><a href="https://github.com/mel-edo" target="_blank" rel="noopener noreferrer">@mel-edo</a></span>
+                                </div>
 
-                 <!-- right sidebar -->
-                <aside class="sidebar">
-                    <div class="card pastel-4">
-                        <h3>links</h3>
-                        <p><a href="guestbook.html">guestbook</a></p>
-                    </div>
+                                <div class="fetch-row">
+                                    <span class="key">Time:</span> 
+                                    <span class="val" id="clock">loading...</span>
+                                </div>
 
-                    <div class="card pastel-5">
-                        <h3>contact</h3>
-                        <a href="mailto:meledo@duck.com">email me</a>
+                                <div class="fetch-colors">
+                                    <span class="color-box c1"></span>
+                                    <span class="color-box c2"></span>
+                                    <span class="color-box c3"></span>
+                                    <span class="color-box c4"></span>
+                                    <span class="color-box c5"></span>
+                                </div>
+                            </div>
+
+                        </article>
+                    </main>
+                </div> <aside class="sidebar">
+                    <div class="card mpd-player">
+                        <div class="mpd-status">
+                            [playing] <span class="mpd-vol">vol: 80%</span>
+                        </div>
+
+                        <div class="mpd-song">
+                            <div class="song-title">My Way</div>
+                            <div class="song-artist">Frank Sinatra</div>
+                        </div>
+
+                        <div class="mpd-time">0:45/3:20</div>
+
+                        <div class="mpd-progress">
+                            ===========>-------------------------------
+                        </div>
+
+                        <div class="mpd-controls">
+                            [&lt;] [P] [&gt;]
+                        </div>
                     </div>
                 </aside>
+
             </div>
-            <footer class="site-footer">
-                <p class="copyright">© 2025 moonweft</p>
-                <p class="contact">
-                    <a class="email-link" href="mailto:meledo@duck.com">meledo@duck.com</a>
-                </p>
-            </footer>
         </div>
-        
+
+        <script>
+            function updateClock() {
+                const now = new Date();
+
+                const timeString = now.toLocaleTimeString('en-US', {
+                    hour12: false,
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    timeZone: 'Asia/Kolkata',
+                    timeZoneName: 'short'
+                });
+
+                document.getElementById('clock').textContent = timeString;
+            }
+
+            updateClock();
+            setInterval(updateClock, 30000);
+        </script>
+
+        <footer class="site-footer">
+            <p>© 2025 moonweft</p>
+            <p class="mail"><a href="mailto:meledo@duck.com" target="_blank">meledo@duck.com</a></p>
+        </footer>
+
     </body>
+
 </html>

@@ -1,156 +1,261 @@
-/* IMPORT A RETRO FONT */
 @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 
 :root {
-    /* Updated Palette: Darker, higher contrast (Inspired by Image 1 & 3) */
-    --bg-color: #0d0d14; 
-    --container-bg: #15151e;
+    --bg-color: #111116;
+    --container-bg: #1a1a24;
     --text-main: #e0e0e0;
-    --accent: #b4befe; /* Keeping your lavender */
-    --accent-dim: #7da3c4;
+    --accent: #b4befe;
     --border-color: #4a4a5e;
-    --highlight: #2a2a3b;
 }
 
-/* GLOBAL DEFAULTS */
 * { box-sizing: border-box; }
+body { margin: 0; padding: 0; }
 
 body {
-    margin: 0;
-    padding: 0;
-    /* BACKGROUND TEXTURE: This is key. Using a repeating gradient helps, 
-       but ideally, you want a small pixel tile image here. */
     background-color: var(--bg-color);
-    background-image: 
-        radial-gradient(var(--highlight) 1px, transparent 1px);
-    background-size: 20px 20px; /* Creates a grid dot pattern */
-    
     color: var(--text-main);
-    
-    /* TYPOGRAPHY: Switching to a pixel-style font */
-    font-family: 'VT323', monospace; 
-    font-size: 1.3rem; /* Pixel fonts usually need to be slightly larger */
-    line-height: 1.4;
+    font-family: 'VT323', monospace;
+    font-size: 1.4rem;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
-/* LINKS */
-a {
-    color: var(--accent);
-    text-decoration: none;
-    border-bottom: 1px dashed var(--accent); /* Retro styling */
-}
-a:hover {
-    background-color: var(--accent);
-    color: var(--bg-color);
-    text-decoration: none;
-    cursor: help; /* Fun custom cursor on hover */
+img {
+    image-rendering: pixelated;
+    max-width: 100%;
+    display: block;
 }
 
-/* MAIN CONTAINER - Make it look like a distinct sheet/window */
+/* --- LAYOUT STRUCTURE --- */
+
 .site-container {
-    max-width: 800px; /* Slightly wider */
+    max-width: 900px;
     margin: 2rem auto;
     padding: 1rem;
-    background: var(--container-bg);
-    border: 2px solid var(--border-color);
-    /* HARD SHADOW: Creates that pop-out retro feel */
-    box-shadow: 8px 8px 0px 0px rgba(0,0,0,0.5); 
-}
-
-/* HEADER & BANNER */
-.site-banner {
-    border-bottom: 2px solid var(--border-color);
-    margin-bottom: 1rem;
-    padding-bottom: 1rem;
-}
-
-.banner-img {
+    flex: 1;
     width: 100%;
-    height: auto;
-    display: block;
-    border: 1px solid var(--border-color);
-    /* CRUCIAL for pixel art banners to stay crisp */
-    image-rendering: pixelated; 
 }
 
-/* NAVIGATION - Making it look like tabs or buttons */
+.split-layout {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+}
+
+/* LEFT COLUMN STYLING */
+.main-window {
+    flex: 1; /* Takes remaining space */
+    background: var(--container-bg);
+    border: 1px solid var(--border-color);
+    box-shadow: 8px 8px 0px 0px #000;
+    padding: 1rem;
+}
+
+/* RIGHT COLUMN STYLING */
+.sidebar {
+    width: 260px; /* Fixed width */
+    background: var(--container-bg);
+    border: 1px solid var(--border-color);
+    box-shadow: 8px 8px 0px 0px #000;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* --- HEADER & NAV --- */
+
 .top-nav {
     text-align: center;
-    background: var(--highlight);
-    padding: 0.5rem;
-    border: 1px solid var(--border-color);
+    border-bottom: 2px dashed var(--border-color);
+    padding: 1rem;
     margin-bottom: 1.5rem;
 }
 
 .top-nav a {
-    margin: 0 10px;
-    font-size: 1.2rem;
-    text-transform: uppercase;
-    border-bottom: none;
-}
-.top-nav a:hover {
-    background: none;
-    color: var(--text-main);
-    text-decoration: line-through; /* Edgy hover effect */
-}
-
-/* LAYOUT GRID */
-.content-grid {
-    display: grid;
-    grid-template-columns: 1fr 220px; /* Sidebar slightly wider */
-    gap: 1.5rem;
-}
-
-/* CARDS - The Core Aesthetic Change */
-.card {
-    background: #1a1a24;
-    padding: 1rem;
-    margin-bottom: 1rem;
-    
-    /* SHARP EDGES instead of rounded */
-    border-radius: 0px; 
-    
-    /* VISIBLE BORDERS */
-    border: 1px solid var(--border-color);
-    
-    /* RETRO INSET LOOK using box-shadow */
-    box-shadow: inset 2px 2px 0px rgba(0, 0, 0, 0.3), 
-                inset -2px -2px 0px rgba(255, 255, 255, 0.05);
-}
-
-/* HEADERS INSIDE CARDS */
-.card h2, .card h3 {
-    margin-top: 0;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 5px;
     color: var(--accent);
-    text-transform: lowercase; /* Stylistic choice */
+    text-decoration: none;
+    margin: 0 10px;
+    font-weight: bold;
 }
 
-/* SIDEBAR SPECIFIC */
-.sidebar .card {
-    text-align: center;
-    font-size: 0.9em;
+.top-nav a:hover {
+    background-color: var(--accent);
+    color: var(--bg-color);
 }
+
+/* --- FETCH CARD --- */
+
+.fetch-card {
+    background: transparent !important;
+    border: none !important;
+    box-shadow: none !important;
+    display: flex;
+    align-items: center; /* Vertically center the art with text */
+    gap: 2rem;           /* Space between art and info */
+    padding: 1rem 0;
+}
+
+.fetch-art pre {
+    margin: 0;
+    font-family: 'Courier New', monospace; /* Courier handles ASCII better */
+    font-weight: bold;
+    color: var(--accent);
+    line-height: 1.4;
+    font-size: 1.2rem;
+    user-select: none;
+}
+
+.fetch-info {
+    flex: 1; /* Ensures text takes available space */
+}
+
+.fetch-title {
+    color: var(--accent);
+    font-weight: bold;
+    margin-bottom: 2px;
+}
+
+.fetch-separator {
+    color: var(--border-color);
+    margin-bottom: 10px;
+}
+
+.fetch-row { margin-bottom: 2px; }
+
+.key {
+    color: var(--accent);
+    font-weight: bold;
+    margin-right: 5px;
+}
+.val { color: var(--text-main); }
+
+.val a { 
+    color: #f2cdcd;
+    text-decoration: none;
+}
+
+.fetch-colors {
+    margin-top: 15px;
+    display: flex;
+    gap: 5px;
+}
+
+.color-box {
+    width: 20px;
+    height: 10px;
+    background: #555;
+}
+
+/* Colors - catppuccin palette */
+.c1 { background: #f38ba8; } 
+.c2 { background: #f9e2af; } 
+.c3 { background: #a6e3a1; } 
+.c4 { background: var(--accent); } 
+.c5 { background: #cdd6f4; }
+
+/* --- MPD PLAYER --- */
+
+.mpd-player {
+    background: #000;
+    color: var(--text-main);
+    border: 1px solid #444;
+    font-family: 'VT323', monospace;
+    padding: 10px;
+    font-size: 1.1rem;
+}
+
+.mpd-status {
+    color: var(--accent);
+    border-bottom: 1px dashed #333;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.mpd-vol { color: #666; }
+
+.mpd-song {
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.song-title {
+    color: #fff;
+    font-weight: bold;
+    font-size: 1.3rem;
+}
+.song-artist { color: var(--accent); }
+
+.mpd-time {
+    margin-left: auto;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #666;
+}
+
+.mpd-progress {
+    color: var(--accent);
+    font-size: 0.9rem;
+    letter-spacing: -1px;
+    margin-bottom: 8px;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.mpd-controls {
+    text-align: center;
+    color: #666;
+    cursor: pointer;
+}
+.mpd-controls:hover { color: #fff; }
 
 /* FOOTER */
 .site-footer {
-    margin-top: 2rem;
-    border-top: 2px solid var(--border-color);
-    padding-top: 1rem;
     text-align: center;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    opacity: 1;
     font-size: 0.9rem;
-    opacity: 0.7;
+    line-height: .5rem;
 }
 
-/* MOBILE ADJUSTMENT */
-@media(max-width: 700px){
-    .content-grid {
-        grid-template-columns: 1fr;
+.mail a {
+    color: var(--accent);
+    text-decoration: none;
+}
+
+.scanlines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to bottom,
+        rgba(255,255,255,0),
+        rgba(255,255,255,0) 50%,
+        rgba(0,0,0,0.2) 50%,
+        rgba(0,0,0,0.2)
+    );
+    background-size: 100% 4px;  /* 4px is line thickness */
+    pointer-events: none;
+    z-index: 999;
+}
+
+/* MOBILE FIX */
+@media (max-width: 600px) {
+    .split-layout {
+        flex-direction: column;
     }
-    .site-container {
-        margin: 0;
-        border: none;
-        box-shadow: none;
+    .sidebar {
+        width: 100%;
+    }
+    .fetch-card {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
     }
 }
