@@ -72,7 +72,7 @@ img {
     text-align: center;
     border-bottom: 2px dashed var(--border-color);
     padding: 1rem;
-    margin-bottom: 1.5rem;
+    margin-bottom: .5rem;
 }
 
 .top-nav a {
@@ -286,7 +286,7 @@ img {
         rgba(0,0,0,0.2) 50%,
         rgba(0,0,0,0.2)
     );
-    background-size: 100% 4px;  /* 4px is line thickness */
+    background-size: 100% 2px;  /* 2px is line thickness */
     pointer-events: none;
     z-index: 999;
 }
