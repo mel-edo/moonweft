@@ -115,6 +115,24 @@
                             <img src="assets/ublock-now.png" alt="ublock">
                         </div>
                     </div>
+
+                    <div class="card moon-widget">
+                        <div class="mw-header">[moon]</div>
+
+                        <div class="mw-decor-tl">+</div>
+                        <div class="mw-decor-tr">?</div>
+                    
+                        <div class="mw-icon-container">
+                            <div id="mw-visual" class="pixel-moon">0</div>
+                        </div>
+
+                        <div class="mw-data">
+                            <div class="mw-row">
+                                <span class="mw-label">Phase:</span>
+                                <span id="mw-phase" class="mw-val-yellow">Calculating...</span>
+                            </div>
+                        </div>
+                    </div>
                 </aside>
 
             </div>
@@ -139,6 +157,45 @@
             setInterval(updateClock, 30000);
         </script>
 
+        <script>
+            function updateMoonPhase() {
+                const now = new Date();
+
+                let year = now.getFullYear();
+                let month = now.getMonth() + 1;
+                let day = now.getDate();
+
+                if (month < 3) {
+                    year--;
+                    month += 12;
+                }
+
+                let c = 365.25 * year;
+                let e = 30.6 * month;
+                let jd = c + e + day - 694039.09;
+                jd /= 29.5305882;
+                let b = parseInt(jd);
+                jd -= b;
+
+                const phaseIndex = Math.round(jd * 8) % 8;
+
+                const phaseNames = [
+                    "New Moon", "Waxing Crescent", "First Quarter", "Waxing Gibbous",
+                    "Full Moon", "Waning Gibbous", "Last Quarter", "Waning Crescent"
+                ];
+
+                const textElement = document.getElementById('mw-phase');
+                if (textElement) {
+                    textElement.textContent = phaseNames[phaseIndex];
+                }
+                
+                const visualElement = document.getElementById('mw-visual');
+                if (visualElement) {
+                    visualElement.innerHTML = `<img src="assets/moon${phaseIndex}.png" width="96" style="image-rendering: pixelated; display: block;">`;
+                }
+            }
+            updateMoonPhase();
+        </script>
 
         <footer class="site-footer">
             <p>© 2025 moonweft</p>
@@ -146,12 +203,6 @@
         </footer>
 
         <script src="scripts/oneko.js"></script>
-        <!-- <script>
-            oneko.js({
-                cat: './assets/eevee.png',
-                speed: 10
-            });
-        </script> -->
 
     </body>
 

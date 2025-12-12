@@ -7,7 +7,6 @@
 
   const nekoEl = document.createElement("div");
 
-  // default center (will be overridden by navbar if found)
   let nekoPosX = 32;
   let nekoPosY = 32;
 
@@ -86,7 +85,6 @@
   // only start chasing after user clicks the neko
   let isActive = false;
 
-  // create element + apply base styles (kept hidden until positioned)
   function prepareElement() {
     nekoEl.id = "oneko";
     nekoEl.ariaHidden = true;
@@ -107,29 +105,15 @@
     }
     nekoEl.style.backgroundImage = `url(${nekoFile})`;
     nekoEl.style.backgroundRepeat = 'no-repeat';
-    // ensure the initial sleeping sprite is used to avoid flash
     const initialSleeping = spriteSets.sleeping[0];
     nekoEl.style.backgroundPosition = `${initialSleeping[0] * 32}px ${initialSleeping[1] * 32}px`;
   }
 
   function init() {
-    // attach mouse listener early (it's harmless if added before append)
     document.addEventListener("mousemove", function (event) {
       mousePosX = event.clientX;
       mousePosY = event.clientY;
     });
-
-    // If a navbar exists, compute its rect and set starting center BEFORE appending
-    const navbar = document.getElementById("navbar");
-    if (navbar) {
-      const rect = navbar.getBoundingClientRect();
-      // center inside navbar by default
-      nekoPosX = rect.left + rect.width / 2;
-      nekoPosY = rect.top + rect.height / 2;
-    }
-    // position the element based on nekoPosX/Y (updated if navbar found)
-    nekoEl.style.left = `${Math.round(nekoPosX) - 16}px`;
-    nekoEl.style.top = `${Math.round(nekoPosY) - 16}px`;
 
     // append to DOM only after we've positioned it
     document.body.appendChild(nekoEl);
@@ -284,7 +268,7 @@
         font-size: 2em;
         animation: heartBurst 1s ease-out;
         animation-fill-mode: forwards;
-        color: #ab9df2;
+        color: #cba6f7;
       }
     `;
 

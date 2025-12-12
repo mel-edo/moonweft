@@ -101,7 +101,7 @@ img {
 
 .fetch-art pre {
     margin: 0;
-    font-family: 'Courier New', monospace; /* Courier handles ASCII better */
+    font-family: 'Courier New', monospace;
     font-weight: bold;
     color: var(--accent);
     line-height: 1.4;
@@ -219,31 +219,7 @@ img {
 }
 .mpd-controls:hover { color: var(--accent-gold); }
 
-/* FOOTER */
-.site-footer {
-    text-align: center;
-    font-weight: bold;
-    padding: 1rem 0;
-    margin-top: auto;
-    opacity: 1;
-    font-size: 0.9rem;
-    color: #6c7086;
-    border-top: 1px dashed var(--border-color);
-    width: 100%;
-    line-height: .5rem;
-}
-
-.mail a {
-    color: var(--accent);
-    text-decoration: none;
-    border-bottom: 1px dotted var(--accent);
-    transition: color 0.2s;
-}
-
-.mail a:hover {
-    color: var(--accent-gold);
-    border-bottom-color: var(--accent-gold);
-}
+/* Blinkies */
 
 .blinkies-panel {
     background: #000;
@@ -272,6 +248,75 @@ img {
     width: 88px;
     image-rendering: pixelated;
 }
+
+/* moon widget */
+.moon-widget {
+    background: #111;
+    border: 1px solid #333;
+    padding: 10px;
+    position: relative;
+    font-family: 'VT323', monospace;
+}
+
+.mw-header {
+    color: var(--accent);
+    border-bottom: 1px dashes #333;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.mw-decor-tl { position: absolute; top: 40px; left: 10px; color: var(--accent-gold); font-size: 0.8rem; }
+.mw-decor-tr { position: absolute; top: 40px; right: 10px; color: var(--accent-gold); font-size: 0.8rem; }
+
+.mw-icon-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 80px;
+    margin-bottom: 5px;
+}
+
+.pixel-moon {
+    font-size: 3rem;
+    color: #ccc;
+}
+
+.mw-data {
+    font-size: 1.1rem;
+    line-height: 1.4;
+}
+
+.mw-label { color: #888; }
+
+.mw-val-yellow { color: var(--accent-gold); text-shadow: 0 0 2px #555500; }
+
+/* FOOTER */
+.site-footer {
+    text-align: center;
+    font-weight: bold;
+    padding: 1rem 0;
+    margin-top: auto;
+    opacity: 1;
+    font-size: 0.9rem;
+    color: #6c7086;
+    border-top: 1px dashed var(--border-color);
+    width: 100%;
+    line-height: .5rem;
+}
+
+.mail a {
+    color: var(--accent);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--accent);
+    transition: color 0.2s;
+}
+
+.mail a:hover {
+    color: var(--accent-gold);
+    border-bottom-color: var(--accent-gold);
+}
+
 
 .scanlines {
     position: fixed;
