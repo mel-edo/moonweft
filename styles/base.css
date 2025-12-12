@@ -91,12 +91,13 @@ img {
 
 .fetch-card {
     background: transparent !important;
-    border: none !important;
     box-shadow: none !important;
     display: flex;
     align-items: center; /* Vertically center the art with text */
     gap: 2rem;           /* Space between art and info */
     padding: 1rem 0;
+    border-bottom: 2px dashed var(--border-color);
+    padding-bottom: 1.5rem;
 }
 
 .fetch-art pre {
@@ -317,6 +318,54 @@ img {
     height: auto;
     display: block;
     image-rendering: pixelated;
+}
+
+.checkpoint-banner {
+    display: flex;
+    align-items: center;
+    background: #2a2a35;
+    border: 2px dashed var(--accent);
+    padding: 1rem;
+    margin-top: 1.5rem;
+    text-decoration: none;
+    color: var(--text-main);
+    gap: 1rem;
+}
+
+.checkpoint-banner:hover {
+    background: #313244;
+    border-color: var(--accent-gold);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 0 rgba(0,0,0,0.5);
+}
+
+.cp-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.cp-icon img {
+    width: 64px;
+    height: auto;
+    image-rendering: pixelated;
+    display: block;
+}
+
+.cp-text { flex: 1; }
+
+.cp-title {
+    color: var(--accent);
+    font-weight: bold;
+    font-size: 1.4rem;
+    letter-spacing: 1px;
+}
+
+.cp-sub { color: #888; font-size: 1rem; }
+
+.cp-arrow {
+    font-size: 2rem;
+    color: var(--accent);
 }
 
 /* FOOTER */
