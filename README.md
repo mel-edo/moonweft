@@ -2,7 +2,7 @@
 
 This is my little corner of the internet where i’m slowly building a personal home, collecting notes, projects, media and whatever else I feel like sharing.
 
-> Checkout the site [here :D](https://mel-edo.github.io/moonweft/)
+> Check out the site [here :D](https://mel-edo.github.io/moonweft/)
 
 ### ✧ Pages (WIP)
 
