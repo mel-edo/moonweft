@@ -344,7 +344,7 @@ img {
 }
 
 .polar-gif img {
-    width: 80px;
+    width: 75px;
     height: auto;
     display: block;
     image-rendering: pixelated;
