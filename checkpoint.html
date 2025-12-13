@@ -26,7 +26,7 @@
             </div>
         </div>
 
-        <div class="screen-center" id="main-content"">
+        <div class="screen-center" id="main-content">
             <div class="checkpoint-card">
                 <div class="cp-header">
                     <div class="cp-title-box">
@@ -67,10 +67,30 @@
                 
             </div>
 
-            <div class="history-card">
-                <div class="history-header">ALL CHECKPOINTS</div>
-                <div class="history-list" id="history-list"></div>
+            <div class="bottom-section">
+                <div class="history-card">
+                    <div class="history-header">ALL CHECKPOINTS</div>
+                    <div class="history-list" id="history-list"></div>
+
+                    <div class="pagination-controls">
+                        <button id="prev-btn" class="page-btn" disabled>&lt;</button>
+                        <span id="page-indicator">PAGE 1</span>
+                        <button id="next-btn" class="page-btn">&gt;</button>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <div class="info-header">ABOUT</div>
+                    <div class="info-content">
+                        <p>I was inspired to make this checkpoint thing by an instagram page called <a href="https://www.instagram.com/intercheckpoint/">@intercheckpoint</a>.</p>
+                        <p>Go ahead and check them out!</p>
+                        <p>I'll update this and add more retro music whenever I feel like it.</p>
+                        <p style="margin-top: 15px; color: #888; ">> Feel free to stay as long as you need.</p>
+                    </div>
+                </div>
+
             </div>
+
         </div>
 
         <script>
@@ -78,6 +98,10 @@
             const startBtn = document.querySelector('.start-btn');
             const mainContent = document.getElementById('main-content');
             const audioPlayer = document.getElementById('main-audio');
+
+            let allCheckpoints = [];
+            let currentPage = 1;
+            let itemsPerPage = 5;
 
             audioPlayer.volume = 0.3;
 
@@ -96,48 +120,73 @@
                 }
             }
 
+            function renderHistory() {
+                const historyList = document.getElementById('history-list');
+                historyList.innerHTML = "";
+
+                const startIndex = (currentPage - 1) * itemsPerPage;
+                const endIndex = startIndex + itemsPerPage;
+                const pageData = allCheckpoints.slice(startIndex, endIndex);
+                
+                pageData.forEach(item => {
+                    const row = document.createElement('div');
+                    row.className = 'save-file';
+                    row.addEventListener('click', () => {
+                        loadCheckpoint(item);
+                    });
+                    row.innerHTML = `
+                        <div class="save-row-top">
+                            <span class="save-id">NO.${item.id}</span>
+                            <span class="save-date">${item.date}</span>
+                        </div>
+                        <div class="save-row-btn">
+                            <span class="save-song">♪ ${item.songTitle}</span>
+                        </div>
+                    `;
+                    historyList.appendChild(row);
+                });
+
+                document.getElementById('page-indicator').textContent = `PAGE ${currentPage}`;
+                document.getElementById('prev-btn').disabled = (currentPage === 1);
+                document.getElementById('next-btn').disabled = (endIndex >= allCheckpoints.length);
+            }
+
             fetch('data/checkpoint.json')
                 .then(response => response.json())
                 .then(data => {
                     if (!data || data.length === 0) return;
 
-                    loadCheckpoint(data[0]);                    
-
-                    const historyList = document.getElementById('history-list');
-                    const historyData = data.slice(0, 5);
-
-                    historyData.forEach(item => {
-                        const row = document.createElement('div');
-                        row.className = 'save-file';
-
-                        row.addEventListener('click', () => {
-                            loadCheckpoint(item);
-                        });
-
-                        row.innerHTML = `
-                            <div class="save-row-top">
-                                <span class="save-id">NO.${item.id}</span>
-                                <span class="save-date">${item.date}</span>
-                            </div>
-                            <div class="save-row-btn">
-                                <span class="save-song">♪ ${item.songTitle}</span>
-                            </div>
-                        `;
-                        historyList.appendChild(row);
-                    });
+                    allCheckpoints = data;
+                    loadCheckpoint(allCheckpoints[0]);
+                    renderHistory();
                 })
                 .catch(err => console.error("Error loading checkpoints:", err));
-            
-                startBtn.addEventListener('click', () => {
-                    startScreen.style.opacity = '0';
-                    startScreen.style.pointerEvents = 'none';
-                    mainContent.style.opacity = '1';
 
-                    audioPlayer.play().catch(e => console.log("Audio play blocked:", e));
-                    setTimeout(() => {
-                        startScreen.style.display = 'none';
-                    }, 1000);
-                });
+            document.getElementById('prev-btn').addEventListener('click', () => {
+                if (currentPage > 1) {
+                    currentPage--;
+                    renderHistory();
+                }
+            });
+
+            document.getElementById('next-btn').addEventListener('click', () => {
+                if ((currentPage * itemsPerPage) < allCheckpoints.length) {
+                    currentPage++;
+                    renderHistory();
+                }
+            });
+
+            
+            startBtn.addEventListener('click', () => {
+                startScreen.style.opacity = '0';
+                startScreen.style.pointerEvents = 'none';
+                mainContent.style.opacity = '1';
+
+                audioPlayer.play().catch(e => console.log("Audio play blocked:", e));
+                setTimeout(() => {
+                    startScreen.style.display = 'none';
+                }, 1000);
+            });
         </script>
 
     </body>

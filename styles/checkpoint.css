@@ -159,6 +159,7 @@ body {
     font-size: 1.4rem;
     border: 3px solid #fff;
     box-shadow: 5px 5px 0px #000;
+    margin-bottom: 5px;
     transition: transform 0.1s;
 }
 
@@ -253,23 +254,102 @@ body {
     animation: blink 5s infinite;
 }
 
-.history-card {
+.bottom-section {
+    display: flex;
+    gap: 20px;
     width: 700px;
     max-width: 90%;
     margin-top: 20px;
-    background: rgba(0,0,0,0.8);
-    border: 2px solid #555;
+    align-items: flex-start;
+}
+
+.info-card {
+    flex: 1;
+    background: #1a1a2e;
+    border: 2px solid var(--nintendo-purple);
+    padding: 10px;
+    box-shadow: 5px 5px 0px #000;
+}
+
+.info-header {
+    background: var(--nintendo-purple);
+    color: #fff;
+    padding: 2px 5px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.info-content p {
+    font-size: 1rem;
+    line-height: 1.4;
+    margin-bottom: 10px;
+    color: #ccc;
+}
+
+.info-content a {
+    color: var(--gameboy-screen);
+}
+
+.pagination-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 2px dashed #444;
+}
+
+.page-btn {
+    background: #333;
+    color: #fff;
+    font-family: 'VT323', monospace;
+    cursor: pointer;
+    padding: 0 10px;
+    font-size: 1.2rem;
+    /* margin-left: 5px;
+    margin-right: 5px; */
+    border: 2px solid #fff;
+    box-shadow: 5px 5px 0px #000;
+}
+
+.page-btn:hover:not(:disabled) {
+    background: var(--nintendo-purple);
+    transform: translate(2px, 2px);
+    box-shadow: 3px 3px 0px #000;
+}
+
+.page-btn:disabled {
+    opacity: 0.3;
+    cursor: default
+}
+
+#page-indicator {
+    color: #888;
+    font-size: 0.9rem;
+}
+
+.history-card {
+    flex: 1.5;
+    min-height: 250px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: #2d2d2d;
+    border: 4px solid #000;
+    box-shadow: 5px 5px 0px #000;
     padding: 10px;
 }
 
 .history-header {
-    color: #888;
+    color: #fff;
     font-size: 1.1rem;
-    border-bottom: 1px dashed #444;
-    padding-bottom: 5px;
+    border: 2px solid var(--nintendo-purple);
+    padding: 2px 5px;
     margin-bottom: 10px;
     letter-spacing: 2px;
-    text-align: center;
+    font-weight: bold;
+    background: var(--nintendo-purple);
 }
 
 .history-list {
@@ -302,7 +382,9 @@ body {
 .save-song {color: var(--accent-gold); font-size: 0.9rem; }
 
 @media (max-width: 750px) {
-    .checkpoint-card, .history-card { width: 90%; height: auto; }
+    .bottom-section { flex-direction: column; width: 90%; }
+    .history-card, .info-card { width: 100%; }
+    .checkpoint-card { width: 90%; height: auto; }
     .cp-content-grid { grid-template-columns: 1fr; }
     .cp-visual-container { height: 200px; }
     .screen-center { height: auto; padding: 20px 0; }
