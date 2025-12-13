@@ -320,6 +320,36 @@ img {
     image-rendering: pixelated;
 }
 
+.polar-panel {
+    background: #000;
+    padding: 10px;
+    border: 1px solid #333;
+    font-family: 'VT323', monospace;
+}
+
+.polar-header {
+    font-size: 1.1rem;
+    color: var(--accent);
+    padding-bottom: 10px;
+    margin-bottom: 5px;
+} 
+
+.polar-visual {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70px;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
+.polar-gif img {
+    width: 80px;
+    height: auto;
+    display: block;
+    image-rendering: pixelated;
+}
+
 .checkpoint-banner {
     display: flex;
     align-items: center;
