@@ -2,6 +2,8 @@
 
 This is my little corner of the internet where i’m slowly building a personal home, collecting notes, projects, media and whatever else I feel like sharing.
 
+> Checkout the site [here :D](https://mel-edo.github.io/moonweft/)
+
 ### ✧ Pages (WIP)
 
 - Home - introduction, featured work and other cool things
