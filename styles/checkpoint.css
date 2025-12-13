@@ -1,0 +1,310 @@
+:root {
+    --bg-deep: #1a1a2e;
+    --nintendo-purple: #4834d4;
+    --gameboy-screen: #9bc63b;
+    --ui-grey: #c0c0c0;
+    --text-white: #e0e0e0;
+    --accent-gold: #f1c40f;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #050510;
+    background-image: 
+        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+    background-size: 40px 40px;
+    font-family: 'VT323', monospace;
+    color: var(--text-white);
+    height: 100vh;
+    overflow: hidden;
+}
+
+.screen-center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100%;
+    padding: 40px 0;
+    opacity: 0;
+    transition: opacity 1.5s ease;
+}
+
+.checkpoint-card {
+    width: 700px;
+    background: #2d2d2d;
+    border: 4px solid #000;
+    box-shadow:
+        inset 2px 2px 0px rgba(255,255,255,0.1),
+        inset -2px -2px 0px rgba(0,0,0,0.5),
+        10px 10px 0px #000;
+    padding: 6px;
+    position: relative;
+    z-index: 2;
+}
+
+.cp-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: var(--nintendo-purple);
+    padding: 10px 15px;
+    border: 2px solid #000;
+    margin-bottom: 10px;
+}
+
+.cp-title-box h1 {
+    margin: 0;
+    font-size: 2rem;
+    text-shadow: 3px 3px 0px #000;
+    letter-spacing: 2px;
+}
+
+.cp-date {
+    background: #000;
+    padding: 5px 10px;
+    color: var(--accent-gold);
+    border: 1px solid #555;
+    font-size: 1.2rem;
+}
+
+.cp-content-grid {
+    display: grid;
+    grid-template-columns: 1fr 1.2fr;
+    gap: 15px;
+}
+
+.cp-visual-container {
+    background: #000;
+    border: 3px inset #555;
+    height: 250px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+}
+
+.cp-image {
+    max-width: 85%;
+    width: 85%;
+    max-height: 90%;
+    image-rendering: pixelated;
+}
+
+.cp-info-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.cp-music-box {
+    background: #c0c0c0;
+    border: 2px solid #fff;
+    border-right-color: #444;
+    border-bottom-color: #444;
+    padding: 8px;
+    color: #000;
+}
+
+.music-label {
+    font-weight: bold;
+    font-size: 1rem;
+    margin-bottom: 2px;
+}
+
+.music-track {
+    background: #000;
+    color: #00ff00;
+    padding: 4px;
+    font-family: monospace;
+    margin-bottom: 8px;
+    border: 2px inset #888;
+}
+
+.retro-audio {
+    width: 100%;
+    height: 25px;
+}
+
+.cp-text-box {
+    flex-grow: 1;
+    background: rgba(0,0,0,0.6);
+    border: 2px solid #fff;
+    padding: 15px;
+    font-size: 1.3rem;
+    line-height: 1.4;
+    box-shadow: inset 0 0 10px #000;
+}
+
+.cp-text-box p { margin: 0 0 10px 0; }
+.signature { color: var(--accent-gold); text-align: right; margin-top: 10px; }
+
+.cp-actions {
+    margin-top: 10px;
+    text-align: center;
+    border-top: 2px dashed #444;
+    padding-top: 10px;
+}
+
+.retro-btn {
+    display: inline-block;
+    background: var(--nintendo-purple);
+    color: #fff;
+    text-decoration: none;
+    padding: 10px 30px;
+    font-size: 1.4rem;
+    border: 3px solid #fff;
+    box-shadow: 5px 5px 0px #000;
+    transition: transform 0.1s;
+}
+
+.retro-btn:hover {
+    transform: translate(2px, 2px);
+    box-shadow: 3px 3px 0px #000;
+    background: #5f4bd9;
+    cursor: pointer;
+}
+
+.crt-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: linear-gradient(
+        rgba(18,16,16,0) 50%,
+        rgba(0,0,0,0.25) 50%
+    );
+    background-size: 100% 4px;
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.6;
+}
+
+.video-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    background: #000;
+}
+
+.video-background img {
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: cover;
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    filter: blur(2px) brightness(0.7);
+}
+
+#start-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #000;
+    z-index: 999;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.5s ease;
+}
+
+.start-wrapper {
+    text-align: center;
+}
+
+.start-btn {
+    font-size: 2rem;
+    color: var(--text-white);
+    border: 3px solid #fff;
+    padding: 20px 40px;
+    background: var(--nintendo-purple);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 15px;
+    cursor: pointer;
+}
+
+.start-btn:hover {
+    transform: translate(2px, 2px);
+    background: #5f4bd9;
+    color: var(--text-white);
+}
+
+.start-warning {
+    color: #888;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    animation: blink 5s infinite;
+}
+
+.history-card {
+    width: 700px;
+    max-width: 90%;
+    margin-top: 20px;
+    background: rgba(0,0,0,0.8);
+    border: 2px solid #555;
+    padding: 10px;
+}
+
+.history-header {
+    color: #888;
+    font-size: 1.1rem;
+    border-bottom: 1px dashed #444;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    letter-spacing: 2px;
+    text-align: center;
+}
+
+.history-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.save-file {
+    background: #1a1a1a;
+    border: 1px solid #333;
+    padding: 8px;
+    transition: background 0.2s;
+}
+
+.save-file:hover {
+    background: #333;
+    border-color: var(--nintendo-purple);
+    cursor: pointer;
+}
+
+.save-row-top {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4px;
+}
+
+.save-id { color: var(--nintendo-purple); font-weight: bold; }
+.save-date { color: #666; }
+.save-song {color: var(--accent-gold); font-size: 0.9rem; }
+
+@media (max-width: 750px) {
+    .checkpoint-card, .history-card { width: 90%; height: auto; }
+    .cp-content-grid { grid-template-columns: 1fr; }
+    .cp-visual-container { height: 200px; }
+    .screen-center { height: auto; padding: 20px 0; }
+    body { overflow-y: auto; }
+}

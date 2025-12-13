@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Internet Checkpoint</title>
+        <link rel="stylesheet" href="styles/checkpoint.css">
+        <link rel="icon" type="image/png" size="32x32" href="assets/bonfire.png">
+        <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div class="video-background">
+            <img src="assets/cp-background.gif" alt="background">
+        </div>
+
+        <div class="crt-overlay"></div>
+
+        <div id="start-screen">
+            <div class="start-wrapper">
+                <div class="start-btn">
+                    [ ENTER? ]
+                </div>
+                <div class="start-warning">
+                    ⚠ CAUTION: AUTOPLAYING AUDIO
+                </div>
+            </div>
+        </div>
+
+        <div class="screen-center" id="main-content"">
+            <div class="checkpoint-card">
+                <div class="cp-header">
+                    <div class="cp-title-box">
+                        <h1>CHECKPOINT</h1>
+                    </div>
+                    <div class="cp-date" id="latest-date">-- --- ----</div>
+                </div>
+
+                <div class="cp-content-grid">
+                    <div class="cp-visual-container">
+                        <img src="assets/2-cats-around-a-fireplace.gif" alt="rest area" class="cp-image">
+                    </div>
+
+                    <div class="cp-info-panel">
+                        <div class="cp-music-box">
+                            <div class="music-label">NOW PLAYING:</div>
+                            <div class="music-track">
+                                <marquee scrollamounts="4" id="latest-song-title">Loading...</marquee>
+                            </div>
+                            <audio id="main-audio" loop>
+                                <source id="audio-source" src="" type="audio/mpeg">
+                            </audio>
+                        </div>
+
+                        <div class="cp-text-box">
+                            <p>You have been surfing for a while.</p>
+                            <p>Rest here for a moment and enjoy some retro music.</p>
+                            <p class="signature">- moonweft</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="cp-actions">
+                    <a href="index.html" class="retro-btn">
+                        <span class="btn-icon">◄ </span>RETURN
+                    </a>
+                </div>
+                
+            </div>
+
+            <div class="history-card">
+                <div class="history-header">ALL CHECKPOINTS</div>
+                <div class="history-list" id="history-list"></div>
+            </div>
+        </div>
+
+        <script>
+            const startScreen = document.getElementById('start-screen');
+            const startBtn = document.querySelector('.start-btn');
+            const mainContent = document.getElementById('main-content');
+            const audioPlayer = document.getElementById('main-audio');
+
+            audioPlayer.volume = 0.3;
+
+            function loadCheckpoint(item) {
+                document.getElementById('latest-date').textContent = item.date;
+                document.getElementById('latest-song-title').textContent = `♫ ${item.songTitle} ♫`;
+
+                const currentSrc = document.getElementById('audio-source').src;
+
+                if (currentSrc !== item.songFile) {
+                    document.getElementById('audio-source').src = item.songFile;
+                    audioPlayer.load();
+                    if (mainContent.style.opacity === '1') {
+                        audioPlayer.play().catch(e => console.log("Playback interrupted", e));
+                    }
+                }
+            }
+
+            fetch('data/checkpoint.json')
+                .then(response => response.json())
+                .then(data => {
+                    if (!data || data.length === 0) return;
+
+                    loadCheckpoint(data[0]);                    
+
+                    const historyList = document.getElementById('history-list');
+                    const historyData = data.slice(0, 5);
+
+                    historyData.forEach(item => {
+                        const row = document.createElement('div');
+                        row.className = 'save-file';
+
+                        row.addEventListener('click', () => {
+                            loadCheckpoint(item);
+                        });
+
+                        row.innerHTML = `
+                            <div class="save-row-top">
+                                <span class="save-id">NO.${item.id}</span>
+                                <span class="save-date">${item.date}</span>
+                            </div>
+                            <div class="save-row-btn">
+                                <span class="save-song">♪ ${item.songTitle}</span>
+                            </div>
+                        `;
+                        historyList.appendChild(row);
+                    });
+                })
+                .catch(err => console.error("Error loading checkpoints:", err));
+            
+                startBtn.addEventListener('click', () => {
+                    startScreen.style.opacity = '0';
+                    startScreen.style.pointerEvents = 'none';
+                    mainContent.style.opacity = '1';
+
+                    audioPlayer.play().catch(e => console.log("Audio play blocked:", e));
+                    setTimeout(() => {
+                        startScreen.style.display = 'none';
+                    }, 1000);
+                });
+        </script>
+
+    </body>
+</html>
