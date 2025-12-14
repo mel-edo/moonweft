@@ -359,6 +359,7 @@
                     .catch(err => console.error("Steam error:", err));
             }
             updateSteam();
+            setInterval(updateSteam, 300000);
         </script>
 
         <script>
