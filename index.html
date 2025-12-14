@@ -24,7 +24,7 @@
 
                     <nav class="top-nav">
                         <a href="#">[home]</a>
-                        <a href="#">[about]</a>
+                        <a href="#">[projects]</a>
                         <a href="#">[links]</a>
                     </nav>
 
@@ -86,6 +86,54 @@
                             </div>
                             <div class="cp-arrow">-></div>
                         </a>
+
+                        <hr class="dashed-line">
+
+                        <div class="about-card">
+                            <div class="about-header">About</div>
+                            <div class="about-content">
+                                <p>Hello I'm <strong>meledo</strong>.</p>
+                                <p>I fell down the Neocities rabbit hole recently and got inspired to make my own little website.</p>
+                                <p>I'll post anything that I'm currently working on here. You can check out some of my projects and links below as well as some blog posts.</p>
+
+                                <div class="about-actions">
+                                    <a href="projects.html" class="leak-btn p5-style">
+                                        <span class="p5-bg-layer"></span> <span class="p5-text">PROJECTS</span>
+                                    </a>
+                                    <a href="links.html" class="leak-btn y2k-style">
+                                        LINKS
+                                    </a>
+                                </div>
+                                <p class="code-tidbit"><a target="_blank" href="https://copyheart.org/manifesto/">Copying is an act of love</a>. If you liked anything here, feel free to copy.<br>The code here is free and open source under GPLv3.</p>
+                            </div>
+                        </div>
+
+                        <hr class="dashed-line">
+
+                        <div class="blog-section">
+                            <div class="section-title">
+                                <span>Recent Posts</span>
+                                <a href="blog.html">[all]</a>
+                            </div>
+
+                            <div class="blog-list">
+                                <a href="#" class="blog-entry">
+                                    <span class="entry-date">[12 DEC]</span>
+                                    <span class="entry-title">epic placeholder</span>
+                                </a>
+
+                                <a href="#" class="blog-entry">
+                                    <span class="entry-date">[05 DEC]</span>
+                                    <span class="entry-title">epic placeholder the 2nd</span>
+                                </a>
+
+                                <a href="#" class="blog-entry">
+                                    <span class="entry-date">[01 DEC]</span>
+                                    <span class="entry-title">regular placeholder</span>
+                                </a>
+                            </div>
+                        </div>
+
                     </main>
                 </div>
                 
@@ -108,6 +156,65 @@
                         </div>
                     </div>
 
+                    <div class="card status-card">
+                        <div class="card-header">[discord]</div>
+                        <div class="status-content" id="discord-widget">
+                            <div class="status-icon">
+                                <img id="discord-pfp" src="assets/default-pfp.png" alt="pfp">
+                                <div class="status-dot" id="discord-status-dot"></div>
+                            </div>
+                            <div class="status-details">
+                                <div id="discord-username">loading...</div>
+                                <div id="discord-activity" class="scrolling-text">connecting...</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card status-card">
+                        <div class="card-header">[steam]</div>
+                        <div class="status-content">
+                            <div class="status-icon">
+                                <img src="assets/steam-icon.png" alt="steam">
+                            </div>
+                            <div class="status-details">
+                                <div class="recently-played">Recently Played</div>
+                                <div class="highlight-text">Hollow Knight</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="card moon-widget">
+                        <div class="mw-header">[moon]</div>
+                        
+                        <div class="mw-decor-tl">+</div>
+                        <div class="mw-decor-tr">?</div>
+                        
+                        <div class="mw-icon-container">
+                            <div id="mw-visual" class="pixel-moon">0</div>
+                        </div>
+
+                        <div class="mw-data">
+                            <div class="mw-row">
+                                <span class="mw-label">Phase:</span>
+                                <span id="mw-phase" class="mw-val-yellow">Calculating...</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card visitor-panel">
+                        <div class="visitor-header">[visitor counter]</div>
+                        <div class="visitor-visual">
+                            <div class="visitor-counter"><img src="https://count.getloli.com/get/@moonweft-demo?theme=moebooru&padding=4&darkmode=0" alt="visitor count"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="card polar-panel">
+                        <div class="polar-header">[cool gif I found]</div>
+                        <div class="polar-visual">
+                            <div class="polar-gif"><img src="assets/bongo-cat-polar-bear.gif" alt="cool gif"></div>
+                        </div>
+                    </div>
+
                     <div class="blinkies-panel">
                         <div class="blinkies-header">[network]</div>
                         <div class="blinkies-grid">
@@ -124,37 +231,6 @@
                         </div>
                     </div>
 
-                    <div class="card moon-widget">
-                        <div class="mw-header">[moon]</div>
-
-                        <div class="mw-decor-tl">+</div>
-                        <div class="mw-decor-tr">?</div>
-                    
-                        <div class="mw-icon-container">
-                            <div id="mw-visual" class="pixel-moon">0</div>
-                        </div>
-
-                        <div class="mw-data">
-                            <div class="mw-row">
-                                <span class="mw-label">Phase:</span>
-                                <span id="mw-phase" class="mw-val-yellow">Calculating...</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card visitor-panel">
-                        <div class="visitor-header">[visitor counter]</div>
-                        <div class="visitor-visual">
-                            <div class="visitor-counter"><img src="https://count.getloli.com/get/@moonweft-demo?theme=moebooru&padding=4&darkmode=0" alt="visitor count"></div>
-                        </div>
-                    </div>
-
-                    <div class="card polar-panel">
-                        <div class="polar-header">[cool gif I found]</div>
-                        <div class="polar-visual">
-                            <div class="polar-gif"><img src="assets/bongo-cat-polar-bear.gif" alt="cool gif"></div>
-                        </div>
-                    </div>
                 </aside>
 
             </div>
@@ -220,7 +296,6 @@
         </script>
 
         <script>
-
             const workerUrl = "https://moonweft-music.meledo.workers.dev";
             function updateLastFM() {
                 fetch(workerUrl)
@@ -232,7 +307,9 @@
                         const isPlaying = track['@attr'] && track['@attr'].nowplaying === 'true';
                         
                         const artUrl = track.image[2]['#text'];
-                        
+
+                        const currentTrackName = document.getElementById('lf-track').textContent;
+
                         document.getElementById('lf-track').textContent = track.name;
                         document.getElementById('lf-artist').textContent = track.artist['#text'];
                         document.getElementById('lf-status').textContent = isPlaying ? "[LISTENING NOW]" : "[RECENTLY LISTENED]";
@@ -241,7 +318,9 @@
                         if (artUrl) {
                             imgElement.src = artUrl;
                         } else {
-                            imgElement.src = 'assets/vinyl.png';
+                            if (track.name !==  currentTrackName) {
+                                imgElement.src = 'assets/vinyl.png';
+                            }
                         }
 
                         const icon = document.querySelector('.music-icon');
@@ -258,6 +337,42 @@
 
             updateLastFM();
             setInterval(updateLastFM, 60000); 
+        </script>
+
+        <script>
+            const discordID = "246259493111857152";
+
+            function initDiscord() {
+                fetch(`https://api.lanyard.rest/v1/users/${discordID}`)
+                    .then(res => res.json())
+                    .then(data => {
+                        if (!data.success) return;
+                        const d = data.data;
+
+                        const avatarID = d.discord_user.avatar;
+                        document.getElementById('discord-pfp').src =
+                            `https://cdn.discordapp.com/avatars/${discordID}/${avatarID}.png`;
+                        document.getElementById('discord-username').textContent = d.discord_user.username;
+
+                        const statusColors = {
+                            online: "#43b581",
+                            idle: "#faa61a",
+                            dnd: "#f04747",
+                            offline: "#747f8d"
+                        };
+                        document.getElementById('discord-status-dot').style.background =
+                            statusColors[d.discord_status] || statusColors.offline;
+                        
+                        const activity = d.activities.find(a => a.type === 0);
+                        if (activity) {
+                            document.getElementById('discord-activity').textContent = `Playing: ${activity.name}`;
+                        } else {
+                            document.getElementById('discord-activity').textContent = "Chilling";
+                        }
+                    });
+            }
+        initDiscord();
+        setInterval(initDiscord, 120000);
         </script>
 
         <footer class="site-footer">
