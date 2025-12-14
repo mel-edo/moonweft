@@ -1,10 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 
-@font-face {
-    font-family: 'Earwig Factory';
-    src: url('../assets/fonts/earwig\ factory.otf') format('opentype');
-}
-
 :root {
     --bg-color: #111116;
     --container-bg: #1a1a24;
@@ -215,17 +210,22 @@ img {
 
 .p5-style {
     position: relative;
-    display: inline-block;
+    display: inline-flex;
     text-decoration: none;
-    color: #fff;
-    padding: 5px 25px;
-    font-family: 'Earwig Factory', sans-serif;
-    font-weight: 900;
-    font-size: 1.6rem;
-    letter-spacing: 1px;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 30px;
     transform: rotate(-3deg);
     transition: transform 0.1s;
     z-index: 1;
+}
+
+.p5-img {
+    height: 30px;
+    width: auto;
+    display: block;
+    filter: invert(0);
+    transition: filter 0.1s;
 }
 
 .p5-style::before {
@@ -248,7 +248,7 @@ img {
 }
 
 .p5-style:hover {
-    transform: rotate(0deg) skewX(-10deg) scale(1.1);
+    transform: rotate(0deg) scale(1.1);
     color: #000;
 }
 
@@ -257,15 +257,13 @@ img {
     transform: translate(5px, -5px);
 }
 
+.p5-style:hover .p5-img {
+    filter: invert(1);
+}
+
 .p5-style:hover .p5-bg-layer {
     background: #d91c1c;
     transform: translate(-5px, 5px);
-}
-
-.p5-text {
-    position: relative;
-    z-index: 2;
-    letter-spacing: 2px;
 }
 
 .y2k-style {
