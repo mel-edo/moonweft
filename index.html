@@ -90,24 +90,21 @@
                 </div>
                 
                 <aside class="sidebar">
-                    <div class="card mpd-player">
-                        <div class="mpd-status">
-                            [playing] <span class="mpd-vol">vol: 80%</span>
+                    <div class="card music-card">
+                        <div class="music-header">
+                            <span class="music-icon">[♫]</span>
+                            <span id="lf-status">[OFFLINE]</span>
                         </div>
 
-                        <div class="mpd-song">
-                            <div class="song-title">Borderline</div>
-                            <div class="song-artist">Tame Impala</div>
-                        </div>
+                        <div class="music-info">
+                            <div class="music-art">
+                                <img id="lf-art" src="assets/vinyl.png" alt="album art">
+                            </div>
+                            <div class="music-details">
+                                <div id="lf-track" class="track-name">Loading...</div>
+                                <div id="lf-artist" class="artist-name">---</div>
+                            </div>
 
-                        <div class="mpd-time">0:45/3:58</div>
-
-                        <div class="mpd-progress">
-                            ===========>-------------------------------
-                        </div>
-
-                        <div class="mpd-controls">
-                            [&lt;] [P] [&gt;]
                         </div>
                     </div>
 
@@ -220,6 +217,47 @@
                 }
             }
             updateMoonPhase();
+        </script>
+
+        <script>
+
+            const workerUrl = "https://moonweft-music.meledo.workers.dev";
+            function updateLastFM() {
+                fetch(workerUrl)
+                    .then(res => res.json())
+                    .then(data => {
+                        const track = data.recenttracks.track[0];
+                        if (!track) return;
+
+                        const isPlaying = track['@attr'] && track['@attr'].nowplaying === 'true';
+                        
+                        const artUrl = track.image[2]['#text'];
+                        
+                        document.getElementById('lf-track').textContent = track.name;
+                        document.getElementById('lf-artist').textContent = track.artist['#text'];
+                        document.getElementById('lf-status').textContent = isPlaying ? "[LISTENING NOW]" : "[RECENTLY LISTENED]";
+                        
+                        const imgElement = document.getElementById('lf-art');
+                        if (artUrl) {
+                            imgElement.src = artUrl;
+                        } else {
+                            imgElement.src = 'assets/vinyl.png';
+                        }
+
+                        const icon = document.querySelector('.music-icon');
+                        if (isPlaying) {
+                            icon.style.animation = "blink 1s infinite";
+                            document.getElementById('lf-status').style.color = "#a6e3a1"; 
+                        } else {
+                            icon.style.animation = "none";
+                            document.getElementById('lf-status').style.color = "var(--accent)";
+                        }
+                    })
+                    .catch(err => console.error("Worker error:", err));
+            }
+
+            updateLastFM();
+            setInterval(updateLastFM, 60000); 
         </script>
 
         <footer class="site-footer">
