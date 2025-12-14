@@ -20,7 +20,7 @@ def save_data(data):
 
 def main():
     print("----New Checkpoint Entry----")
-    song_title = input("Song Title - Artist").strip()
+    song_title = input("Song Title - Artist: ").strip()
     song_url = input("Song URL: ").strip()
     data = load_data()
 
