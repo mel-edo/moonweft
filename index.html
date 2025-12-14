@@ -175,11 +175,11 @@
                         <div class="card-header">[steam]</div>
                         <div class="status-content">
                             <div class="status-icon">
-                                <img src="assets/steam-icon.png" alt="steam">
+                                <img id="steam-icon" src="assets/steam-icon.png" alt="steam">
                             </div>
                             <div class="status-details">
-                                <div class="recently-played">Recently Played</div>
-                                <div class="highlight-text">Hollow Knight</div>
+                                <div id="steam-status-text" class="recently-played">Recently Played</div>
+                                <div id="steam-game" class="highlight-text">loading...</div>
                             </div>
                         </div>
                     </div>
@@ -297,7 +297,7 @@
         </script>
 
         <script>
-            const workerUrl = "https://moonweft-music.meledo.workers.dev";
+            const workerUrl = "https://moonweft-music.meledo.workers.dev/music";
             function updateLastFM() {
                 fetch(workerUrl)
                     .then(res => res.json())
@@ -338,6 +338,27 @@
 
             updateLastFM();
             setInterval(updateLastFM, 60000); 
+        </script>
+
+        <script>
+            const steamWorkerUrl = "https://moonweft-music.meledo.workers.dev/steam";
+            function updateSteam() {
+                fetch(steamWorkerUrl)
+                    .then(res => res.json())
+                    .then(data => {
+                        const games = data.response.games;
+                        if (games && games.length > 0) {
+                            const game = games[0];
+                            document.getElementById('steam-game').textContent = game.name;
+                            const imgUrl = `http://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg`;
+                            document.getElementById('steam-icon').src = imgUrl;
+                        } else {
+                            document.getElementById('steam-game').textContent = "Offline";
+                        }
+                    })
+                    .catch(err => console.error("Steam error:", err));
+            }
+            updateSteam();
         </script>
 
         <script>

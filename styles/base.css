@@ -391,8 +391,18 @@ img {
     font-size: 1rem;
 }
 
+#steam-icon {
+    image-rendering: -webkit-optimize-contrast;
+    border-radius: 4px;
+}
+
 .highlight-text {
     color: #66c0f4;
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 140px;
     font-size: 0.9rem;
 }
 
