@@ -202,9 +202,9 @@ img {
 
 .about-actions {
     display: flex;
-    gap: 40px;
-    margin: 25px 0 25px 10px;
-    justify-content: space-evenly;
+    gap: 25px;
+    margin: 20px 60px;
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -214,14 +214,14 @@ img {
     text-decoration: none;
     align-items: center;
     justify-content: center;
-    padding: 10px 30px;
+    padding: 6px 15px;
     transform: rotate(-3deg);
     transition: transform 0.1s;
     z-index: 1;
 }
 
 .p5-img {
-    height: 30px;
+    height: 24px;
     width: auto;
     display: block;
     filter: invert(0);
@@ -274,11 +274,14 @@ img {
     background-size: 15px 15px, 30px 30px;
     background-position: 0 0, 15px 15px;
     border: 2px outset #9966ff;
-    padding: 8px 15px;
+    padding: 8px 25px;
     font-family: 'Times New Roman', serif;
     font-weight: bold;
+    font-size: 1.2rem;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 3px;
+    min-width: 100px;
+    text-align: center;
     text-shadow: 0 0 5px #ff00ff;
     transition: all 0.2s;
 }
