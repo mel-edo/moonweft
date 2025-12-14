@@ -1,5 +1,10 @@
 @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 
+@font-face {
+    font-family: 'Earwig Factory';
+    src: url('../assets/fonts/earwig\ factory.otf') format('opentype');
+}
+
 :root {
     --bg-color: #111116;
     --container-bg: #1a1a24;
@@ -163,7 +168,232 @@ img {
 .c4 { background: var(--accent); } 
 .c5 { background: #cdd6f4; }
 
-/* --- music card --- */
+/* --- about card --- */
+
+.dashed-line {
+    border: none;
+    border-top: 2px dashed var(--border-color, #444);
+    margin: 20px 0;
+    height: 0;
+    width: 100%;
+}
+
+.about-card {
+    border: 2px dashed var(--accent-flamingo);
+    background: #181825;
+    padding: 10px;
+}
+
+.about-header {
+    color: var(--accent-flamingo);
+    border-bottom: 2px solid #333;
+    padding-bottom: 5px;
+    margin-bottom: 10px;
+    font-size: 1.5rem;
+    font-family: 'VT323', monospace;
+}
+
+.section-title a {
+    text-decoration: none;
+    color: var(--accent-gold);
+}
+
+
+.about-content p {
+    margin: 0 0 8px 0;
+    line-height: 1.4;
+    color: #ccc;
+}
+
+.about-actions {
+    display: flex;
+    gap: 40px;
+    margin: 25px 0 25px 10px;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.p5-style {
+    position: relative;
+    display: inline-block;
+    text-decoration: none;
+    color: #fff;
+    padding: 5px 25px;
+    font-family: 'Earwig Factory', sans-serif;
+    font-weight: 900;
+    font-size: 1.6rem;
+    letter-spacing: 1px;
+    transform: rotate(-3deg);
+    transition: transform 0.1s;
+    z-index: 1;
+}
+
+.p5-style::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: #d91c1c;
+    z-index: -1;
+    clip-path: polygon(2% 0, 95% 0, 100% 90%, 0% 100%);
+    transition: all 0.2s;
+}
+
+.p5-bg-layer {
+    position: absolute;
+    top: 5px; left: -5px; width: 100%; height: 100%;
+    background: #000;
+    z-index: -2;
+    clip-path: polygon(0 0, 100% 5%, 98% 100%, 5% 95%);
+    transition: all 0.2s;
+}
+
+.p5-style:hover {
+    transform: rotate(0deg) skewX(-10deg) scale(1.1);
+    color: #000;
+}
+
+.p5-style:hover::before {
+    background: #fff;
+    transform: translate(5px, -5px);
+}
+
+.p5-style:hover .p5-bg-layer {
+    background: #d91c1c;
+    transform: translate(-5px, 5px);
+}
+
+.p5-text {
+    position: relative;
+    z-index: 2;
+    letter-spacing: 2px;
+}
+
+.y2k-style {
+    text-decoration: none;
+    color: #cc99ff;
+    background: #000033;
+    background-image: radial-gradient(white 1px, transparent 1px), radial-gradient(rgba(255,255,255,0.5) 1px, transparent 1px);
+    background-size: 15px 15px, 30px 30px;
+    background-position: 0 0, 15px 15px;
+    border: 2px outset #9966ff;
+    padding: 8px 15px;
+    font-family: 'Times New Roman', serif;
+    font-weight: bold;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    text-shadow: 0 0 5px #ff00ff;
+    transition: all 0.2s;
+}
+
+.y2k-style:hover {
+    border-style: inset;
+    background-color: #1a0033;
+    background-position: 5px 5px, 20px 20px;
+    color: #fff;
+    text-shadow: 0 0 10px #fff, 0 0 20px #ff00ff;
+    cursor: help;
+}
+
+.code-tidbit {
+    font-size: 1rem;
+}
+
+.code-tidbit a {
+    color: var(--accent-flamingo);
+}
+
+.blog-section {
+    margin: 5px 0;
+}
+
+.section-title {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 2px solid #fff;
+    margin-bottom: 10px;
+    padding-bottom: 2px;
+    font-weight: bold;
+}
+
+.blog-entry {
+    display: block;
+    padding: 5px 0;
+    text-decoration: none;
+    color: #aaa;
+    border-bottom: 1px dashed #333;
+    transition: color 0.2s;
+}
+
+.blog-entry:hover {
+    color: #fff;
+    background: rgba(255,255,255,0.05)
+}
+
+.entry-date {
+    color: var(--accent);
+    margin-right: 10px;
+}
+
+.status-card {
+    background: #000;
+    border: 1px solid #444;
+    padding: 10px;
+}
+
+.status-content {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 5px;
+}
+
+.card-header {
+    font-size: 1rem;
+    color: var(--accent);
+    padding-bottom: 10px;
+}
+
+.status-icon {
+    position: relative;
+    width: 40px;
+    height: 40px;
+}
+
+.status-icon img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+}
+
+.status-dot {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid #000;
+    background: #747f8d;
+}
+
+.status-details {
+    font-size: 1rem;
+    overflow: hidden;
+}
+
+.scrolling-text {
+    font-size: 0.9rem;
+    color: var(--accent-gold);
+}
+
+.recently-played {
+    font-size: 1rem;
+}
+
+.highlight-text {
+    color: #66c0f4;
+    font-size: 0.9rem;
+}
 
 .music-card {
     background: #000;
@@ -175,7 +405,6 @@ img {
 
 .music-header {
     color: var(--accent);
-    border-bottom: 2px dashed #333;
     padding-bottom: 5px;
     margin-bottom: 10px;
     display: flex;
