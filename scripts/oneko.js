@@ -23,66 +23,50 @@
     idle: [[-3, -3]],
     alert: [[-7, -3]],
     scratchSelf: [
-      [-5, 0],
-      [-6, 0],
-      [-7, 0],
+      [-5, 0], [-6, 0], [-7, 0],
     ],
     scratchWallN: [
-      [0, 0],
-      [0, -1],
+      [0, 0], [0, -1],
     ],
     scratchWallS: [
-      [-7, -1],
-      [-6, -2],
+      [-7, -1], [-6, -2],
     ],
     scratchWallE: [
-      [-2, -2],
-      [-2, -3],
+      [-2, -2], [-2, -3],
     ],
     scratchWallW: [
-      [-4, 0],
-      [-4, -1],
+      [-4, 0], [-4, -1],
     ],
     tired: [[-3, -2]],
     sleeping: [
-      [-2, 0],
-      [-2, -1],
+      [-2, 0], [-2, -1],
     ],
     N: [
-      [-1, -2],
-      [-1, -3],
+      [-1, -2], [-1, -3],
     ],
     NE: [
-      [0, -2],
-      [0, -3],
+      [0, -2], [0, -3],
     ],
     E: [
-      [-3, 0],
-      [-3, -1],
+      [-3, 0], [-3, -1],
     ],
     SE: [
-      [-5, -1],
-      [-5, -2],
+      [-5, -1], [-5, -2],
     ],
     S: [
-      [-6, -3],
-      [-7, -2],
+      [-6, -3], [-7, -2],
     ],
     SW: [
-      [-5, -3],
-      [-6, -1],
+      [-5, -3], [-6, -1],
     ],
     W: [
-      [-4, -2],
-      [-4, -3],
+      [-4, -2], [-4, -3],
     ],
     NW: [
-      [-1, 0],
-      [-1, -1],
+      [-1, 0], [-1, -1],
     ],
   };
 
-  // only start chasing after user clicks the neko
   let isActive = false;
 
   function prepareElement() {
@@ -90,13 +74,13 @@
     nekoEl.ariaHidden = true;
     nekoEl.style.width = "32px";
     nekoEl.style.height = "32px";
-    nekoEl.style.position = "fixed";
+    nekoEl.style.position = "absolute"; // FIX 1: Absolute positioning
     nekoEl.style.pointerEvents = "auto";
     nekoEl.style.imageRendering = "pixelated";
     nekoEl.style.left = `${nekoPosX - 16}px`;
     nekoEl.style.top = `${nekoPosY - 16}px`;
-    nekoEl.style.zIndex = Number.MAX_VALUE;
-    nekoEl.style.visibility = 'hidden'; // hide until properly positioned & sprite set
+    nekoEl.style.zIndex = "9999"; // High z-index to sit above everything
+    nekoEl.style.visibility = 'hidden';
 
     let nekoFile = "assets/eevee.png";
     const curScript = document.currentScript;
@@ -110,41 +94,41 @@
   }
 
   function init() {
+    // FIX 2: Track mouse relative to the PAGE (document), not the screen
     document.addEventListener("mousemove", function (event) {
-      mousePosX = event.clientX;
-      mousePosY = event.clientY;
+      mousePosX = event.pageX; 
+      mousePosY = event.pageY;
     });
 
-    // append to DOM only after we've positioned it
-    document.body.appendChild(nekoEl);
+    const navbar = document.querySelector('.top-nav');
+    if (navbar) {
+      const rect = navbar.getBoundingClientRect();
+      nekoPosX = rect.left + 15;
+      nekoPosY = rect.top + (rect.height / 2) - 5;
 
-    // ensure the sprite state is set
+      nekoEl.style.left = `${nekoPosX - 16}px`;
+      nekoEl.style.top = `${nekoPosY - 16}px`;
+    }
+
+    document.body.appendChild(nekoEl);
     setSprite("sleeping", 0);
 
-    // small delay then reveal — ensures paint uses our background-position/coords
-    // (0ms setTimeout pushes reveal to next macrotask after append)
     setTimeout(() => {
       nekoEl.style.visibility = 'visible';
     }, 0);
 
-    // click handler
     nekoEl.addEventListener('click', (e) => {
       isActive = true;
-      explodeHearts();
       e.stopPropagation();
     });
 
-    // start RAF loop
     window.requestAnimationFrame(onAnimationFrame);
   }
 
-  // If the DOM isn't ready yet, wait for it so the navbar can be found.
   if (document.readyState === 'loading') {
-    // DOM still loading — prepare element and wait
     prepareElement();
     document.addEventListener('DOMContentLoaded', init, { once: true });
   } else {
-    // DOM already ready
     prepareElement();
     init();
   }
@@ -152,7 +136,6 @@
   let lastFrameTimestamp;
 
   function onAnimationFrame(timestamp) {
-    // Stops execution if the neko element is removed from DOM
     if (!nekoEl.isConnected) {
       return;
     }
@@ -179,7 +162,6 @@
   function idle() {
     idleTime += 1;
 
-    // every ~ 20 seconds
     if (
       idleTime > 10 &&
       Math.floor(Math.random() * 200) == 0 &&
@@ -192,10 +174,11 @@
       if (nekoPosY < 32) {
         avalibleIdleAnimations.push("scratchWallN");
       }
-      if (nekoPosX > window.innerWidth - 32) {
+      // FIX 3: Check against document width, not window width
+      if (nekoPosX > document.documentElement.scrollWidth - 32) {
         avalibleIdleAnimations.push("scratchWallE");
       }
-      if (nekoPosY > window.innerHeight - 32) {
+      if (nekoPosY > document.documentElement.scrollHeight - 32) {
         avalibleIdleAnimations.push("scratchWallS");
       }
       idleAnimation =
@@ -232,55 +215,12 @@
     idleAnimationFrame += 1;
   }
 
-  function explodeHearts() {
-    const parent = nekoEl.parentElement;
-    const rect = nekoEl.getBoundingClientRect();
-    const scrollLeft = window.scrollX || document.documentElement.scrollLeft;
-    const scrollTop = window.scrollY || document.documentElement.scrollTop;
-    const centerX = rect.left + rect.width / 2 + scrollLeft;
-    const centerY = rect.top + rect.height / 2 + scrollTop;
-
-    for (let i = 0; i < 10; i++) {
-      const heart = document.createElement('div');
-      heart.className = 'heart';
-      heart.textContent = '❤';
-      const offsetX = (Math.random() - 0.5) * 50;
-      const offsetY = (Math.random() - 0.5) * 50;
-      heart.style.left = `${centerX + offsetX - 16}px`;
-      heart.style.top = `${centerY + offsetY - 16}px`;
-      heart.style.transform = `translate(-50%, -50%) rotate(${Math.random() * 360}deg)`;
-      parent.appendChild(heart);
-
-      setTimeout(() => {
-        if (heart.parentElement) parent.removeChild(heart);
-      }, 1000);
-    }
-  }
-
-  const style = document.createElement('style');
-  style.innerHTML = `
-      @keyframes heartBurst {
-        0% { transform: scale(0); opacity: 1; }
-        100% { transform: scale(1); opacity: 0; }
-      }
-      .heart {
-        position: absolute;
-        font-size: 2em;
-        animation: heartBurst 1s ease-out;
-        animation-fill-mode: forwards;
-        color: #cba6f7;
-      }
-    `;
-
-  document.head.appendChild(style);
-
   function frame() {
     frameCount += 1;
     const diffX = nekoPosX - mousePosX;
     const diffY = nekoPosY - mousePosY;
     const distance = Math.sqrt(diffX ** 2 + diffY ** 2);
 
-    // If not activated by click yet, stay sleeping and don't chase
     if (!isActive) {
       setSprite("sleeping", Math.floor(frameCount / 4));
       return;
@@ -296,7 +236,6 @@
 
     if (idleTime > 1) {
       setSprite("alert", 0);
-      // count down after being alerted before moving
       idleTime = Math.min(idleTime, 7);
       idleTime -= 1;
       return;
@@ -312,8 +251,12 @@
     nekoPosX -= (diffX / distance) * nekoSpeed;
     nekoPosY -= (diffY / distance) * nekoSpeed;
 
-    nekoPosX = Math.min(Math.max(16, nekoPosX), window.innerWidth - 16);
-    nekoPosY = Math.min(Math.max(16, nekoPosY), window.innerHeight - 16);
+    // FIX 4: Clamp position to the PAGE size, not the WINDOW size
+    const limitX = document.documentElement.scrollWidth - 16;
+    const limitY = document.documentElement.scrollHeight - 16;
+    
+    nekoPosX = Math.min(Math.max(16, nekoPosX), limitX);
+    nekoPosY = Math.min(Math.max(16, nekoPosY), limitY);
 
     nekoEl.style.left = `${nekoPosX - 16}px`;
     nekoEl.style.top = `${nekoPosY - 16}px`;

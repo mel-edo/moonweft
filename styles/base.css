@@ -427,7 +427,6 @@ img {
     border-bottom-color: var(--accent-gold);
 }
 
-
 .scanlines {
     position: fixed;
     top: 0;
@@ -444,6 +443,15 @@ img {
     background-size: 100% 2px;  /* 2px is line thickness */
     pointer-events: none;
     z-index: 999;
+}
+
+#oneko {
+    position: absolute !important;
+    top: 0;
+    left: 0;
+    will-change: transform;
+    pointer-events: auto;
+    z-index: 9999;
 }
 
 /* MOBILE FIX */
