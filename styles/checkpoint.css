@@ -18,7 +18,7 @@ body {
     font-family: 'VT323', monospace;
     color: var(--text-white);
     height: 100vh;
-    overflow: hidden;
+    overflow-x: hidden;
 }
 
 .screen-center {
