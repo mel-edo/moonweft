@@ -3,15 +3,17 @@
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width", initial-scale="1.0">
-        <title>ARCHIVE // MOONWEFT</title>
+        <title>Projects Archive</title>
         <link rel="stylesheet" href="styles/projects.css">
+        <link rel="icon" type="image/png" href="assets/star.png">
     </head>
 
     <body>
 
         <div class="p5-bg-dots"></div>
 
-        <img src="assets/star-banner.png" class="p5-deco star-pattern" alt="">
+        <img src="assets/star-banner.png" class="p5-deco star-pattern-1" alt="">
+        <img src="assets/star-banner.png" class="p5-deco star-pattern-2" alt="">
         <img src="assets/star.png" class="p5-deco star-1" alt="">
         <img src="assets/star.png" class="p5-deco star-2" alt="">
         <img src="assets/star.png" class="p5-deco star-3" alt="">
@@ -32,7 +34,7 @@
                     </div>
                     <div class="p5-box date-box">
                         <span class="bg-layer"></span>
-                        <span class="date-text">12/15</span>
+                        <span class="date-text" id="dynamic-date">--/--</span>
                     </div>
                 </div>
             </header>
@@ -79,6 +81,24 @@
                     <div class="content-wrapper">
                         <div class="main-info">
                             <div class="details">
+                                <h2>CHIP-8 EMU</h2>
+                                <p>Chip-8 emulator written in Rust.</p>
+                            </div>
+                            <div class="category">RUST</div>
+                        </div>
+
+                        <div class="expanded-info">
+                            <p>A fully functional Chip-8 emulator. My first venture into emulation development.</p>
+                            <a href="https://github.com/mel-edo/chip8-rust" target="_blank" class="repo-link">VISIT REPO</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="target-card" onclick="toggleCard(this)">
+                    <div class="rank">IV</div>
+                    <div class="content-wrapper">
+                        <div class="main-info">
+                            <div class="details">
                                 <h2>LINUX RICE</h2>
                                 <p>My awesomeWM rice.</p>
                             </div>
@@ -95,7 +115,7 @@
 
             <div class="footer-section">
                 <a href="index.html" class="escape-btn">
-                    RETURN TO REALITY
+                    RETURN
                 </a>
             </div>
         </div>
@@ -107,6 +127,15 @@
                 });
                 card.classList.toggle('active');
             }
+
+            function updateDate() {
+                const dateElement = document.getElementById('dynamic-date');
+                const today = new Date();
+                const month = String(today.getMonth() + 1).padStart(2, '0');
+                const day = String(today.getDate()).padStart(2, '0');
+                dateElement.textContent = `${month}/${day}`;
+            }
+            document.addEventListener('DOMContentLoaded', updateDate);
         </script>
     </body>
 </html>
