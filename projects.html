@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width", initial-scale="1.0">
+        <title>ARCHIVE // MOONWEFT</title>
+        <link rel="stylesheet" href="styles/projects.css">
+    </head>
+
+    <body>
+
+        <div class="p5-bg-dots"></div>
+
+        <img src="assets/star-banner.png" class="p5-deco star-pattern" alt="">
+        <img src="assets/star.png" class="p5-deco star-1" alt="">
+        <img src="assets/star.png" class="p5-deco star-2" alt="">
+        <img src="assets/star.png" class="p5-deco star-3" alt="">
+        <img src="assets/star.png" class="p5-deco star-4" alt="">
+
+        <div class="container">
+
+            <header class="archive-header">
+                <div class="title-group">
+                    <div class="p5-box black-box">
+                        <span class="bg-layer"></span>
+                        <span class="project-text">PROJECTS</span>
+                    </div>
+
+                    <div class="p5-box white-box">
+                        <span class="bg-layer"></span>
+                        <img src="assets/p5-header.png" alt="ARCHIVE" class="archive-img">
+                    </div>
+                </div>
+                <div class="p5-box date-box">
+                    <span class="bg-layer"></span>
+                    <span class="date-text">12/15</span>
+                </div>
+            </header>
+
+            <div class="target-list">
+                <div class="target-card" onclick="toggleCard(this)">
+                    <div class="rank">I</div>
+                    <div class="content-wrapper">
+                        <div class="main-info">
+                            <div class="details">
+                                <h2>MOONWEFT.ME</h2>
+                                <p>This website you're currently on.</p>
+                            </div>
+                            <div class="category">WEB</div>
+                        </div>
+
+                        <div class="expanded-info">
+                            <p>A personal portfolio built with HTML, CSS and vanilla JS. I finally got around to building a website and have been enjoying the process so far.</p>
+                            <a href="https://github.com/mel-edo/moonweft" target="_blank" class="repo-link">VISIT REPO</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="target-card" onclick="toggleCard(this)">
+                    <div class="rank">II</div>
+                    <div class="content-wrapper">
+                        <div class="main-info">
+                            <div class="details">
+                                <h2>GB_EMULATOR</h2>
+                                <p>Gameboy emulator written in Rust.</p>
+                            </div>
+                            <div class="category">RUST</div>
+                        </div>
+
+                        <div class="expanded-info">
+                            <p>Still WIP. Planned compilation into WebAssembly.</p>
+                            <a href="https://github.com/mel-edo/gbemu-rust" target="_blank" class="repo-link">VISIT REPO</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="target-card" onclick="toggleCard(this)">
+                    <div class="rank">III</div>
+                    <div class="content-wrapper">
+                        <div class="main-info">
+                            <div class="details">
+                                <h2>LINUX_RICE</h2>
+                                <p>My awesomeWM rice.</p>
+                            </div>
+                            <div class="category">UNIX</div>
+                        </div>
+
+                        <div class="expanded-info">
+                            <p>awesomeWM setup including polybar, rofi, conky and other programs. Will be updated soon to a hyprland+quickshell rice.</p>
+                            <a href="https://github.com/mel-edo/awesome-setup" target="_blank" class="repo-link">VISIT REPO</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-section">
+                <a href="index.html" class="escape-btn">
+                    RETURN TO REALITY
+                </a>
+            </div>
+        </div>
+
+        <script>
+            function toggleCard(card) {
+                document.querySelectorAll('.target-card.active').forEach(c => {
+                    if (c !== card) c.classList.remove('active');
+                });
+                card.classList.toggle('active');
+            }
+        </script>
+    </body>
+</html>
