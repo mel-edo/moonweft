@@ -5,20 +5,21 @@
         <title>~/notes</title>
         <link rel="stylesheet" href="styles/notes.css">
         <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;800&family=Permanent+Marker&display=swap">
-        <link rel="icon" type="image/png" href="assets/moon3.png">
+        <link rel="icon" type="image/png" size="32x32" href="assets/bocchi.png">
     </head>
 
     <body>
         <div class="grid-background"></div>
         <div class="noise-overlay"></div>
         <div class="schematic-container">
+
             <header class="blueprint-header">
                 <div class="spec-box">
                     <span class="label">PROJECT:</span> MOONWEFT
                     <br>
                     <span class="label">UNIT:</span> 01
                 </div>
-                <h1 class="signal-text">SIGNAL_CHAIN</h1>
+                <h1 class="signal-text">NOTES</h1>
                 <div class="spec-box right">
                     <span class="label">STATUS:</span> AMPLIFIED
                     <br>
@@ -26,16 +27,50 @@
                 </div>
             </header>
 
-            <nav class="amp-controls">
-                <a href="index.html" class="knob-link">
-                    <span class="knob-circle"></span>
-                    <span class="knob-label">INPUT (HOME)</span>
-                </a>
-                <div class="cable-connector"></div>
-                <div class="knob-status">
-                    <span class="knob-circle active"></span>
-                    <span class="knob-label">GAIN (NOTES)</span>
+            <nav class="amp-head-nav">
+
+                <div class="patch-bay">
+                    <a href="index.html" class="jack-container">
+                    <div class="jack-socket">
+                        <div class="jack-hole"></div>
+                    </div>
+                    <span class="jack-label">INPUT (HOME)</span>
+                    </a>
+    
+                    <div class="patch-cable-visual">
+                        <div class="cable-arch"></div>
+                    </div>
+                    
+                    <div class="jack-container active">
+                        <div class="jack-socket">
+                            <div class="led-light"></div>
+                        </div>
+                        <span class="jack-label">CHANNEL 2 (NOTES)</span>
+                    </div>
                 </div>
+
+                <div class="amp-controls">
+                    <div class="amp-vent">
+                        <div class="vent-slit"></div>
+                        <div class="vent-slit"></div>
+                        <div class="vent-slit"></div>
+                    </div>
+
+                    <div class="serial-plate">
+                        <span class="brand">MOONWEFT</span>
+                        <span class="model">MW-01</span>
+                    </div>
+                    
+                    <div class="power-section">
+                        <div class="power-switch on"></div>
+                        <span class="control-label">POWER</span>
+                    </div>
+
+                </div>
+                <div class="rack-screw top-left"></div>
+                <div class="rack-screw top-right"></div>
+                <div class="rack-screw bottom-left"></div>
+                <div class="rack-screw bottom-right"></div>
             </nav>
 
             <main class="pedalboard">
@@ -85,41 +120,99 @@
                     </article>
 
                 </div>
+
+                <div class="transport-controls">
+                    <div class="rack-screw top-left-1"></div>
+                    <div class="rack-screw top-right-1"></div>
+                    <div class="rack-screw bottom-left-1"></div>
+                    <div class="rack-screw bottom-right-1"></div>
+
+                    <div class="bocchi-sticker">
+                        <img src="assets/bocchi.png">
+                    </div>
+
+                    <button id="prev-btn" class="tape-btn" onclick="changeBank(-1)" title="Rewind">
+                        <span class="switch-label">◄◄</span>
+                    </button>
+
+                    <div class="tape-counter">
+                        <span class="label">TAPE COUNTER</span>
+                        <div class="counter-window">
+                            <span id="current-bank-num">001</span>
+                        </div>
+                    </div>
+
+                    <button id="next-btn" class="tape-btn" onclick="changeBank(1)" title="Fast Forward">
+                        <span class="switch-label">►►</span>
+                    </button>
+                </div>
             </main>
 
             <footer class="schematic-footer">
-                // KESSOKU BAND APPROVED // SYSTEM STABLE //
+                WRITE SOMETHING HERE BEFORE PUSHING LOL
             </footer>
         </div>
 
         <script>
+            let allNotes = [];
+            let currentBank = 1;
+            const NOTES_PER_BANK = 3;
+
             fetch('data/notes.json')
                 .then(res => res.json())
                 .then(data => {
-                    const container = document.getElementById('notes-list');
-                    container.innerHTML = '<div class="cable-line"></div>';
-                    
-                    data.forEach((note, index) => {
-                        const article = document.createElement('article');
-                        article.className = 'pedal-box';
-                        article.innerHTML = `
-                            <div class="screw top-left">+</div>
-                            <div class="screw top-right">+</div>
-                            <div class="pedal-display">
-                                <span class="date">${note.date}</span>
-                                <span class="id">#00${data.length - index}</span>
-                            </div>
-                            <h2 class="pedal-title"><a href="${note.url}">${note.title}</a></h2>
-                            <div class="tags">
-                                ${note.tags.map(t => `<span class="tag">[${t.toUpperCase()}]</span>`).join('')}
-                            </div>
-                            <div class="stomp-switch"></div>
-                            <div class="screw bottom-left">+</div>
-                            <div class="screw bottom-right">+</div>
-                        `;
-                        container.appendChild(article);
-                    });
+                    allNotes = data;
+                    renderBank(currentBank);
                 });
+
+            function renderBank(bank) {
+                const container = document.getElementById('notes-list');
+                container.innerHTML = '<div class="cable-line"></div>';
+
+                const start = (bank - 1) * NOTES_PER_BANK;
+                const end = start + NOTES_PER_BANK;
+                const notesToSHow = allNotes.slice(start, end);
+
+                notesToSHow.forEach((note, index) => {
+                    const realIndex = allNotes.length - (start + index); 
+                    
+                    const article = document.createElement('article');
+                    article.className = 'pedal-box';
+                    article.innerHTML = `
+                        <div class="screw top-left">+</div>
+                        <div class="screw top-right">+</div>
+                        <div class="pedal-display">
+                            <span class="date">${note.date}</span>
+                            <span class="id">#${String(realIndex).padStart(3, '0')}</span>
+                        </div>
+                        <h2 class="pedal-title"><a href="${note.url}">${note.title}</a></h2>
+                        <div class="tags">
+                            ${note.tags.map(t => `<span class="tag">[${t.toUpperCase()}]</span>`).join('')}
+                        </div>
+                        <div class="stomp-switch"></div>
+                        <div class="screw bottom-left">+</div>
+                        <div class="screw bottom-right">+</div>
+                    `;
+                    container.appendChild(article);
+                });
+
+                document.getElementById('current-bank-num').innerText = String(bank).padStart(3, '0');
+                
+                document.getElementById('prev-btn').disabled = (bank === 1);
+                
+                document.getElementById('next-btn').disabled = (end >= allNotes.length);
+            }
+
+            function changeBank(direction) {
+                const newBank = currentBank + direction;
+                if (newBank < 1) return;
+                if ((newBank - 1) * NOTES_PER_BANK >= allNotes.length) return;
+
+                currentBank = newBank;
+                renderBank(currentBank);
+                
+                document.querySelector('.pedalboard').scrollIntoView({ behavior: 'smooth' });
+            }
         </script>
     </body>
 </html>
