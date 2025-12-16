@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>~/notes</title>
+        <link rel="stylesheet" href="styles/notes.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;800&family=Permanent+Marker&display=swap">
+        <link rel="icon" type="image/png" href="assets/moon3.png">
+    </head>
+
+    <body>
+        <div class="grid-background"></div>
+        <div class="noise-overlay"></div>
+        <div class="schematic-container">
+            <header class="blueprint-header">
+                <div class="spec-box">
+                    <span class="label">PROJECT:</span> MOONWEFT
+                    <br>
+                    <span class="label">UNIT:</span> 01
+                </div>
+                <h1 class="signal-text">SIGNAL_CHAIN</h1>
+                <div class="spec-box right">
+                    <span class="label">STATUS:</span> AMPLIFIED
+                    <br>
+                    <span class="label">BPM:</span> 190
+                </div>
+            </header>
+
+            <nav class="amp-controls">
+                <a href="index.html" class="knob-link">
+                    <span class="knob-circle"></span>
+                    <span class="knob-label">INPUT (HOME)</span>
+                </a>
+                <div class="cable-connector"></div>
+                <div class="knob-status">
+                    <span class="knob-circle active"></span>
+                    <span class="knob-label">GAIN (NOTES)</span>
+                </div>
+            </nav>
+
+            <main class="pedalboard">
+                <div class="cable-line"></div>
+
+                <div id="notes-list">
+                    <article class="pedal-box">
+                        <div class="screw top-left">+</div>
+                        <div class="screw top-right">+</div>
+
+                        <div class="pedal-display">
+                            <span class="date">14 DEC 2025</span>
+                            <span class="id">#003</span>
+                        </div>
+
+                        <h2 class="pedal-title"><a href="#">Switching to hyprland</a></h2>
+
+                        <div class="tags">
+                            <span class="tag">[LINUX]</span>
+                            <span class="tag">[RICE]</span>
+                        </div>
+
+                        <div class="stomp-switch"></div>
+
+                        <div class="screw bottom-left">+</div>
+                        <div class="screw bottom-right">+</div>
+                    </article>
+                        <div class="screw top-left">+</div>
+                        <div class="screw top-right">+</div>
+
+                        <div class="pedal-display">
+                            <span class="date">12 DEC 2025</span>
+                            <span class="id">#002</span>
+                        </div>
+
+                        <h2 class="pedal-title"><a href="#">Social Anxiety & Code</a></h2>
+
+                        <div class="tags">
+                            <span class="tag">[PERSONAL]</span>
+                            <span class="tag">[BTR]</span>
+                        </div>
+
+                        <div class="stomp-switch"></div>
+
+                        <div class="screw bottom-left">+</div>
+                        <div class="screw bottom-right">+</div>
+                    </article>
+
+                </div>
+            </main>
+
+            <footer class="schematic-footer">
+                // KESSOKU BAND APPROVED // SYSTEM STABLE //
+            </footer>
+        </div>
+
+        <script>
+            fetch('data/notes.json')
+                .then(res => res.json())
+                .then(data => {
+                    const container = document.getElementById('notes-list');
+                    container.innerHTML = '<div class="cable-line"></div>';
+                    
+                    data.forEach((note, index) => {
+                        const article = document.createElement('article');
+                        article.className = 'pedal-box';
+                        article.innerHTML = `
+                            <div class="screw top-left">+</div>
+                            <div class="screw top-right">+</div>
+                            <div class="pedal-display">
+                                <span class="date">${note.date}</span>
+                                <span class="id">#00${data.length - index}</span>
+                            </div>
+                            <h2 class="pedal-title"><a href="${note.url}">${note.title}</a></h2>
+                            <div class="tags">
+                                ${note.tags.map(t => `<span class="tag">[${t.toUpperCase()}]</span>`).join('')}
+                            </div>
+                            <div class="stomp-switch"></div>
+                            <div class="screw bottom-left">+</div>
+                            <div class="screw bottom-right">+</div>
+                        `;
+                        container.appendChild(article);
+                    });
+                });
+        </script>
+    </body>
+</html>

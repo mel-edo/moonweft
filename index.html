@@ -25,7 +25,7 @@
                     <nav class="top-nav">
                         <a href="#">[home]</a>
                         <a href="projects.html">[projects]</a>
-                        <a href="#">[links]</a>
+                        <a href="links.html">[links]</a>
                     </nav>
 
                     <main>
@@ -114,25 +114,10 @@
                         <div class="blog-section">
                             <div class="section-title">
                                 <span>Recent Posts</span>
-                                <a href="blog.html">[all]</a>
+                                <a href="notes.html">[all]</a>
                             </div>
 
-                            <div class="blog-list">
-                                <a href="#" class="blog-entry">
-                                    <span class="entry-date">[12 DEC]</span>
-                                    <span class="entry-title">epic placeholder</span>
-                                </a>
-
-                                <a href="#" class="blog-entry">
-                                    <span class="entry-date">[05 DEC]</span>
-                                    <span class="entry-title">epic placeholder the 2nd</span>
-                                </a>
-
-                                <a href="#" class="blog-entry">
-                                    <span class="entry-date">[01 DEC]</span>
-                                    <span class="entry-title">regular placeholder</span>
-                                </a>
-                            </div>
+                            <div class="blog-list" id="homepage-blog-list"></div>
                         </div>
 
                     </main>
@@ -294,6 +279,24 @@
                 }
             }
             updateMoonPhase();
+
+            fetch('data/notes.json')
+                .then(res => res.json())
+                .then(data => {
+                    const list = document.getElementById('homepage-blog-list');
+                    const recent = data.slice(0, 3);
+                    recent.forEach(post => {
+                        const link = document.createElement('a');
+                        link.href = post.url;
+                        link.className = 'blog-entry';
+                        link.innerHTML = `
+                            <span class="entry-date">[${post.date.split(' ').slice(0, 2).join(' ')}]</span>
+                            <span class="entry-title">${post.title}</span>
+                        `;
+                        list.appendChild(link);
+                    });
+                })
+                .catch(err => console.error("Failed to log blog posts", err));
         </script>
 
         <script>

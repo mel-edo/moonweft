@@ -1,0 +1,20 @@
+[
+    {
+        "date": "14 DEC 2025",
+        "title": "Switching to Hyprland",
+        "url": "posts/hyprland-config.html",
+        "tags": ["linux", "wayland"]
+    },
+    {
+        "date": "12 DEC 2025",
+        "title": "The beauty of pixel art",
+        "url": "posts/pixel-art.html",
+        "tags": ["design", "art"]
+    },
+    {
+        "date": "01 DEC 2025",
+        "title": "Hello World",
+        "url": "posts/hello.html",
+        "tags": ["personal"]
+    }
+]
