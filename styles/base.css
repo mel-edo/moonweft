@@ -70,7 +70,6 @@ img {
 
 .top-nav {
     text-align: center;
-    border-bottom: 2px dashed var(--border-color);
     padding: 1rem;
     margin-bottom: .5rem;
 }
@@ -305,6 +304,9 @@ img {
 
 .blog-section {
     margin: 5px 0;
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid var(--border-color);
 }
 
 .section-title {
@@ -314,6 +316,11 @@ img {
     margin-bottom: 10px;
     padding-bottom: 2px;
     font-weight: bold;
+}
+
+.section-title a:hover {
+    background: var(--accent-gold);
+    color: var(--bg-color);
 }
 
 .blog-entry {
