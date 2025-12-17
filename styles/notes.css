@@ -391,9 +391,12 @@ h1 {
 .pedal-title a {
     color: var(--text-main);
     text-decoration: none;
-    font-family: 'Permanent Marker', cursive;
+    font-family: 'Teko', monospace;
+    font-size: 2.2rem;
+    letter-spacing: 1px;
     display: inline-block;
     transition: transform 0.1s, color 0.1s;
+    line-height: 0.9;
 }
 
 .pedal-title a:hover {
@@ -596,7 +599,6 @@ h1 {
     align-items: center;
     justify-content: center;
     border: 1px solid #444;
-    transform: rotate(2deg);
 }
 
 .cassette-housing {
@@ -744,6 +746,82 @@ h1 {
     text-align: center;
     font-size: 0.7rem;
     opacity: 0.5;
+}
+
+.monitor-screen {
+    background: #0d0d15;
+    border: 2px solid #585b70;
+    border-radius: 4px;
+    padding: 40px;
+    margin: 0 auto;
+    position: relative;
+    box-sizing: inset 0 0 20px #000;
+    overflow: hidden;
+}
+
+.screen-glare {
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06));
+    background-size: 100% 2px, 3px 100%;
+    pointer-events: none;
+    z-index: 10;
+    opacity: 0.3;
+}
+
+.markdown-body {
+    position: relative;
+    z-index: 2;
+    color: #cdd6f4;
+    line-height: 1.6;
+}
+
+.markdown-body h1, .markdown-body h2, .markdown-body h3 {
+    font-family: 'Teko', sans-serif;
+    color: var(--bocchi-pink);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border-bottom: 1px dashed #333;
+    padding-bottom: 5px;
+}
+
+.markdown-body h1 { font-size: 2.5rem; color: var(--kita-red); }
+.markdown-body h2 { font-size: 2rem; }
+.markdown-body p { margin-bottom: 20px; font-size: 1.1rem; }
+
+.markdown-body a {
+    color: var(--ryo-blue);
+    text-decoration: none;
+    border-bottom: 1px solid var(--ryo-blue);
+}
+.markdown-body a:hover {background: var(--ryo-blue); color: #000; }
+
+.markdown-body pre {
+    background: #181825;
+    border: 1px solid #444;
+    padding: 15px;
+    border-radius: 4px;
+    overflow-x: auto;
+    border-left: 3px solid var(--nijika-yellow);
+}
+
+.markdown-body code {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.9rem;
+    background: rgba(255,255,255,0.1);
+    padding: 2px 5px;
+    border-radius: 2px;
+}
+
+.markdown-body pre code {
+    background: transparent;
+    padding: 0;
+}
+
+.markdown-body img {
+    max-width: 100%;
+    border: 2px solid #444;
+    margin: 20px 0;
 }
 
 @media (max-width: 600px) {

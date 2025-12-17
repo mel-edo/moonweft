@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>~/notes</title>
+        <link rel="stylesheet" href="../styles/notes.css">
+        <link href="https://fonts.googleapis.com/css2?family=Teko:wght@400;500;700&family=JetBrains+Mono:wght@400;800&family=Permanent+Marker&display=swap" rel="stylesheet">
+        <link rel="icon" type="image/png" href="../assets/bocchi.png">
+    </head>
+
+    <body>
+        <div class="grid-background"></div>
+        <div class="noise-overlay"></div>
+
+        <div class="schematic-container">
+            <header class="blueprint-header">
+                <div class="spec-box"><span class="label">PROJECT:</span>BLOG<br><span class="label">UNIT:</span>02</div>
+                <h1 class="signal-text">{{ title }}</h1>
+                <div class="spec-box right"><span class="label">DATE:</span> {{ date }}<br><span class="label">TAG:</span> {{ tags }}</div>
+            </header>
+
+            <nav class="amp-head-nav">
+                <div class="patch-bay">
+                    <a href="../notes.html" class="jack-container">
+                        <div class="jack-socket"><div class="jack-hole"></div></div>
+                        <span class="jack-label">EJECT (BACK)</span>
+                    </a>
+                </div>
+                <div class="amp-controls">
+                    <div class="serial-plate">
+                        <span class="brand">READING</span>
+                        <span class="model">MODE</span>
+                    </div>
+                </div>
+                <div class="rack-screw top-left"></div><div class="rack-screw top-right"></div>
+                <div class="rack-screw bottom-left"></div><div class="rack-screw bottom-right"></div>
+            </nav>
+
+            <main class="monitor-screen">
+                <div class="screen-glare"></div>
+                <div class="markdown-body">
+                    {{ content }}
+                </div>
+            </main>
+        </div>
+    </body>
+</html>
