@@ -11,7 +11,7 @@
         <div class="star-bg"></div>
         <div class="y2k-container">
             <div class="header-marquee">
-                <marquee scrollamount="5" scrolldelay="100">WELCOME TO THE PORTAL ... ENJOY YOUR STAY ... DON'T GET LOST ...</marquee>
+                <marquee scrollamount="5" scrolldelay="100">WELCOME TO THE PORTAL ... ENJOY YOUR STAY ...</marquee>
             </div>
             <header class="neon-title">
                 <h1>HYPERLINKS</h1>
@@ -19,28 +19,74 @@
             </header>
 
             <main class="glass-panel">
+                
+                <div class="satellite-container">
+                    <pre class="ascii-art">
+                .   |   .
+                .     |     .
+                \   |   /
+                \  |  /
+                --  \(*)/  --  SIGNAL LOCKED
+                    /|\ 
+                    / | \
+                /  |  \
+                    </pre>
+                </div>
+
                 <section class="link-group">
-                    <h2 class="section-header">:: NEIGHBOURHOOD ::</h2>
-                    <div class="button-grid">
-                        <a href="#" class="button-88"><img src="https://file.garden/Z8v8V8/placeholder-88x31.png" alt="WIP"></a>
-                        <a href="#" class="button-88"><img src="https://file.garden/Z8v8V8/placeholder-88x31.png" alt="WIP"></a>
-                        <a href="#" class="button-88"><img src="https://file.garden/Z8v8V8/placeholder-88x31.png" alt="WIP"></a>
-                        <a href="#" class="button-88"><img src="https://file.garden/Z8v8V8/placeholder-88x31.png" alt="WIP"></a>
+                    <h2 class="section-header">:: SHARE DATA ::</h2>
+                    <div class="floppy-disk">
+                        <div class="floppy-header">
+                            <div class="shutter"></div>
+                        </div>
+                        <div class="floppy-label">
+                            <span class="label-text">moonweft_link.exe</span>
+                            <img src="https://file.garden/Z8v8V8/placeholder-88x31.png" class="my-button" alt="My Button">
+                            <textarea readonly class="code-area"><a href="https://moonweft.neocities.org"><img src="https://moonweft.neocities.org/assets/button.gif"></a></textarea>
+                        </div>
                     </div>
                 </section>
 
                 <hr class="neon-divider">
+
                 <section class="link-group">
-                    <h2 class="section-header">:: COOL RESOURCES ::</h2>
-                    <ul class="text-links">
-                        <li><a href="#">WIP</a> <span class="comment">// wip as you can see</span></li>
-                    </ul>
+                    <h2 class="section-header">:: NEIGHBOURHOOD ::</h2>
+                    <div class="button-grid" id="friend-grid">
+                        <a href="https://neocities.org" class="button-88" title="Neocities"><img src="https://file.garden/Z8v8V8/placeholder-88x31.png"></a>
+                        <a href="https://sadgrl.online" class="button-88" title="Sadgrl"><img src="https://file.garden/Z8v8V8/placeholder-88x31.png"></a>
+                        <a href="https://wiby.me" class="button-88" title="Wiby"><img src="https://file.garden/Z8v8V8/placeholder-88x31.png"></a>
+                        <a href="#" class="button-88" title="Friend 4"><img src="https://file.garden/Z8v8V8/placeholder-88x31.png"></a>
+                        </div>
                 </section>
+
+                <div class="warp-zone">
+                    <button onclick="warpRandom()" class="warp-btn">
+                        <span class="warp-text">ENGAGE WARP DRIVE</span>
+                        <span class="warp-sub">?? RANDOM DESTINATION ??</span>
+                    </button>
+                </div>
+
+                <hr class="neon-divider">
 
                 <div class="return-portal">
                     <a href="index.html">◄ RETURN HOME</a>
                 </div>
             </main>
+
+            <script>
+                function warpRandom() {
+                    // Get all links inside the friend grid
+                    const links = document.querySelectorAll('#friend-grid a');
+                    if(links.length > 0) {
+                        // Pick a random one
+                        const randomLink = links[Math.floor(Math.random() * links.length)];
+                        // Go there
+                        window.location.href = randomLink.href;
+                    } else {
+                        alert("Warp Drive Malfunction: No coordinates found.");
+                    }
+                }
+            </script>
         </div>
     </body>
 </html>
