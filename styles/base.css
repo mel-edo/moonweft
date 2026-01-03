@@ -563,10 +563,13 @@ img {
     margin-top: 10px;
 }
 
-.visitor-counter img {
-    max-width: 100%;
+.visitor-counter {
+    max-width: 80%;
     height: auto;
     display: block;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.9;
     image-rendering: pixelated;
 }
 
