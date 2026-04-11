@@ -36,36 +36,10 @@
 
             <!-- THE CORKBOARD -->
             <main class="corkboard">
+                <!-- Dynamically rendered cozy threads overlay -->
+                <canvas id="thread-canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 100; pointer-events: none;"></canvas>
 
-                <!-- ✧ STRING — red thread connecting all pins ✧ -->
-                <svg class="string-svg" viewBox="0 0 1000 1400" preserveAspectRatio="none" aria-hidden="true">
-                    <!-- top thread: pin 1 (left) → pin 2 (right) -->
-                    <path d="M 472 12 Q 600 55, 976 26"
-                          stroke="#8b3a3a" stroke-width="1.5" fill="none" opacity="0.42"/>
-                    <!-- left thread: pin 1 → pin 3 (loose droop) -->
-                    <path d="M 470 14 Q 440 400, 466 760"
-                          stroke="#8b3a3a" stroke-width="1.4" fill="none" opacity="0.35"/>
-                    <!-- right thread: pin 2 → pin 4 -->
-                    <path d="M 978 28 Q 1005 400, 980 764"
-                          stroke="#8b3a3a" stroke-width="1.4" fill="none" opacity="0.35"/>
-                    <!-- bottom thread: pin 3 → pin 4 -->
-                    <path d="M 468 762 Q 600 800, 978 766"
-                          stroke="#8b3a3a" stroke-width="1.5" fill="none" opacity="0.42"/>
-                    <!-- detective diagonal: pin 2 → pin 3 (dashed) -->
-                    <path d="M 976 28 Q 780 350, 470 758"
-                          stroke="#8b3a3a" stroke-width="1.2" fill="none"
-                          stroke-dasharray="5,4" opacity="0.22"/>
-                    <!-- decorative loop hanging off top thread -->
-                    <path d="M 700 36 Q 718 90, 695 96 Q 672 90, 690 36"
-                          stroke="#8b3a3a" stroke-width="1.1" fill="none" opacity="0.2"/>
-                    <!-- knot dots at each pin location -->
-                    <circle cx="472" cy="12" r="3.5" fill="#8b3a3a" opacity="0.45"/>
-                    <circle cx="976" cy="26" r="3.5" fill="#8b3a3a" opacity="0.45"/>
-                    <circle cx="468" cy="762" r="3.5" fill="#8b3a3a" opacity="0.45"/>
-                    <circle cx="978" cy="764" r="3.5" fill="#8b3a3a" opacity="0.45"/>
-                    <!-- intersection dot where diagonal crosses left thread -->
-                    <circle cx="620" cy="420" r="2" fill="none" stroke="#8b3a3a" stroke-width="1" opacity="0.18"/>
-                </svg>
+                <!-- ✧ STRINGS HAVE BEEN MOVED TO DYNAMIC CANVAS!! ✧ -->
 
                 <!-- DOODLES scattered on the cork ✧ -->
                 <span class="doodle doodle-1" aria-hidden="true">★</span>
@@ -81,9 +55,6 @@
                 </div>
                 <div class="postit postit-2" aria-hidden="true">
                     <span>touch grass</span>
-                </div>
-                <div class="postit postit-3" aria-hidden="true">
-                    <span>ad astra abyssosque</span>
                 </div>
 
                 <!-- POLAROID tucked on the board ✧ -->
@@ -124,13 +95,13 @@
                     <span class="sub-label">cool people</span>
                     <div class="button-grid">
                         <a href="https://neocities.org" target="_blank" rel="noopener noreferrer" title="neocities">
-                            <img src="https://file.garden/Z8v8V8/placeholder-88x31.png" alt="neocities">
+                            <img src="assets/firefoxnow.gif" alt="neocities">
                         </a>
                         <a href="https://sadgrl.online" target="_blank" rel="noopener noreferrer" title="sadgrl">
-                            <img src="https://file.garden/Z8v8V8/placeholder-88x31.png" alt="sadgrl">
+                            <img src="assets/pokemon.gif" alt="sadgrl">
                         </a>
                         <a href="https://wiby.me" target="_blank" rel="noopener noreferrer" title="wiby">
-                            <img src="https://file.garden/Z8v8V8/placeholder-88x31.png" alt="wiby">
+                            <img src="assets/ublock-now.png" alt="wiby">
                         </a>
                         <!-- add more 88x31 buttons here -->
                     </div>
@@ -164,16 +135,28 @@
                     </div>
                 </section>
 
-                <!-- FROM AFAR — Kirara (dendro) -->
+                <!-- GAMES — Kirara (dendro) -->
                 <section class="paper paper-4 tint-dendro">
                     <div class="washi washi-dendro"></div>
                     <div class="pin pin-dendro"></div>
-                    <h2 class="paper-title"><img src="assets/kirara-icon.webp" alt="" class="char-icon"> from afar ◎</h2>
-                    <p class="paper-sub">where visitors have traveled from.</p>
-                    <div class="map-wrap">
-                        <div class="placeholder-box">
-                            [ visitor map implementastion coming soon ]
-                        </div>
+                    <h2 class="paper-title">
+                        <img src="assets/kirara-icon.webp" alt="" class="char-icon"> games ※
+                    </h2>
+                    <p class="paper-sub"><strong id="ra-points" style="color: var(--ink);">—</strong> pts · retro grinding and current obsessions.</p>
+
+                    <!-- RA Recently Played -->
+                    <span class="sub-label">recently on retroachievements</span>
+                    <div class="ra-grid" id="ra-content">
+                        <span class="al-placeholder">loading...</span>
+                    </div>
+
+                    <!-- Divider -->
+                    <div class="games-divider"></div>
+
+                    <!-- Hand-curated modern games -->
+                    <span class="sub-label">modern shelf</span>
+                    <div class="games-grid" id="games-content">
+                        <span class="al-placeholder">loading...</span>
                     </div>
                 </section>
 
@@ -182,6 +165,9 @@
             <footer class="board-bottom">
                 <a href="index.html" class="footer-back">← back home</a>
                 
+                <div class="postit postit-3" aria-hidden="true">
+                    <span>ad astra abyssosque</span>
+                </div>
                 <div class="blinkie-wrapper">
                     <!-- blinkie strip — long paper pinned at both ends -->
                     <div class="blinkie-strip">
@@ -316,6 +302,145 @@
                 leftContainer.innerHTML = renderChibi(shuffled[0], true);
                 rightContainer.innerHTML = renderChibi(shuffled[1], false);
             })();
+        </script>
+
+        <!-- GAMES DATA (RetroAchievements + Curated) -->
+        <script>
+            // ── RETROACHIEVEMENTS ──
+            fetch('https://moonweft-music.meledo.workers.dev/retro')
+                .then(r => {
+                    if (!r.ok) throw new Error("Worker responded with " + r.status);
+                    return r.json();
+                })
+                .then(data => {
+                    document.getElementById('ra-points').textContent =
+                        Number(data.points || 0).toLocaleString();
+
+                    const container = document.getElementById('ra-content');
+                    container.innerHTML = '';
+
+                    if (!data.recent || Object.keys(data.recent).length === 0) {
+                        container.innerHTML = '<span class="al-placeholder">nothing tracked recently</span>';
+                        return;
+                    }
+
+                    // Handles both arrays and objects (if PHP maps it as an object dictionary)
+                    const recentList = Array.isArray(data.recent) ? data.recent : Object.values(data.recent);
+
+                    recentList.slice(0, 3).forEach(game => {
+                        const card = document.createElement('a');
+                        card.href = `https://retroachievements.org/game/${game.id}`;
+                        card.target = '_blank';
+                        card.rel = 'noopener noreferrer';
+                        card.className = 'ra-card';
+                        card.innerHTML = `
+                            <img src="https://media.retroachievements.org${game.imageUrl}"
+                                 alt="${game.title}" class="ra-cover">
+                            <div class="ra-info">
+                                <div class="ra-title">${game.title}</div>
+                                <div style="font-size: 0.55rem; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-top: -2px;">${game.console}</div>
+                            </div>
+                        `;
+                        container.appendChild(card);
+                    });
+                })
+                .catch((err) => {
+                    console.error("RetroAchievements Error:", err);
+                    document.getElementById('ra-content').innerHTML =
+                        '<span class="al-placeholder">couldn\'t reach retroachievements (check console)</span>';
+                });
+
+            // ── HAND-CURATED GAMES ──
+            fetch('data/games.json')
+                .then(r => r.json())
+                .then(data => {
+                    const container = document.getElementById('games-content');
+                    container.innerHTML = '';
+
+                    data.forEach(game => {
+                        const card = document.createElement('div');
+                        card.className = 'game-card';
+                        
+                        // Always auto-fetch via worker SteamGridDB proxy natively
+                        const coverSrc = 'https://moonweft-music.meledo.workers.dev/steamgrid?q=' + encodeURIComponent(game.title);
+
+                        card.innerHTML = `
+                            <img src="${coverSrc}" alt="${game.title}" class="game-cover">
+                            <span class="game-badge badge-${game.status}">${game.status}</span>
+                            <span class="game-title">${game.title}</span>
+                        `;
+                        container.appendChild(card);
+                    });
+                })
+                .catch((err) => {
+                    console.error("Games json error:", err);
+                    document.getElementById('games-content').innerHTML =
+                        '<span class="al-placeholder">couldn\'t load games</span>';
+                });
+
+            // ── DRAW COZY THREADS NATIVELY ──
+            function updateThreads() {
+                const canvas = document.getElementById('thread-canvas');
+                if(!canvas) return;
+                const board = document.querySelector('.corkboard');
+                const rect = board.getBoundingClientRect();
+                
+                // Match physical pixels to prevent blurring
+                canvas.width = board.offsetWidth;
+                canvas.height = board.offsetHeight;
+                
+                const ctx = canvas.getContext('2d');
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                // We order them explicitly by how they physically render in the DOM (1, 2, 3, 4)
+                const pins = Array.from(document.querySelectorAll('.pin'));
+                if(pins.length < 4) return;
+                
+                // Map pins into exact X/Y pixels relative to canvas
+                const p = pins.map(pin => {
+                    const r = pin.getBoundingClientRect();
+                    return { x: (r.left - rect.left) + r.width/2, y: (r.top - rect.top) + r.height/2 };
+                });
+                
+                function drawCurve(p1, p2, curveX, curveY, dashed) {
+                    ctx.beginPath();
+                    ctx.moveTo(p1.x, p1.y);
+                    const mx = ((p1.x + p2.x) / 2) + curveX;
+                    const my = ((p1.y + p2.y) / 2) + curveY;
+                    ctx.quadraticCurveTo(mx, my, p2.x, p2.y);
+                    
+                    if (dashed) {
+                        ctx.setLineDash([6, 5]);
+                        ctx.strokeStyle = 'rgba(196, 108, 108, 0.25)';
+                        ctx.lineWidth = 1.2;
+                    } else {
+                        ctx.setLineDash([]);
+                        ctx.strokeStyle = 'rgba(196, 108, 108, 0.45)';
+                        ctx.lineWidth = 2.0;
+                    }
+                    ctx.stroke();
+                }
+                
+                // Tactile shadow
+                ctx.shadowColor = 'rgba(0,0,0,0.3)';
+                ctx.shadowOffsetY = 3;
+                ctx.shadowBlur = 4;
+                
+                // Top horizontal droop
+                drawCurve(p[0], p[1], 0, 45, false);
+                // Left vertical swoop
+                drawCurve(p[0], p[2], 30, 0, false);
+                // Right vertical swoop
+                drawCurve(p[1], p[3], -30, 0, false);
+                // Detective diagonal thread
+                drawCurve(p[1], p[2], -15, 15, true);
+                // Bottom horizontal droop
+                drawCurve(p[2], p[3], 0, 40, false);
+            }
+
+            // Tie logic tightly to window so fonts pushing layout will definitely get caught!
+            window.addEventListener('load', () => setTimeout(updateThreads, 150));
+            window.addEventListener('resize', updateThreads);
         </script>
 
     </body>

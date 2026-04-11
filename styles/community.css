@@ -319,7 +319,7 @@ body {
 .postit-2 {
     background: var(--postit-green);
     color: #1a4a18;
-    top: 46%;
+    top: 40%;
     left: 47%;
     transform: rotate(-3deg);
 }
@@ -327,7 +327,7 @@ body {
 .postit-3 {
     background: var(--postit-pink);
     color: #5a1838;
-    top: 90%;
+    bottom: 1%;
     right: 12%;
     transform: rotate(2.5deg);
     font-style: italic;
@@ -340,7 +340,7 @@ body {
 .polaroid {
     position: absolute;
     z-index: 30;
-    top: 35%;
+    top: 33%;
     right: 2%;
     transform: rotate(6deg);
     background: #faf8f4;
@@ -385,9 +385,6 @@ body {
 
 /* No hover transform on paper — static feel matches the corkboard vibe */
 
-/* chibi-active class kept for JS compatibility but no longer lifts the paper */
-.paper.chibi-active { z-index: 1; }
-
 /* ── CHARACTER BG ART — large faded portrait behind each card's content ── */
 .paper::after {
     content: '';
@@ -406,10 +403,9 @@ body {
 }
 
 /* Per-card character image */
-.tint-electro::after { background-image: url('../assets/keqing-icon.webp'); }
+.tint-electro::after { background-image: url('../assets/keqing-icon.webp'); filter: brightness(0.6) contrast(1.2); }
 .tint-pyro::after    { background-image: url('../assets/yoimiya-icon.webp'); }
-/* Layla's cryo icon is pale blue — same tone as the darker card, so darken it hard */
-.tint-cryo::after    { background-image: url('../assets/layla-icon.webp'); filter: brightness(0.3) contrast(1.2); }
+.tint-cryo::after    { background-image: url('../assets/layla-icon.webp'); filter: brightness(0.5) contrast(1.2); }
 .tint-dendro::after  { background-image: url('../assets/kirara-icon.webp'); }
 
 /* Paper aging — yellowed/darkened edges via ::before overlay */
@@ -431,7 +427,7 @@ body {
 }
 
 /* Ensure content sits above aging overlay and char bg */
-.paper > *:not(.chibi-reveal) {
+.paper > *:not(.washi):not(.pin) {
     position: relative;
     z-index: 1;
 }
@@ -444,9 +440,9 @@ body {
 
 /* Scatter — hand-placed feel */
 .paper-1 { transform: rotate(-1.5deg); grid-column: 1 / 2; }
-.paper-2 { transform: rotate(1.2deg);  grid-column: 2 / 3; margin-top: 28px; }
+.paper-2 { transform: rotate(1.2deg);  grid-column: 2 / 4; margin-top: 28px; }
 .paper-3 { transform: rotate(0.8deg);  grid-column: 1 / 2; }
-.paper-4 { transform: rotate(-1.8deg); grid-column: 2 / 3; margin-top: 30px; }
+.paper-4 { transform: rotate(-1.8deg); grid-column: 2 / 4; width: 90%; justify-self: center; margin-top: 130px; }
 
 /* ──────────────────────────────
    WASHI TAPE — decorative strips
@@ -467,39 +463,39 @@ body {
 }
 
 .washi-electro {
-    width: 80px;
-    height: 18px;
+    width: 90px;
+    height: 20px;
     background-color: rgba(200, 168, 255, 0.45);
-    top: 12px;
-    left: -15px;
-    transform: rotate(-12deg);
+    top: -6px;
+    left: 8%;
+    transform: rotate(-8deg);
 }
 
 .washi-pyro {
-    width: 70px;
-    height: 18px;
+    width: 85px;
+    height: 20px;
     background-color: rgba(255, 157, 92, 0.4);
-    bottom: 14px;
-    right: -10px;
-    transform: rotate(8deg);
+    top: -6px;
+    left: 10%;
+    transform: rotate(10deg);
 }
 
 .washi-cryo {
-    width: 65px;
-    height: 18px;
+    width: 80px;
+    height: 20px;
     background-color: rgba(127, 212, 245, 0.4);
-    bottom: -6px;
-    right: 30px;
-    transform: rotate(-5deg);
+    top: 0px;
+    right: 8%;
+    transform: rotate(-6deg);
 }
 
 .washi-dendro {
-    width: 75px;
-    height: 18px;
+    width: 95px;
+    height: 20px;
     background-color: rgba(143, 217, 106, 0.4);
-    top: 8px;
-    left: -8px;
-    transform: rotate(-6deg);
+    top: -7px;
+    left: 25%;
+    transform: rotate(12deg);
 }
 
 /* ──────────────────────────────
@@ -508,13 +504,11 @@ body {
 ────────────────────────────── */
 .pin {
     position: absolute;
-    top: -8px;
-    right: 22px;
     width: 16px;
     height: 16px;
     border-radius: 50%;
     cursor: default;
-    z-index: 10;
+    z-index: 101;
     border: 1.5px solid rgba(255,255,255,0.5);
     /* Compositor layer — keeps the pin isolated so it never triggers
        parent re-rasterization */
@@ -523,21 +517,25 @@ body {
 }
 
 .pin-electro {
+    top: 12px; right: 22px;
     background: radial-gradient(circle at 40% 35%, rgba(255,255,255,0.5), var(--electro) 70%);
     box-shadow: 0 0 8px var(--electro), 0 2px 6px rgba(0,0,0,0.2);
 }
 
 .pin-pyro {
+    top: 15px; right: 28px;
     background: radial-gradient(circle at 40% 35%, rgba(255,255,255,0.5), var(--pyro) 70%);
     box-shadow: 0 0 8px var(--pyro), 0 2px 6px rgba(0,0,0,0.2);
 }
 
 .pin-cryo {
+    top: 15px; right: 30px;
     background: radial-gradient(circle at 40% 35%, rgba(255,255,255,0.5), var(--cryo) 70%);
     box-shadow: 0 0 8px var(--cryo), 0 2px 6px rgba(0,0,0,0.2);
 }
 
 .pin-dendro {
+    top: 10px; left: 75%; transform: translateX(-50%) translateZ(0);
     background: radial-gradient(circle at 40% 35%, rgba(255,255,255,0.5), var(--dendro) 70%);
     box-shadow: 0 0 8px var(--dendro), 0 2px 6px rgba(0,0,0,0.2);
 }
@@ -930,6 +928,175 @@ body {
     filter: drop-shadow(2px 3px 6px rgba(0,0,0,0.35));
 }
 
+
+/* ──────────────────────────────
+   KIRARA'S GAMES PANEL
+────────────────────────────── */
+
+/* Dendro washi + pin (same pattern as electro/pyro/cryo) */
+.washi-dendro {
+    background: linear-gradient(90deg,
+        rgba(143,217,106,0.55) 0%,
+        rgba(143,217,106,0.2) 100%);
+}
+.pin-dendro { background: radial-gradient(circle at 35% 35%, #b8f07a, #5fa832); }
+.tint-dendro { background-color: var(--paper-dendro); }
+
+/* RA stats row — reuse .al-stats pattern */
+.ra-stats {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 12px;
+    font-family: 'Caveat', cursive;
+}
+.ra-stat { text-align: center; }
+.ra-stat strong { display: block; font-size: 1.3rem; color: var(--ink); }
+.ra-stat span { font-size: 0.78rem; color: var(--ink-muted); }
+
+/* RA recently played grid — mimic modern grid */
+.ra-grid {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 64px;
+    justify-content: start;
+    overflow-x: auto;
+    overflow-y: hidden;
+    gap: 8px;
+    margin-bottom: 16px;
+    padding-top: 6px;
+    padding-right: 6px;
+    padding-bottom: 8px;
+}
+
+/* Custom subtle scrollbars for horizontal grids */
+.ra-grid::-webkit-scrollbar,
+.games-grid::-webkit-scrollbar {
+    height: 3px;
+}
+.ra-grid::-webkit-scrollbar-track,
+.games-grid::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.05);
+    border-radius: 3px;
+}
+.ra-grid::-webkit-scrollbar-thumb,
+.games-grid::-webkit-scrollbar-thumb {
+    background: rgba(0, 0, 0, 0.15);
+    border-radius: 3px;
+}
+.ra-grid::-webkit-scrollbar-thumb:hover,
+.games-grid::-webkit-scrollbar-thumb:hover {
+    background: rgba(0, 0, 0, 0.25);
+}
+
+.ra-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    text-align: center;
+    text-decoration: none;
+    color: var(--ink);
+}
+
+.ra-cover {
+    width: 64px;
+    height: 64px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 2px solid rgba(0,0,0,0.1);
+}
+
+.ra-info { width: 100%; display: flex; flex-direction: column; gap: 4px; }
+.ra-title {
+    font-size: 0.65rem;
+    color: var(--ink-muted);
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: 'Nunito', sans-serif;
+}
+
+.ra-bar-wrap {
+    height: 4px;
+    background: rgba(0,0,0,0.12);
+    border-radius: 2px;
+    overflow: hidden;
+    width: 100%;
+}
+.ra-bar-fill {
+    height: 100%;
+    background: var(--dendro);
+    border-radius: 2px;
+    transition: width 0.6s ease;
+}
+
+/* Divider between RA and curated */
+.games-divider {
+    border: none;
+    border-top: 1px dashed rgba(0,0,0,0.15);
+    margin: 14px 0;
+}
+
+/* Modern games shelf */
+.games-grid {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 64px;
+    justify-content: start;
+    overflow-x: auto;
+    overflow-y: hidden;
+    gap: 8px;
+    padding-top: 6px;
+    padding-right: 6px;
+    padding-bottom: 8px;
+}
+
+.game-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    text-align: center;
+    cursor: default;
+    position: relative;
+}
+
+.game-cover {
+    width: 64px;
+    height: 96px;
+    object-fit: cover;
+    border-radius: 6px;
+    border: 2px solid rgba(0,0,0,0.1);
+    transition: transform 0.2s;
+}
+
+.game-badge {
+    position: absolute;
+    top: -4px;
+    right: -4px;
+    font-size: 0.55rem;
+    padding: 1px 4px;
+    border-radius: 3px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.badge-playing   { background: var(--dendro); color: #1a3a0a; }
+.badge-completed { background: #c9a040; color: #fff; }
+.badge-dropped   { background: #ccc; color: #444; }
+.badge-wishlist  { background: var(--cryo); color: #1a3a4a; }
+
+.game-title {
+    font-size: 0.65rem;
+    color: var(--ink-muted);
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-family: 'Nunito', sans-serif;
+}
 
 /* ──────────────────────────────
    RESPONSIVE
