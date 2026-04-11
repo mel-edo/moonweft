@@ -294,6 +294,52 @@ img {
     cursor: help;
 }
 
+.board-style-btn {
+    text-decoration: none;
+    color: #2c2420; /* black/ink text inside the paper */
+    background-color: #6b5030; /* wooden plank / cork base */
+    /* draw a smaller rectangle of paper inside the wood */
+    background-image: linear-gradient(#f2ece0, #f2ece0);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: calc(100% - 14px) calc(100% - 14px); /* leaves a 7px visible wooden border */
+    
+    padding: 10px 24px;
+    font-family: 'Caveat', cursive;
+    font-size: 1.5rem;
+    font-weight: 600;
+    min-width: 80px;
+    text-align: center;
+    border: 3px solid #000;
+    box-shadow: 2px 3px 6px rgba(0,0,0,0.4);
+    transform: rotate(-1deg);
+    transition: filter 0.2s, transform 0.2s;
+}
+
+.board-style-btn:hover {
+    filter: brightness(0.9);
+    transform: rotate(-1deg) scale(0.98);
+}
+
+.board-style-btn::after {
+    content: '';
+    position: absolute;
+    top: -6px;
+    left: -12px;
+    width: 45px;
+    height: 16px;
+    background-color: rgba(200, 168, 255, 0.45);
+    background-image: repeating-linear-gradient(
+        45deg,
+        transparent 0px, transparent 2px,
+        rgba(255,255,255,0.12) 2px, rgba(255,255,255,0.12) 4px
+    );
+    border: 1px solid rgba(255,255,255,0.1);
+    transform: rotate(-15deg);
+    z-index: 6;
+    pointer-events: none;
+}
+
 .code-tidbit {
     font-size: 1rem;
 }

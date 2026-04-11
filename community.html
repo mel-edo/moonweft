@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>the board ~ moonweft</title>
+        <meta name="description" content="moonweft's community board — links, guestbook, and more.">
+        <link rel="stylesheet" href="styles/community.css">
+        <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Nunito:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+        <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
+    </head>
+    <body>
+
+        <div class="board-frame">
+            <!-- cork texture grain -->
+            <div class="cork-grain" aria-hidden="true"></div>
+
+            <!-- Title strip taped to the board -->
+            <header class="board-label">
+                <div class="tape tape-left"></div>
+                <div class="label-content">
+                    <h1>the board</h1>
+                    <span class="traveler-whisper">welcome, traveler</span>
+                </div>
+                <div class="tape tape-right"></div>
+            </header>
+
+            <!-- Nav — paper scrap -->
+            <nav class="nav-scrap">
+                <a href="index.html">[home]</a>
+                <a href="projects.html">[projects]</a>
+                <span class="nav-here">[board]</span>
+                <a href="notes.html">[blog]</a>
+            </nav>
+
+            <!-- THE CORKBOARD -->
+            <main class="corkboard">
+
+                <!-- ✧ STRING — red thread connecting all pins ✧ -->
+                <svg class="string-svg" viewBox="0 0 1000 1400" preserveAspectRatio="none" aria-hidden="true">
+                    <!-- top thread: pin 1 (left) → pin 2 (right) -->
+                    <path d="M 472 12 Q 600 55, 976 26"
+                          stroke="#8b3a3a" stroke-width="1.5" fill="none" opacity="0.42"/>
+                    <!-- left thread: pin 1 → pin 3 (loose droop) -->
+                    <path d="M 470 14 Q 440 400, 466 760"
+                          stroke="#8b3a3a" stroke-width="1.4" fill="none" opacity="0.35"/>
+                    <!-- right thread: pin 2 → pin 4 -->
+                    <path d="M 978 28 Q 1005 400, 980 764"
+                          stroke="#8b3a3a" stroke-width="1.4" fill="none" opacity="0.35"/>
+                    <!-- bottom thread: pin 3 → pin 4 -->
+                    <path d="M 468 762 Q 600 800, 978 766"
+                          stroke="#8b3a3a" stroke-width="1.5" fill="none" opacity="0.42"/>
+                    <!-- detective diagonal: pin 2 → pin 3 (dashed) -->
+                    <path d="M 976 28 Q 780 350, 470 758"
+                          stroke="#8b3a3a" stroke-width="1.2" fill="none"
+                          stroke-dasharray="5,4" opacity="0.22"/>
+                    <!-- decorative loop hanging off top thread -->
+                    <path d="M 700 36 Q 718 90, 695 96 Q 672 90, 690 36"
+                          stroke="#8b3a3a" stroke-width="1.1" fill="none" opacity="0.2"/>
+                    <!-- knot dots at each pin location -->
+                    <circle cx="472" cy="12" r="3.5" fill="#8b3a3a" opacity="0.45"/>
+                    <circle cx="976" cy="26" r="3.5" fill="#8b3a3a" opacity="0.45"/>
+                    <circle cx="468" cy="762" r="3.5" fill="#8b3a3a" opacity="0.45"/>
+                    <circle cx="978" cy="764" r="3.5" fill="#8b3a3a" opacity="0.45"/>
+                    <!-- intersection dot where diagonal crosses left thread -->
+                    <circle cx="620" cy="420" r="2" fill="none" stroke="#8b3a3a" stroke-width="1" opacity="0.18"/>
+                </svg>
+
+                <!-- DOODLES scattered on the cork ✧ -->
+                <span class="doodle doodle-1" aria-hidden="true">★</span>
+                <span class="doodle doodle-2" aria-hidden="true">♡</span>
+                <span class="doodle doodle-3" aria-hidden="true">~</span>
+                <span class="doodle doodle-4" aria-hidden="true">✦</span>
+                <span class="doodle doodle-5" aria-hidden="true">✿</span>
+                <span class="doodle doodle-6" aria-hidden="true">↗</span>
+
+                <!-- POST-IT NOTES on the cork ✧ -->
+                <div class="postit postit-1" aria-hidden="true">
+                    <span>trade buttons?</span>
+                </div>
+                <div class="postit postit-2" aria-hidden="true">
+                    <span>touch grass</span>
+                </div>
+                <div class="postit postit-3" aria-hidden="true">
+                    <span>ad astra abyssosque</span>
+                </div>
+
+                <!-- POLAROID tucked on the board ✧ -->
+                <div class="polaroid" aria-hidden="true">
+                    <div class="polaroid-photo">
+                    </div>
+                    <span class="polaroid-caption">   untitled</span>
+                </div>
+
+                <!-- GUESTBOOK — Keqing (electro) -->
+                <section class="paper paper-1 tint-electro">
+                    <div class="washi washi-electro"></div>
+                    <div class="pin pin-electro"></div>
+                    <h2 class="paper-title"><img src="assets/keqing-icon.webp" alt="" class="char-icon"> leave a note ✉</h2>
+                    <p class="paper-sub">say hello, drop a thought, sign the board.</p>
+                    <div class="guestbook-wrap">
+                        <div class="placeholder-box">
+                            [ guestbook implementation coming soon ]
+                        </div>
+                    </div>
+                </section>
+
+                <!-- NEIGHBOURS — Yoimiya (pyro) -->
+                <section class="paper paper-2 tint-pyro">
+                    <div class="washi washi-pyro"></div>
+                    <div class="pin pin-pyro"></div>
+                    <h2 class="paper-title"><img src="assets/yoimiya-icon.webp" alt="" class="char-icon"> neighbours ✦</h2>
+                    <p class="paper-sub">sites i visit. link back if you'd like.</p>
+
+                    <div class="my-button-block">
+                        <span class="sub-label">my button, grab it!</span>
+                        <div class="button-row">
+                            <img src="assets/moonweft_88x31.png" alt="moonweft 88x31" class="site-btn">
+                            <textarea readonly class="btn-code"><a href="https://mel-edo.github.io/moonweft/"><img src="https://mel-edo.github.io/moonweft/assets/moonweft_88x31.png" alt="moonweft"></a></textarea>
+                        </div>
+                    </div>
+
+                    <span class="sub-label">cool people</span>
+                    <div class="button-grid">
+                        <a href="https://neocities.org" target="_blank" rel="noopener noreferrer" title="neocities">
+                            <img src="https://file.garden/Z8v8V8/placeholder-88x31.png" alt="neocities">
+                        </a>
+                        <a href="https://sadgrl.online" target="_blank" rel="noopener noreferrer" title="sadgrl">
+                            <img src="https://file.garden/Z8v8V8/placeholder-88x31.png" alt="sadgrl">
+                        </a>
+                        <a href="https://wiby.me" target="_blank" rel="noopener noreferrer" title="wiby">
+                            <img src="https://file.garden/Z8v8V8/placeholder-88x31.png" alt="wiby">
+                        </a>
+                        <!-- add more 88x31 buttons here -->
+                    </div>
+                </section>
+
+                <!-- CURRENTLY — Layla (cryo) -->
+                <section class="paper paper-3 tint-cryo">
+                    <div class="washi washi-cryo"></div>
+                    <div class="pin pin-cryo"></div>
+                    <h2 class="paper-title"><img src="assets/layla-icon.webp" alt="" class="char-icon"> currently ♡</h2>
+                    <p class="paper-sub">watching and reading right now.</p>
+                    <!-- AniList user stats -->
+                    <div class="al-stats" id="al-stats">
+                        <div class="al-stat">
+                            <strong id="al-anime-count">—</strong>
+                            <span>anime</span>
+                        </div>
+                        <span class="al-dot">·</span>
+                        <div class="al-stat">
+                            <strong id="al-hours">—</strong>
+                            <span>hrs watched</span>
+                        </div>
+                        <span class="al-dot">·</span>
+                        <div class="al-stat">
+                            <strong id="al-chapters">—</strong>
+                            <span>chapters read</span>
+                        </div>
+                    </div>
+                    <div id="anilist-content" class="anilist-grid">
+                        <span class="al-placeholder">loading...</span>
+                    </div>
+                </section>
+
+                <!-- FROM AFAR — Kirara (dendro) -->
+                <section class="paper paper-4 tint-dendro">
+                    <div class="washi washi-dendro"></div>
+                    <div class="pin pin-dendro"></div>
+                    <h2 class="paper-title"><img src="assets/kirara-icon.webp" alt="" class="char-icon"> from afar ◎</h2>
+                    <p class="paper-sub">where visitors have traveled from.</p>
+                    <div class="map-wrap">
+                        <div class="placeholder-box">
+                            [ visitor map implementastion coming soon ]
+                        </div>
+                    </div>
+                </section>
+
+            </main>
+
+            <footer class="board-bottom">
+                <a href="index.html" class="footer-back">← back home</a>
+                
+                <div class="blinkie-wrapper">
+                    <!-- blinkie strip — long paper pinned at both ends -->
+                    <div class="blinkie-strip">
+                        <div class="strip-pin strip-pin-left"></div>
+                        <div class="strip-pin strip-pin-right"></div>
+                        <div class="blinkie-content-row">
+                            <div id="footer-crew-left" class="footer-crew-side"></div>
+                            
+                            <div class="footer-blinkies">
+                                <img src="assets/firefoxnow.gif" alt="firefox now">
+                                <img src="assets/pokemon.gif" alt="pokemon">
+                                <img src="assets/penguins.gif" alt="linux penguins">
+                                <img src="assets/archlinux.gif" alt="arch linux">
+                                <img src="assets/saynotoweb3.gif" alt="say no to web3">
+                                <img src="assets/neovim.gif" alt="neovim">
+                                <img src="assets/anythingbut.gif" alt="anything but chrome">
+                                <img src="assets/bsod.gif" alt="bsod">
+                                <img src="assets/mademyown.gif" alt="i made my own">
+                                <img src="assets/ublock-now.png" alt="ublock origin now">
+                                <img src="assets/vim.gif" alt="vim">
+                                <img src="assets/www2.gif" alt="www">
+                                <img src="assets/get.gif" alt="get">
+                                <img src="assets/emulate.gif" alt="emulate">
+                                <img src="assets/html_learn_it_today.gif" alt="html">
+                                <img src="assets/java.gif" alt="java">
+                                <img src="assets/GUTENBRG.gif" alt="gutenberg">
+                                <img src="assets/antinft.gif" alt="anti nft">
+                                <img src="assets/bestview.gif" alt="best view">
+                            </div>
+
+                            <div id="footer-crew-right" class="footer-crew-side"></div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+
+        </div>
+
+        <!-- ANILIST FETCH -->
+        <script>
+            const ANILIST_USER = 'meledo';
+            const QUERY = `
+            query ($name: String) {
+                User(name: $name) {
+                    statistics {
+                        anime { count minutesWatched }
+                        manga { count chaptersRead }
+                    }
+                }
+                anime: MediaListCollection(userName: $name, type: ANIME, status: CURRENT, sort: UPDATED_TIME_DESC) {
+                    lists { entries { progress media { title { romaji } coverImage { medium } episodes siteUrl } } }
+                }
+                manga: MediaListCollection(userName: $name, type: MANGA, status: CURRENT, sort: UPDATED_TIME_DESC) {
+                    lists { entries { progress media { title { romaji } coverImage { medium } chapters siteUrl } } }
+                }
+            }`;
+
+            fetch('https://graphql.anilist.co', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ query: QUERY, variables: { name: ANILIST_USER } })
+            })
+            .then(r => r.json())
+            .then(data => {
+                // — stats row —
+                const stats = data.data?.User?.statistics;
+                if (stats) {
+                    const hours = Math.round(stats.anime.minutesWatched / 60);
+                    document.getElementById('al-anime-count').textContent = stats.anime.count;
+                    document.getElementById('al-hours').textContent = hours.toLocaleString();
+                    document.getElementById('al-chapters').textContent = stats.manga.chaptersRead.toLocaleString();
+                }
+
+                // — currently watching/reading grid —
+                const container = document.getElementById('anilist-content');
+                container.innerHTML = '';
+                const anime = data.data?.anime?.lists?.flatMap(l => l.entries) || [];
+                const manga = data.data?.manga?.lists?.flatMap(l => l.entries) || [];
+                const entries = [...anime.slice(0, 4), ...manga.slice(0, 2)];
+
+                if (entries.length === 0) {
+                    container.innerHTML = '<span class="al-placeholder">nothing currently tracked</span>';
+                    return;
+                }
+
+                entries.forEach(entry => {
+                    const m = entry.media;
+                    const total = m.episodes ?? m.chapters ?? '?';
+                    const unit = m.episodes !== undefined ? 'ep' : 'ch';
+                    const card = document.createElement('a');
+                    card.href = m.siteUrl;
+                    card.target = '_blank';
+                    card.rel = 'noopener noreferrer';
+                    card.className = 'anilist-card';
+                    card.innerHTML = `
+                        <img src="${m.coverImage.medium}" alt="${m.title.romaji}" class="al-cover">
+                        <div class="al-info">
+                            <div class="al-title">${m.title.romaji}</div>
+                            <div class="al-progress">${entry.progress} / ${total} ${unit}</div>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            })
+            .catch(() => {
+                document.getElementById('anilist-content').innerHTML =
+                    '<span class="al-placeholder">couldn\'t reach anilist</span>';
+            });
+        </script>
+
+        <!-- FOOTER CREW PICKER -->
+        <script>
+            (function() {
+                const chars = ['keqing', 'yoimiya', 'layla', 'kirara'];
+                const leftContainer = document.getElementById('footer-crew-left');
+                const rightContainer = document.getElementById('footer-crew-right');
+                if (!leftContainer || !rightContainer) return;
+
+                // Pick 2 random unique characters
+                const shuffled = chars.sort(() => 0.5 - Math.random());
+                
+                const renderChibi = (char, invert) => {
+                    const variant = Math.floor(Math.random() * 2) + 1;
+                    const transform = invert ? 'transform: scaleX(-1);' : '';
+                    return `
+                        <div class="crew-member">
+                            <img src="assets/chibi-${char}-${variant}.webp" alt="${char} chibi" class="crew-chibi" style="${transform}">
+                        </div>
+                    `;
+                }
+
+                leftContainer.innerHTML = renderChibi(shuffled[0], true);
+                rightContainer.innerHTML = renderChibi(shuffled[1], false);
+            })();
+        </script>
+
+    </body>
+</html>

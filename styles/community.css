@@ -1,0 +1,962 @@
+/*
+ * the board — community.css
+ * CORKBOARD: Darker cork, aged wood frame, scattered papers,
+ * string between pins, post-its, doodles, washi tape,
+ * polaroid, paper aging, element glow pins, chibi reveals.
+ */
+
+/* ──────────────────────────────
+   PALETTE
+────────────────────────────── */
+:root {
+    /* Genshin element colours */
+    --electro: #c8a8ff;
+    --pyro:    #ff9d5c;
+    --cryo:    #a0d6eb;
+    --dendro:  #8fd96a;
+
+    /* Wall */
+    --wall: #110e0a;
+
+    /* Cork — darker, richer */
+    --cork:       #6b5030;
+    --cork-dark:  #4a3820;
+
+    /* Frame — aged dark wood */
+    --wood-dark:  #2a1808;
+    --wood-mid:   #40280e;
+    --wood-light: #5c3a18;
+
+    /* Papers — parchment tints */
+    --paper:         #f2ece0;
+    --paper-electro: #ece5f5;
+    --paper-pyro:    #f5e9e0;
+    --paper-cryo:    #c3d4e1;
+    --paper-dendro:  #e6f2e0;
+
+    /* Ink */
+    --ink:       #2c2420;
+    --ink-muted: #6e645a;
+    --gold:      #c9a040;
+
+    /* Post-it colours */
+    --postit-yellow: #f5e87a;
+    --postit-green:  #a8e6a0;
+    --postit-pink:   #f0b8d0;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+/* ──────────────────────────────
+   BODY — dark wall
+────────────────────────────── */
+body {
+    background: var(--wall);
+    min-height: 100vh;
+    font-family: 'Nunito', sans-serif;
+    font-size: 15px;
+    line-height: 1.6;
+    color: var(--ink);
+    overflow-x: hidden;
+    /* Subtle stone/plaster on dark wall */
+    background-image:
+        radial-gradient(ellipse at 25% 15%, rgba(50,35,18,0.5) 0%, transparent 55%),
+        radial-gradient(ellipse at 75% 85%, rgba(35,25,12,0.4) 0%, transparent 50%),
+        repeating-linear-gradient(
+            90deg, transparent 0px, transparent 3px,
+            rgba(255,255,255,0.008) 3px, rgba(255,255,255,0.008) 4px
+        );
+}
+
+/* ──────────────────────────────
+   BOARD FRAME — aged wooden border
+   with visible edges and deep shadows
+────────────────────────────── */
+.board-frame {
+    position: relative;
+    z-index: 1;
+    max-width: 1120px;
+    margin: 50px auto;
+    padding: 40px 36px 48px;
+    background: var(--cork);
+    border-radius: 3px;
+
+    /* Thick wooden frame */
+    border: 18px solid var(--wood-mid);
+    border-image: linear-gradient(
+        140deg,
+        var(--wood-light) 0%,
+        var(--wood-mid) 20%,
+        var(--wood-dark) 45%,
+        var(--wood-mid) 60%,
+        var(--wood-light) 80%,
+        var(--wood-mid) 100%
+    ) 1;
+
+    /* Deep shadows: recessed cork + frame hanging on wall */
+    box-shadow:
+        /* inner — recessed into frame, worn at edges */
+        inset 0 0 30px rgba(0,0,0,0.45),
+        inset 0 0 8px rgba(0,0,0,0.2),
+        inset 6px 6px 15px rgba(0,0,0,0.15),
+        inset -6px -6px 15px rgba(0,0,0,0.15),
+        /* outer — board weight on wall */
+        0 10px 40px rgba(0,0,0,0.6),
+        0 3px 10px rgba(0,0,0,0.4),
+        /* warm ambient reflection off cork */
+        0 0 80px rgba(107,80,48,0.06);
+}
+
+/* ──────────────────────────────
+   CORK GRAIN TEXTURE — inside the frame
+   Rich dark grain with knots, cracks, and
+   warm colour variation.
+────────────────────────────── */
+.cork-grain {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    border-radius: 2px;
+    background:
+        /* fine horizontal grain */
+        repeating-linear-gradient(
+            88deg,
+            transparent 0px, transparent 1px,
+            rgba(0,0,0,0.06) 1px, rgba(0,0,0,0.06) 2px
+        ),
+        /* vertical cross-grain */
+        repeating-linear-gradient(
+            176deg,
+            transparent 0px, transparent 3px,
+            rgba(0,0,0,0.04) 3px, rgba(0,0,0,0.04) 4px
+        ),
+        /* crack lines — thin dark scratches */
+        linear-gradient(135deg,
+            transparent 30%, rgba(0,0,0,0.08) 30.2%,
+            rgba(0,0,0,0.08) 30.4%, transparent 30.6%
+        ),
+        linear-gradient(160deg,
+            transparent 55%, rgba(0,0,0,0.06) 55.1%,
+            rgba(0,0,0,0.06) 55.3%, transparent 55.5%
+        ),
+        linear-gradient(110deg,
+            transparent 72%, rgba(0,0,0,0.05) 72.1%,
+            rgba(0,0,0,0.05) 72.3%, transparent 72.5%
+        ),
+        /* cork knots — dark spots */
+        radial-gradient(circle 14px at 12% 20%, rgba(50,30,10,0.35) 0%, transparent 100%),
+        radial-gradient(circle 9px at 65% 12%, rgba(50,30,10,0.25) 0%, transparent 100%),
+        radial-gradient(circle 18px at 88% 50%, rgba(50,30,10,0.3) 0%, transparent 100%),
+        radial-gradient(circle 11px at 25% 70%, rgba(50,30,10,0.25) 0%, transparent 100%),
+        radial-gradient(circle 7px at 50% 40%, rgba(50,30,10,0.2) 0%, transparent 100%),
+        radial-gradient(circle 12px at 40% 92%, rgba(50,30,10,0.22) 0%, transparent 100%),
+        radial-gradient(circle 8px at 78% 80%, rgba(50,30,10,0.18) 0%, transparent 100%),
+        /* warm colour shifts across cork surface */
+        radial-gradient(ellipse at 20% 30%, rgba(140,100,50,0.15) 0%, transparent 35%),
+        radial-gradient(ellipse at 80% 60%, rgba(120,85,40,0.12) 0%, transparent 40%),
+        radial-gradient(ellipse at 55% 85%, rgba(130,95,45,0.1) 0%, transparent 45%),
+        /* vignette — darker at edges */
+        radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.15) 100%);
+}
+
+/* ──────────────────────────────
+   HEADER — taped label
+────────────────────────────── */
+.board-label {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 12px;
+    z-index: 3;
+}
+
+.label-content {
+    background: var(--paper);
+    padding: 10px 28px 8px;
+    border: 1px solid rgba(0,0,0,0.08);
+    box-shadow: 1px 2px 6px rgba(0,0,0,0.18);
+    position: relative;
+}
+
+.label-content h1 {
+    font-family: 'Caveat', cursive;
+    font-size: 2.8rem;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1;
+    letter-spacing: 1px;
+}
+
+.traveler-whisper {
+    display: block;
+    font-family: 'Lora', serif;
+    font-style: italic;
+    font-size: 0.85rem;
+    color: #a07828;
+    opacity: 0.8;
+    margin-top: -2px;
+    letter-spacing: 1px;
+}
+
+/* Masking tape */
+.tape {
+    position: absolute;
+    width: 60px;
+    height: 22px;
+    background: rgba(255, 248, 220, 0.55);
+    border: 1px solid rgba(200, 180, 120, 0.2);
+    z-index: 4;
+    background-image: linear-gradient(
+        135deg,
+        transparent 30%,
+        rgba(255,255,255,0.1) 50%,
+        transparent 70%
+    );
+}
+
+.tape-left  { top: -6px; left: -20px; transform: rotate(-18deg); }
+.tape-right { bottom: -4px; right: -18px; transform: rotate(12deg); }
+
+/* ──────────────────────────────
+   NAV — paper scrap
+────────────────────────────── */
+.nav-scrap {
+    display: inline-flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    background: var(--paper);
+    padding: 6px 14px;
+    transform: rotate(-0.8deg);
+    box-shadow: 1px 2px 8px rgba(0,0,0,0.15);
+    border: 1px solid rgba(0,0,0,0.06);
+    margin-bottom: 28px;
+    font-size: 0.88rem;
+    font-weight: 600;
+    position: relative;
+    z-index: 3;
+}
+
+.nav-scrap a {
+    color: var(--ink-muted);
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.nav-scrap a:hover { color: var(--ink); }
+.nav-here { color: var(--gold); }
+
+/* ──────────────────────────────
+   CORKBOARD GRID
+────────────────────────────── */
+.corkboard {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    align-items: start;
+    position: relative;
+    z-index: 2;
+}
+
+/* ──────────────────────────────
+   STRING — red thread SVG overlay
+────────────────────────────── */
+.string-svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 22;  /* above chibi-active paper (20), pointer-events:none so never blocks clicks */
+}
+
+/* ──────────────────────────────
+   DOODLES — handwritten marks
+   scattered on the cork surface
+────────────────────────────── */
+.doodle {
+    position: absolute;
+    font-family: 'Caveat', cursive;
+    pointer-events: none;
+    z-index: 22;  /* same layer as string — above chibi-active, never blocks */
+    opacity: 0.25;
+    color: rgba(255,255,255,0.7);
+}
+
+.doodle-1 { top: 3%;  left: 4%;  font-size: 1.4rem; transform: rotate(15deg); }
+.doodle-2 { top: 35%; right: 3%; font-size: 1.2rem; transform: rotate(-10deg); color: #f0b8d0; opacity: 0.3; }
+.doodle-3 { top: 60%; left: 48%; font-size: 1.6rem; transform: rotate(8deg); }
+.doodle-4 { top: 88%; left: 6%;  font-size: 1rem;   transform: rotate(-20deg); color: var(--gold); opacity: 0.35; }
+.doodle-5 { top: 15%; left: 48%; font-size: 1.1rem; transform: rotate(25deg); }
+.doodle-6 { top: 75%; right: 4%; font-size: 1.3rem; transform: rotate(-5deg); }
+
+/* ──────────────────────────────
+   POST-IT NOTES — small sticky notes
+   on the cork with personal one-liners
+────────────────────────────── */
+.postit {
+    position: absolute;
+    z-index: 30;
+    padding: 8px 12px;
+    font-family: 'Caveat', cursive;
+    font-size: 0.95rem;
+    line-height: 1.3;
+    box-shadow: 2px 3px 8px rgba(0,0,0,0.25);
+    pointer-events: none;
+    min-width: 90px;
+    max-width: 140px;
+}
+
+.postit-1 {
+    background: var(--postit-yellow);
+    color: #5a4a10;
+    top: 1%;
+    right: 6%;
+    transform: rotate(4deg);
+}
+
+.postit-2 {
+    background: var(--postit-green);
+    color: #1a4a18;
+    top: 46%;
+    left: 47%;
+    transform: rotate(-3deg);
+}
+
+.postit-3 {
+    background: var(--postit-pink);
+    color: #5a1838;
+    top: 90%;
+    right: 12%;
+    transform: rotate(2.5deg);
+    font-style: italic;
+}
+
+/* ──────────────────────────────
+   POLAROID — small photo frame
+   tucked on the board
+────────────────────────────── */
+.polaroid {
+    position: absolute;
+    z-index: 30;
+    top: 35%;
+    right: 2%;
+    transform: rotate(6deg);
+    background: #faf8f4;
+    padding: 8px 8px 14px;
+    width: 90px;
+    box-shadow: 2px 4px 12px rgba(0,0,0,0.3);
+    pointer-events: none;
+}
+
+.polaroid-photo {
+    width: 100%;
+    aspect-ratio: 1;
+    background: url('../assets/polaroid.jpg') center / cover;
+    border-radius: 1px;
+}
+
+.polaroid-caption {
+    display: block;
+    text-align: center;
+    font-family: 'Caveat', cursive;
+    font-size: 0.75rem;
+    color: var(--ink-muted);
+    margin-top: 4px;
+}
+
+/* ──────────────────────────────
+   PAPER — pinned sheets with aging
+────────────────────────────── */
+.paper {
+    position: relative;
+    padding: 24px 22px 20px;
+    border-radius: 2px;
+    box-shadow:
+        3px 5px 16px rgba(0,0,0,0.25),
+        1px 1px 0 rgba(0,0,0,0.04);
+    border: 1px solid rgba(0,0,0,0.06);
+    overflow: visible;  /* chibi tooltip floats above; bg art is mask-contained */
+    /* Explicit z-index from the start: prevents GPU layer re-rasterization
+       (and text pixelation) when z-index is changed on chibi-active */
+    z-index: 1;
+}
+
+/* No hover transform on paper — static feel matches the corkboard vibe */
+
+/* chibi-active class kept for JS compatibility but no longer lifts the paper */
+.paper.chibi-active { z-index: 1; }
+
+/* ── CHARACTER BG ART — large faded portrait behind each card's content ── */
+.paper::after {
+    content: '';
+    position: absolute;
+    /* keep fully inside card bounds — mask does the soft fade */
+    top: 0;
+    right: 0;
+    width: 135px;
+    height: 135px;
+    pointer-events: none;
+    z-index: 0;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center top;
+    opacity: 0.7;
+}
+
+/* Per-card character image */
+.tint-electro::after { background-image: url('../assets/keqing-icon.webp'); }
+.tint-pyro::after    { background-image: url('../assets/yoimiya-icon.webp'); }
+/* Layla's cryo icon is pale blue — same tone as the darker card, so darken it hard */
+.tint-cryo::after    { background-image: url('../assets/layla-icon.webp'); filter: brightness(0.3) contrast(1.2); }
+.tint-dendro::after  { background-image: url('../assets/kirara-icon.webp'); }
+
+/* Paper aging — yellowed/darkened edges via ::before overlay */
+.paper::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    border-radius: 2px;
+    background:
+        /* foxing — brown spots near edges */
+        radial-gradient(ellipse at 5% 10%, rgba(160,120,60,0.12) 0%, transparent 50%),
+        radial-gradient(ellipse at 95% 90%, rgba(160,120,60,0.1) 0%, transparent 50%),
+        radial-gradient(ellipse at 90% 5%, rgba(140,110,50,0.08) 0%, transparent 40%),
+        /* edge darkening */
+        linear-gradient(to right, rgba(120,90,40,0.08) 0%, transparent 10%, transparent 90%, rgba(120,90,40,0.08) 100%),
+        linear-gradient(to bottom, rgba(120,90,40,0.06) 0%, transparent 10%, transparent 92%, rgba(120,90,40,0.1) 100%);
+}
+
+/* Ensure content sits above aging overlay and char bg */
+.paper > *:not(.chibi-reveal) {
+    position: relative;
+    z-index: 1;
+}
+
+/* Tints */
+.tint-electro { background: var(--paper-electro); }
+.tint-pyro    { background: var(--paper-pyro); }
+.tint-cryo    { background: var(--paper-cryo); }
+.tint-dendro  { background: var(--paper-dendro); }
+
+/* Scatter — hand-placed feel */
+.paper-1 { transform: rotate(-1.5deg); grid-column: 1 / 2; }
+.paper-2 { transform: rotate(1.2deg);  grid-column: 2 / 3; margin-top: 28px; }
+.paper-3 { transform: rotate(0.8deg);  grid-column: 1 / 2; }
+.paper-4 { transform: rotate(-1.8deg); grid-column: 2 / 3; margin-top: 30px; }
+
+/* ──────────────────────────────
+   WASHI TAPE — decorative strips
+   on select papers. Different colour
+   and angle per paper.
+────────────────────────────── */
+.washi {
+    position: absolute;
+    z-index: 6;
+    pointer-events: none;
+    /* semi-transparent with subtle pattern */
+    background-image: repeating-linear-gradient(
+        45deg,
+        transparent 0px, transparent 2px,
+        rgba(255,255,255,0.12) 2px, rgba(255,255,255,0.12) 4px
+    );
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.washi-electro {
+    width: 80px;
+    height: 18px;
+    background-color: rgba(200, 168, 255, 0.45);
+    top: 12px;
+    left: -15px;
+    transform: rotate(-12deg);
+}
+
+.washi-pyro {
+    width: 70px;
+    height: 18px;
+    background-color: rgba(255, 157, 92, 0.4);
+    bottom: 14px;
+    right: -10px;
+    transform: rotate(8deg);
+}
+
+.washi-cryo {
+    width: 65px;
+    height: 18px;
+    background-color: rgba(127, 212, 245, 0.4);
+    bottom: -6px;
+    right: 30px;
+    transform: rotate(-5deg);
+}
+
+.washi-dendro {
+    width: 75px;
+    height: 18px;
+    background-color: rgba(143, 217, 106, 0.4);
+    top: 8px;
+    left: -8px;
+    transform: rotate(-6deg);
+}
+
+/* ──────────────────────────────
+   ELEMENT PINS — purely decorative thumbtacks
+   (click behaviour removed; easter egg moved to paper-title hover)
+────────────────────────────── */
+.pin {
+    position: absolute;
+    top: -8px;
+    right: 22px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    cursor: default;
+    z-index: 10;
+    border: 1.5px solid rgba(255,255,255,0.5);
+    /* Compositor layer — keeps the pin isolated so it never triggers
+       parent re-rasterization */
+    will-change: transform;
+    transform: translateZ(0);
+}
+
+.pin-electro {
+    background: radial-gradient(circle at 40% 35%, rgba(255,255,255,0.5), var(--electro) 70%);
+    box-shadow: 0 0 8px var(--electro), 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.pin-pyro {
+    background: radial-gradient(circle at 40% 35%, rgba(255,255,255,0.5), var(--pyro) 70%);
+    box-shadow: 0 0 8px var(--pyro), 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.pin-cryo {
+    background: radial-gradient(circle at 40% 35%, rgba(255,255,255,0.5), var(--cryo) 70%);
+    box-shadow: 0 0 8px var(--cryo), 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.pin-dendro {
+    background: radial-gradient(circle at 40% 35%, rgba(255,255,255,0.5), var(--dendro) 70%);
+    box-shadow: 0 0 8px var(--dendro), 0 2px 6px rgba(0,0,0,0.2);
+}
+
+
+/* ──────────────────────────────
+   PAPER CONTENT
+────────────────────────────── */
+.paper-title {
+    font-family: 'Caveat', cursive;
+    font-size: 1.7rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 2px;
+    line-height: 1.2;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Character icon — now hidden; the icon lives as the card's ::after bg art.
+   Keep the <img> in HTML for alt text / accessibility, just visually hide. */
+.char-icon {
+    display: none;
+}
+
+.paper-sub {
+    font-size: 0.82rem;
+    color: var(--ink-muted);
+    font-style: italic;
+    margin-bottom: 16px;
+}
+
+.sub-label {
+    display: block;
+    font-family: 'Caveat', cursive;
+    font-size: 1.1rem;
+    color: var(--ink-muted);
+    margin-bottom: 8px;
+}
+
+/* ──────────────────────────────
+   GUESTBOOK
+────────────────────────────── */
+.guestbook-wrap { min-height: 50px; }
+
+.placeholder-box {
+    padding: 30px;
+    text-align: center;
+    border: 1.5px dashed rgba(0,0,0,0.15);
+    border-radius: 4px;
+    color: var(--ink-muted);
+    font-family: 'Caveat', cursive;
+    font-size: 1.2rem;
+    background: rgba(255,255,255,0.25);
+    width: 100%;
+}
+
+/* ──────────────────────────────
+   NEIGHBOURS
+────────────────────────────── */
+.my-button-block {
+    margin-bottom: 16px;
+    padding: 10px 12px;
+    background: rgba(255,255,255,0.4);
+    border: 1px dashed rgba(0,0,0,0.12);
+    border-radius: 3px;
+}
+
+.my-button-block .sub-label { margin-bottom: 8px; }
+
+.button-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.site-btn {
+    width: 88px;
+    height: 31px;
+    image-rendering: pixelated;
+    border: 1px solid rgba(0,0,0,0.12);
+    display: block;
+}
+
+.btn-code {
+    flex: 1;
+    min-width: 160px;
+    max-height: 48px;
+    background: rgba(255,255,255,0.5);
+    border: 1px solid rgba(0,0,0,0.1);
+    color: var(--ink-muted);
+    padding: 6px 8px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.68rem;
+    resize: vertical;
+    border-radius: 2px;
+    line-height: 1.4;
+}
+
+.button-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.button-grid a img {
+    width: 88px;
+    height: 31px;
+    image-rendering: pixelated;
+    border: 1px solid rgba(0,0,0,0.08);
+    display: block;
+    /* No hover effects — pins to the board and stays there */
+}
+
+/* ──────────────────────────────
+   ANILIST
+────────────────────────────── */
+.anilist-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    gap: 10px;
+}
+
+.al-placeholder {
+    font-size: 0.82rem;
+    font-style: italic;
+    color: var(--ink-muted);
+    padding: 12px 0;
+    grid-column: 1 / -1;
+}
+
+/* ───────────────────────────────
+   ANILIST STATS ROW
+   Three callout numbers shown above
+   the watching/reading grid.
+─────────────────────────────── */
+.al-stats {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    flex-wrap: wrap;
+    margin-bottom: 14px;
+    padding: 8px 12px;
+    background: rgba(255,255,255,0.45);
+    border: 1px dashed rgba(0,0,0,0.1);
+    border-radius: 2px;
+}
+
+.al-stat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    line-height: 1.1;
+}
+
+.al-stat strong {
+    font-family: 'Caveat', cursive;
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: var(--ink);
+    line-height: 1;
+}
+
+.al-stat span {
+    font-size: 0.68rem;
+    color: var(--ink-muted);
+    text-transform: lowercase;
+    letter-spacing: 0.5px;
+}
+
+.al-dot {
+    color: var(--ink-muted);
+    opacity: 0.4;
+    font-size: 1.2rem;
+    line-height: 1;
+    align-self: center;
+}
+
+.anilist-card {
+    display: flex;
+    flex-direction: column;
+    text-decoration: none;
+    color: var(--ink);
+    border: 1px solid rgba(0,0,0,0.08);
+    border-radius: 3px;
+    overflow: hidden;
+    background: rgba(255,255,255,0.5);
+    /* Own compositor layer prevents rasterization flicker on hover */
+    will-change: transform;
+    transform: translateZ(0);
+    /* No hover transform — static feel matches the board vibe */
+}
+
+.al-cover {
+    width: 100%;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    display: block;
+}
+
+.al-info { padding: 6px 8px; }
+
+.al-title {
+    font-size: 0.72rem;
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: 3px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.al-progress {
+    font-family: 'Courier New', monospace;
+    font-size: 0.65rem;
+    color: var(--ink-muted);
+}
+
+/* ──────────────────────────────
+   VISITOR MAP
+────────────────────────────── */
+.map-wrap {
+    display: flex;
+    justify-content: center;
+}
+
+/* ──────────────────────────────
+   FOOTER
+────────────────────────────── */
+.board-bottom {
+    margin-top: 36px;
+    padding-top: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    position: relative;
+    z-index: 3;
+}
+
+/* Luggage-tag paper scrap */
+.footer-back {
+    display: inline-block;
+    background: var(--paper);
+    font-family: 'Caveat', cursive;
+    font-size: 1.2rem;
+    color: var(--ink);
+    text-decoration: none;
+    padding: 5px 16px 5px 26px;
+    transform: rotate(-1.2deg);
+    box-shadow: 1px 2px 8px rgba(0,0,0,0.25);
+    border: 1px solid rgba(0,0,0,0.07);
+    position: relative;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    /* aged edge top */
+    background-image:
+        radial-gradient(ellipse at 5% 20%, rgba(140,100,40,0.1) 0%, transparent 50%);
+}
+
+/* punch-hole on the left */
+.footer-back::before {
+    content: '';
+    position: absolute;
+    left: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(0,0,0,0.18);
+    background: var(--cork);
+    box-shadow: inset 0 1px 2px rgba(0,0,0,0.2);
+}
+
+/* tiny tape strip angled on the tag */
+.footer-back::after {
+    content: '';
+    position: absolute;
+    top: -7px;
+    left: 14px;
+    width: 44px;
+    height: 14px;
+    background: rgba(255,248,220,0.55);
+    border: 1px solid rgba(200,180,120,0.2);
+    transform: rotate(-8deg);
+    background-image: linear-gradient(
+        135deg, transparent 30%,
+        rgba(255,255,255,0.1) 50%,
+        transparent 70%
+    );
+}
+
+/* footer-back hover removed — static feel matches the board vibe */
+
+/* ───────────────────────────────
+   BLINKIE STRIP — horizontal paper
+   pinned at both ends with gold pins
+─────────────────────────────── */
+.blinkie-strip {
+    position: relative;
+    background: var(--paper);
+    padding: 10px 18px;
+    transform: rotate(-0.4deg);
+    box-shadow:
+        2px 3px 14px rgba(0,0,0,0.28),
+        1px 1px 0 rgba(0,0,0,0.04);
+    border: 1px solid rgba(0,0,0,0.06);
+    /* slight age at edges */
+    background-image:
+        linear-gradient(to right, rgba(140,100,40,0.07) 0%, transparent 8%, transparent 92%, rgba(140,100,40,0.07) 100%),
+        linear-gradient(to bottom, rgba(0,0,0,0.03) 0%, transparent 20%);
+}
+
+/* Pins at each end of the strip */
+.strip-pin {
+    position: absolute;
+    top: -7px;
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255,255,255,0.5);
+    z-index: 5;
+}
+
+.strip-pin-left {
+    left: 24px;
+    background: radial-gradient(circle at 38% 32%, rgba(255,255,255,0.55), #c9a040 70%);
+    box-shadow: 0 0 7px rgba(201,160,64,0.7), 0 2px 5px rgba(0,0,0,0.25);
+}
+
+.strip-pin-right {
+    right: 24px;
+    background: radial-gradient(circle at 38% 32%, rgba(255,255,255,0.55), #c9a040 70%);
+    box-shadow: 0 0 7px rgba(201,160,64,0.7), 0 2px 5px rgba(0,0,0,0.25);
+}
+
+.footer-blinkies {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.footer-blinkies img {
+    image-rendering: pixelated;
+    border: 1px solid rgba(0,0,0,0.15);
+    display: block;
+    opacity: 0.85;
+    /* No hover effects — blinkies just sit there, pinned, unbothered */
+}
+
+/* ──────────────────────────────
+   FOOTER CREW — two random chibis
+   flanking the blinkie strip, as if
+   they've gathered to admire it
+────────────────────────────── */
+.blinkie-wrapper {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    z-index: 5;
+}
+
+.blinkie-content-row {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+}
+
+.footer-crew-side {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    pointer-events: none;
+}
+
+.crew-member {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+}
+
+.crew-chibi {
+    height: 88px;
+    width: auto;
+    display: block;
+    filter: drop-shadow(2px 3px 6px rgba(0,0,0,0.35));
+}
+
+
+/* ──────────────────────────────
+   RESPONSIVE
+────────────────────────────── */
+@media (max-width: 750px) {
+    .board-frame {
+        margin: 16px 8px;
+        padding: 24px 14px 30px;
+        border-width: 12px;
+    }
+
+    .corkboard { grid-template-columns: 1fr; }
+
+    .paper-1, .paper-2, .paper-3, .paper-4 {
+        transform: none;
+        margin-top: 0;
+    }
+
+    .label-content h1 { font-size: 2.2rem; }
+    .paper { padding: 20px 16px 18px; }
+    .button-row { flex-direction: column; align-items: flex-start; }
+    .btn-code { width: 100%; min-width: unset; }
+    .anilist-grid { grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); }
+
+    /* Hide decorative elements on small screens */
+    .string-svg,
+    .doodle,
+    .postit,
+    .polaroid { display: none; }
+}
