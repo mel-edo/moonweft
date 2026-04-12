@@ -8,7 +8,7 @@
     "status": "playing"
   },
   {
-    "title": "Hollow Knight",
+    "title": "Sonic Generations",
     "status": "completed"
   },
   {
@@ -28,7 +28,19 @@
     "status": "playing"
   },
   {
+    "title": "Hollow Knight",
+    "status": "completed"
+  },
+  {
     "title": "It takes Two",
+    "status": "playing"
+  },
+  {
+    "title": "Unleashed Recompiled",
+    "status": "completed"
+  },
+  {
+    "title": "osu!",
     "status": "playing"
   }
 ]

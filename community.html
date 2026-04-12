@@ -69,11 +69,77 @@
                     <div class="washi washi-electro"></div>
                     <div class="pin pin-electro"></div>
                     <h2 class="paper-title"><img src="assets/keqing-icon.webp" alt="" class="char-icon"> leave a note ✉</h2>
-                    <p class="paper-sub">say hello, drop a thought, sign the board.</p>
                     <div class="guestbook-wrap">
-                        <div class="placeholder-box">
-                            [ guestbook implementation coming soon ]
+
+                        <!-- Entry form -->
+                        <form class="gb-form" id="gb-form" novalidate>
+
+                            <!-- HONEYPOT — hidden from humans, bots fill it -->
+                            <input type="text" name="website_url" id="website_url"
+                                tabindex="-1" autocomplete="off"
+                                style="position:absolute;left:-9999px;opacity:0;height:0;">
+
+                            <div class="gb-form-row">
+                                <div class="gb-field">
+                                    <label for="gb-name">name *</label>
+                                    <input type="text" id="gb-name" maxlength="32"
+                                        placeholder="your name" required>
+                                </div>
+                                <div class="gb-field">
+                                    <label for="gb-site">site <span class="optional">(optional)</span></label>
+                                    <input type="url" id="gb-site"
+                                        placeholder="https://yoursite.com">
+                                </div>
+                            </div>
+
+                            <div class="gb-field">
+                                <label for="gb-message">message * <span class="optional">(max 280 chars)</span></label>
+                                <textarea id="gb-message" maxlength="280" rows="3"
+                                        placeholder="say hello, drop a thought, sign the board." required></textarea>
+                                <div class="gb-char-count"><span id="gb-chars">0</span>/280</div>
+                            </div>
+
+                            <!-- Color picker -->
+                            <div class="gb-color-row">
+                                <span class="gb-color-label">note color:</span>
+                                <div class="gb-color-options">
+                                    <label class="color-opt">
+                                        <input type="radio" name="gb-color" value="#c8a8ff" checked>
+                                        <span style="background:#c8a8ff"></span>
+                                    </label>
+                                    <label class="color-opt">
+                                        <input type="radio" name="gb-color" value="#ff9d5c">
+                                        <span style="background:#ff9d5c"></span>
+                                    </label>
+                                    <label class="color-opt">
+                                        <input type="radio" name="gb-color" value="#a0d6eb">
+                                        <span style="background:#a0d6eb"></span>
+                                    </label>
+                                    <label class="color-opt">
+                                        <input type="radio" name="gb-color" value="#8fd96a">
+                                        <span style="background:#8fd96a"></span>
+                                    </label>
+                                    <label class="color-opt">
+                                        <input type="radio" name="gb-color" value="#f5e87a">
+                                        <span style="background:#f5e87a"></span>
+                                    </label>
+                                </div>
+                            </div>
+
+                            <button type="submit" class="gb-submit" id="gb-submit">
+                                leave a note
+                            </button>
+                            <div class="gb-status" id="gb-status"></div>
+                        </form>
+
+                        <!-- Entries list -->
+                        <div class="gb-entries" id="gb-entries">
+                            <span class="al-placeholder">loading entries...</span>
                         </div>
+
+                        <!-- Pagination -->
+                        <div class="gb-pagination" id="gb-pagination"></div>
+
                     </div>
                 </section>
 
@@ -105,14 +171,39 @@
                         </a>
                         <!-- add more 88x31 buttons here -->
                     </div>
+
+                    <div style="margin-top: 24px;"></div>
+                    <span class="sub-label">elsewhere ➹</span>
+                    <div class="ticket-grid">
+                        <a href="https://osu.ppy.sh" target="_blank" class="ticket ticket-osu" style="transform: rotate(-3deg);">
+                            <span class="ticket-type">token</span>
+                            <span class="ticket-name">osu!</span>
+                        </a>
+                        <a href="https://steamcommunity.com" target="_blank" class="ticket ticket-steam" style="transform: rotate(2deg) translateY(4px);">
+                            <span class="ticket-type">pass</span>
+                            <span class="ticket-name">steam</span>
+                        </a>
+                        <a href="https://backloggd.com" target="_blank" class="ticket ticket-bkg" style="transform: rotate(-1deg) translateY(2px);">
+                            <span class="ticket-type">log</span>
+                            <span class="ticket-name">backloggd</span>
+                        </a>
+                        <a href="https://letterboxd.com" target="_blank" class="ticket ticket-lbox" style="transform: rotate(4deg);">
+                            <span class="ticket-type">admit 1</span>
+                            <span class="ticket-name">letterboxd</span>
+                        </a>
+                        <a href="https://retroachievements.org" target="_blank" class="ticket ticket-ra" style="transform: rotate(-2deg) translateY(6px);">
+                            <span class="ticket-type">retro</span>
+                            <span class="ticket-name">rachv</span>
+                        </a>
+                    </div>
                 </section>
 
                 <!-- CURRENTLY — Layla (cryo) -->
                 <section class="paper paper-3 tint-cryo">
                     <div class="washi washi-cryo"></div>
                     <div class="pin pin-cryo"></div>
-                    <h2 class="paper-title"><img src="assets/layla-icon.webp" alt="" class="char-icon"> currently ♡</h2>
-                    <p class="paper-sub">watching and reading right now.</p>
+                    <h2 class="paper-title"><img src="assets/layla-icon.webp" alt="" class="char-icon"> recently ♡</h2>
+                    <p class="paper-sub">recently completed and rated milestones.</p>
                     <!-- AniList user stats -->
                     <div class="al-stats" id="al-stats">
                         <div class="al-stat">
@@ -217,11 +308,11 @@
                         manga { count chaptersRead }
                     }
                 }
-                anime: MediaListCollection(userName: $name, type: ANIME, status: CURRENT, sort: UPDATED_TIME_DESC) {
-                    lists { entries { progress media { title { romaji } coverImage { medium } episodes siteUrl } } }
+                recent: MediaListCollection(userName: $name, type: ANIME, status: COMPLETED, sort: UPDATED_TIME_DESC) {
+                    lists { entries { score(format: POINT_10_DECIMAL) media { title { romaji } coverImage { medium } siteUrl } } }
                 }
-                manga: MediaListCollection(userName: $name, type: MANGA, status: CURRENT, sort: UPDATED_TIME_DESC) {
-                    lists { entries { progress media { title { romaji } coverImage { medium } chapters siteUrl } } }
+                recentManga: MediaListCollection(userName: $name, type: MANGA, status: COMPLETED, sort: UPDATED_TIME_DESC) {
+                    lists { entries { score(format: POINT_10_DECIMAL) media { title { romaji } coverImage { medium } siteUrl } } }
                 }
             }`;
 
@@ -241,22 +332,24 @@
                     document.getElementById('al-chapters').textContent = stats.manga.chaptersRead.toLocaleString();
                 }
 
-                // — currently watching/reading grid —
+                // — recently completed grid —
                 const container = document.getElementById('anilist-content');
                 container.innerHTML = '';
-                const anime = data.data?.anime?.lists?.flatMap(l => l.entries) || [];
-                const manga = data.data?.manga?.lists?.flatMap(l => l.entries) || [];
-                const entries = [...anime.slice(0, 4), ...manga.slice(0, 2)];
+                const anime = data.data?.recent?.lists?.flatMap(l => l.entries) || [];
+                const manga = data.data?.recentManga?.lists?.flatMap(l => l.entries) || [];
+                
+                // Mix anime and manga sorted loosely by recent, then slice
+                // (Since we can't sort across types easily, just taking latest of both)
+                const entries = [...anime.slice(0, 4), ...manga.slice(0, 4)];
 
                 if (entries.length === 0) {
-                    container.innerHTML = '<span class="al-placeholder">nothing currently tracked</span>';
+                    container.innerHTML = '<span class="al-placeholder">nothing completed yet</span>';
                     return;
                 }
 
                 entries.forEach(entry => {
                     const m = entry.media;
-                    const total = m.episodes ?? m.chapters ?? '?';
-                    const unit = m.episodes !== undefined ? 'ep' : 'ch';
+                    const scoreText = entry.score ? entry.score + '/10 ★' : 'No Rating';
                     const card = document.createElement('a');
                     card.href = m.siteUrl;
                     card.target = '_blank';
@@ -266,7 +359,7 @@
                         <img src="${m.coverImage.medium}" alt="${m.title.romaji}" class="al-cover">
                         <div class="al-info">
                             <div class="al-title">${m.title.romaji}</div>
-                            <div class="al-progress">${entry.progress} / ${total} ${unit}</div>
+                            <div class="al-progress" style="color: var(--gold); font-weight: bold;">${scoreText}</div>
                         </div>
                     `;
                     container.appendChild(card);
@@ -357,6 +450,9 @@
                     const container = document.getElementById('games-content');
                     container.innerHTML = '';
 
+                    // Randomize games order
+                    data.sort(() => 0.5 - Math.random());
+
                     data.forEach(game => {
                         const card = document.createElement('div');
                         card.className = 'game-card';
@@ -436,11 +532,152 @@
                 drawCurve(p[1], p[2], -15, 15, true);
                 // Bottom horizontal droop
                 drawCurve(p[2], p[3], 0, 40, false);
+
+                // ERASE thread at pin locations to make them look like they are 'over'
+                ctx.globalCompositeOperation = 'destination-out';
+                ctx.setLineDash([]);
+                ctx.shadowColor = 'transparent';
+                p.forEach(point => {
+                    ctx.beginPath();
+                    ctx.arc(point.x, point.y, 10, 0, Math.PI * 2);
+                    ctx.fill();
+                });
+                ctx.globalCompositeOperation = 'source-over';
             }
 
             // Tie logic tightly to window so fonts pushing layout will definitely get caught!
             window.addEventListener('load', () => setTimeout(updateThreads, 150));
             window.addEventListener('resize', updateThreads);
+        </script>
+    
+        <script>
+            // ── GUESTBOOK ──
+            const GB_URL = 'https://moonweft-music.meledo.workers.dev/guestbook';
+            let gbPage = 1;
+
+            // Character counter
+            document.getElementById('gb-message').addEventListener('input', function() {
+                document.getElementById('gb-chars').textContent = this.value.length;
+            });
+
+            // Fetch and render entries
+            function loadGuestbook(page = 1) {
+                fetch(`${GB_URL}?page=${page}`)
+                    .then(r => r.json())
+                    .then(data => {
+                        gbPage = data.page;
+                        const container = document.getElementById('gb-entries');
+                        container.innerHTML = '';
+
+                        if (!data.entries || data.entries.length === 0) {
+                        container.innerHTML =
+                            '<span class="al-placeholder">no entries yet — be the first! ♡</span>';
+                    } else {
+                        data.entries.forEach(entry => {
+                            const el = document.createElement('div');
+                            el.className = 'gb-entry';
+                            el.style.borderLeftColor = entry.color;
+
+                            const nameHtml = entry.site
+                                ? `<a href="${entry.site}" target="_blank"
+                                    rel="noopener noreferrer">${entry.name}</a>`
+                                : entry.name;
+
+                            const date = new Date(entry.created_at)
+                                .toLocaleDateString('en-GB', {
+                                    day: 'numeric', month: 'short', year: 'numeric'
+                                });
+
+                            el.innerHTML = `
+                                <div class="gb-entry-header">
+                                    <span class="gb-entry-name">${nameHtml}</span>
+                                    <span class="gb-entry-date">${date}</span>
+                                </div>
+                                <div class="gb-entry-message">${entry.message}</div>
+                            `;
+                            container.appendChild(el);
+                        });
+                    }
+
+                    // Pagination
+                    const pag = document.getElementById('gb-pagination');
+                    pag.innerHTML = '';
+                    if (data.pages > 1) {
+                        const prev = document.createElement('button');
+                        prev.className = 'gb-page-btn';
+                        prev.textContent = '←';
+                        prev.disabled = page === 1;
+                        prev.onclick = () => loadGuestbook(page - 1);
+
+                        const indicator = document.createElement('span');
+                        indicator.className = 'gb-page-indicator';
+                        indicator.textContent = `${page} / ${data.pages}`;
+
+                        const next = document.createElement('button');
+                        next.className = 'gb-page-btn';
+                        next.textContent = '→';
+                        next.disabled = page === data.pages;
+                        next.onclick = () => loadGuestbook(page + 1);
+
+                        pag.append(prev, indicator, next);
+                    }
+                })
+                .catch(() => {
+                    document.getElementById('gb-entries').innerHTML =
+                        '<span class="al-placeholder">couldn\'t load entries</span>';
+                });
+        }
+
+        // Form submission
+        document.getElementById('gb-form').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const submit = document.getElementById('gb-submit');
+            const status = document.getElementById('gb-status');
+
+            submit.disabled = true;
+            status.textContent = 'sending...';
+            status.className = 'gb-status';
+
+            const color = document.querySelector('input[name="gb-color"]:checked')?.value
+                        || '#c8a8ff';
+
+            const payload = {
+                name:        document.getElementById('gb-name').value,
+                message:     document.getElementById('gb-message').value,
+                site:        document.getElementById('gb-site').value,
+                color,
+                website_url: document.getElementById('website_url').value // honeypot
+            };
+
+            try {
+                const res  = await fetch(GB_URL, {
+                    method:  'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body:    JSON.stringify(payload)
+                });
+                const data = await res.json();
+
+                if (data.error) {
+                    status.textContent = data.error;
+                    status.className = 'gb-status error';
+                    submit.disabled = false;
+                } else {
+                    status.textContent = 'note left! thank you ♡';
+                    status.className = 'gb-status success';
+                    this.reset();
+                    document.getElementById('gb-chars').textContent = '0';
+                    loadGuestbook(1); // reload to show new entry
+                }
+            } catch {
+                status.textContent = 'something went wrong, try again';
+                status.className = 'gb-status error';
+                submit.disabled = false;
+            }
+        });
+
+        // Initial load
+        loadGuestbook(1);
         </script>
 
     </body>

@@ -340,8 +340,8 @@ body {
 .polaroid {
     position: absolute;
     z-index: 30;
-    top: 33%;
-    right: 2%;
+    top: 42%;
+    right: 1%;
     transform: rotate(6deg);
     background: #faf8f4;
     padding: 8px 8px 14px;
@@ -442,7 +442,7 @@ body {
 .paper-1 { transform: rotate(-1.5deg); grid-column: 1 / 2; }
 .paper-2 { transform: rotate(1.2deg);  grid-column: 2 / 4; margin-top: 28px; }
 .paper-3 { transform: rotate(0.8deg);  grid-column: 1 / 2; }
-.paper-4 { transform: rotate(-1.8deg); grid-column: 2 / 4; width: 90%; justify-self: center; margin-top: 130px; }
+.paper-4 { transform: rotate(-1.8deg); grid-column: 2 / 4; width: 90%; justify-self: center; margin-top: 50px; }
 
 /* ──────────────────────────────
    WASHI TAPE — decorative strips
@@ -582,6 +582,29 @@ body {
 ────────────────────────────── */
 .guestbook-wrap { min-height: 50px; }
 
+.gb-entries {
+    max-height: 380px;
+    overflow-y: auto;
+    padding-right: 8px;
+    margin-bottom: 16px;
+}
+
+/* Custom scrollbar for guestbook entries */
+.gb-entries::-webkit-scrollbar {
+    width: 6px;
+}
+.gb-entries::-webkit-scrollbar-track {
+    background: rgba(0,0,0,0.05);
+    border-radius: 3px;
+}
+.gb-entries::-webkit-scrollbar-thumb {
+    background: rgba(0,0,0,0.15);
+    border-radius: 3px;
+}
+.gb-entries::-webkit-scrollbar-thumb:hover {
+    background: rgba(0,0,0,0.25);
+}
+
 .placeholder-box {
     padding: 30px;
     text-align: center;
@@ -649,16 +672,96 @@ body {
     image-rendering: pixelated;
     border: 1px solid rgba(0,0,0,0.08);
     display: block;
-    /* No hover effects — pins to the board and stays there */
+/* No hover effects — pins to the board and stays there */
 }
+
+/* ──────────────────────────────
+   TICKET STUBS (Elsewhere)
+────────────────────────────── */
+.ticket-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px 10px; /* More vertical gap for paperclips */
+    margin-top: 14px;
+    padding-top: 6px;
+}
+
+.ticket {
+    position: relative;
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    --t-bg: #e8e3d8; /* aged paper base */
+    background: 
+        radial-gradient(circle at 0 50%, transparent 5px, var(--t-bg) 6px) 0 0 / 51% 100% no-repeat,
+        radial-gradient(circle at 100% 50%, transparent 5px, var(--t-bg) 6px) 100% 0 / 51% 100% no-repeat;
+    color: var(--ink);
+    text-decoration: none;
+    font-family: 'Courier New', monospace;
+    font-size: 0.88rem;
+    font-weight: bold;
+    padding: 8px 12px;
+    filter: drop-shadow(1px 2px 3px rgba(0,0,0,0.15));
+    transition: filter 0.2s, transform 0.2s;
+    border: 1px dashed rgba(0,0,0,0.1);
+}
+
+/* CSS Paperclip hanging the ticket */
+.ticket::after {
+    content: '';
+    position: absolute;
+    top: -12px;
+    left: 50%;
+    margin-left: -5px; /* center */
+    width: 8px;
+    height: 18px;
+    border: 2px solid #b5b5b5;
+    border-radius: 6px;
+    border-bottom: 2px solid transparent; /* open end of clip */
+    transform: rotate(15deg);
+    z-index: 2;
+}
+
+.ticket:hover {
+    filter: drop-shadow(2px 4px 6px rgba(0,0,0,0.25)) brightness(0.95);
+    z-index: 10;
+}
+
+.ticket-type {
+    font-size: 0.6rem;
+    text-transform: uppercase;
+    color: var(--ink-muted);
+    letter-spacing: 1px;
+    border-bottom: 1px dashed rgba(0,0,0,0.15);
+    margin-bottom: 4px;
+    padding-bottom: 2px;
+    width: 100%;
+    text-align: center;
+}
+
+.ticket-osu { --t-bg: #f8e5e9; color: #a12b4e; }
+.ticket-osu .ticket-type { color: #d66485; border-color: rgba(161, 43, 78, 0.2); }
+
+.ticket-steam { --t-bg: #e1ebf0; color: #1e3a4f; }
+.ticket-steam .ticket-type { color: #4b6a82; border-color: rgba(30, 58, 79, 0.2); }
+
+.ticket-bkg { --t-bg: #e5efe9; color: #2b5c41; }
+.ticket-bkg .ticket-type { color: #508c69; border-color: rgba(43, 92, 65, 0.2); }
+
+.ticket-lbox { --t-bg: #e6eaed; color: #2e3e4a; }
+.ticket-lbox .ticket-type { color: #627b8c; border-color: rgba(46, 62, 74, 0.2); }
+
+.ticket-ra { --t-bg: #fcf1df; color: #724c16; }
+.ticket-ra .ticket-type { color: #a57833; border-color: rgba(114, 76, 22, 0.2); }
 
 /* ──────────────────────────────
    ANILIST
 ────────────────────────────── */
 .anilist-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
     gap: 10px;
+    min-height: 380px; /* Prevent thread shift while loading */
 }
 
 .al-placeholder {
@@ -736,6 +839,7 @@ body {
     aspect-ratio: 2 / 3;
     object-fit: cover;
     display: block;
+    image-rendering: auto !important;
 }
 
 .al-info { padding: 6px 8px; }
@@ -1042,12 +1146,13 @@ body {
 /* Modern games shelf */
 .games-grid {
     display: grid;
+    grid-template-rows: repeat(2, 1fr);
     grid-auto-flow: column;
     grid-auto-columns: 64px;
     justify-content: start;
     overflow-x: auto;
     overflow-y: hidden;
-    gap: 8px;
+    gap: 12px 8px;
     padding-top: 6px;
     padding-right: 6px;
     padding-bottom: 8px;
@@ -1070,6 +1175,7 @@ body {
     border-radius: 6px;
     border: 2px solid rgba(0,0,0,0.1);
     transition: transform 0.2s;
+    image-rendering: auto !important;
 }
 
 .game-badge {
@@ -1096,6 +1202,202 @@ body {
     overflow: hidden;
     text-overflow: ellipsis;
     font-family: 'Nunito', sans-serif;
+}
+
+/* ── FORM ── */
+.gb-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-bottom: 20px;
+    font-family: 'Caveat', cursive;
+}
+
+.gb-form-row {
+    display: flex;
+    gap: 10px;
+}
+
+.gb-field {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    gap: 3px;
+}
+
+.gb-field label {
+    font-size: 0.78rem;
+    color: var(--ink-muted);
+    font-family: 'Nunito', sans-serif;
+}
+
+.optional { opacity: 0.6; }
+
+.gb-field input,
+.gb-field textarea {
+    background: rgba(255,255,255,0.6);
+    border: 1px solid rgba(0,0,0,0.15);
+    border-radius: 4px;
+    padding: 6px 8px;
+    font-family: 'Caveat', cursive;
+    font-size: 1rem;
+    color: var(--ink);
+    resize: none;
+    transition: border-color 0.2s, background 0.2s;
+}
+
+.gb-field input:focus,
+.gb-field textarea:focus {
+    outline: none;
+    border-color: var(--electro);
+    background: rgba(255,255,255,0.85);
+}
+
+.gb-char-count {
+    text-align: right;
+    font-size: 0.7rem;
+    color: var(--ink-muted);
+    font-family: 'Nunito', sans-serif;
+}
+
+/* Color picker */
+.gb-color-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.gb-color-label {
+    font-size: 0.78rem;
+    color: var(--ink-muted);
+    font-family: 'Nunito', sans-serif;
+}
+
+.gb-color-options {
+    display: flex;
+    gap: 6px;
+}
+
+.color-opt input { display: none; }
+
+.color-opt span {
+    display: block;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    border: 1px solid transparent;
+    cursor: pointer;
+}
+
+.color-opt input:checked + span {
+    border-color: var(--ink);
+}
+
+/* Submit button */
+.gb-submit {
+    align-self: flex-start;
+    background: var(--electro);
+    color: var(--ink);
+    border: 1.5px solid rgba(0,0,0,0.15);
+    border-radius: 4px;
+    padding: 6px 18px;
+    font-family: 'Caveat', cursive;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.1s;
+}
+
+.gb-submit:hover  { opacity: 0.85; }
+.gb-submit:active { transform: scale(0.97); }
+.gb-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.gb-status {
+    font-size: 0.8rem;
+    font-family: 'Nunito', sans-serif;
+    min-height: 1.2em;
+}
+.gb-status.success { color: #4a7c2f; }
+.gb-status.error   { color: #a03030; }
+
+/* ── ENTRIES ── */
+.gb-entries {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.gb-entry {
+    padding: 10px 12px;
+    border-radius: 5px;
+    border-left: 3px solid var(--electro);
+    background: rgba(255,255,255,0.45);
+    position: relative;
+}
+
+/* Border color driven by visitor's chosen color */
+.gb-entry[data-color] {
+    border-left-color: attr(data-color); /* fallback — JS sets inline style */
+}
+
+.gb-entry-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 4px;
+}
+
+.gb-entry-name {
+    font-family: 'Caveat', cursive;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--ink);
+}
+
+.gb-entry-name a {
+    color: inherit;
+    text-decoration: underline dotted;
+}
+.gb-entry-name a:hover { color: var(--electro); }
+
+.gb-entry-date {
+    font-size: 0.7rem;
+    color: var(--ink-muted);
+    font-family: 'Nunito', sans-serif;
+}
+
+.gb-entry-message {
+    font-family: 'Caveat', cursive;
+    font-size: 0.95rem;
+    color: var(--ink);
+    line-height: 1.5;
+}
+
+/* ── PAGINATION ── */
+.gb-pagination {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 12px;
+}
+
+.gb-page-btn {
+    background: rgba(255,255,255,0.5);
+    border: 1px solid rgba(0,0,0,0.15);
+    border-radius: 3px;
+    padding: 3px 10px;
+    font-family: 'Caveat', cursive;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+.gb-page-btn:hover:not(:disabled) { background: var(--electro); }
+.gb-page-btn:disabled { opacity: 0.35; cursor: default; }
+
+.gb-page-indicator {
+    font-size: 0.78rem;
+    color: var(--ink-muted);
+    font-family: 'Nunito', sans-serif;
+    align-self: center;
 }
 
 /* ──────────────────────────────

@@ -300,7 +300,11 @@
 
                         const isPlaying = track['@attr'] && track['@attr'].nowplaying === 'true';
                         
-                        const artUrl = track.image[2]['#text'];
+                        // Try different image sizes as fallbacks if the preferred size is missing
+                        const artUrl = (track.image[3] && track.image[3]['#text']) || // extralarge
+                                       (track.image[2] && track.image[2]['#text']) || // large
+                                       (track.image[1] && track.image[1]['#text']) || // medium
+                                       (track.image[0] && track.image[0]['#text']);   // small
 
                         const currentTrackName = document.getElementById('lf-track').textContent;
 
@@ -309,12 +313,30 @@
                         document.getElementById('lf-status').textContent = isPlaying ? "[LISTENING NOW]" : "[RECENTLY LISTENED]";
                         
                         const imgElement = document.getElementById('lf-art');
-                        if (artUrl) {
-                            imgElement.src = artUrl;
-                        } else {
-                            if (track.name !==  currentTrackName) {
+                        
+                        const setArtFallback = () => {
+                            if (track.name !== currentTrackName) {
                                 imgElement.src = 'assets/vinyl.png';
                             }
+                        };
+
+                        // Check if art exists and is not Last.fm's default grey star placeholder
+                        if (artUrl && !artUrl.includes('2a96cbd8b46e442fc41c2b86b821562f')) {
+                            imgElement.src = artUrl;
+                        } else {
+                            // Secondary fallback: iTunes API
+                            const query = track.artist['#text'] + ' ' + track.name;
+                            fetch(`https://itunes.apple.com/search?term=${encodeURIComponent(query)}&media=music&entity=song&limit=1`)
+                                .then(r => r.json())
+                                .then(itunesData => {
+                                    if (itunesData.results && itunesData.results.length > 0) {
+                                        // Replace 100x100 with 300x300 for higher quality
+                                        imgElement.src = itunesData.results[0].artworkUrl100.replace('100x100bb', '300x300bb');
+                                    } else {
+                                        setArtFallback();
+                                    }
+                                })
+                                .catch(() => setArtFallback());
                         }
 
                         const icon = document.querySelector('.music-icon');
