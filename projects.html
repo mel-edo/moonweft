@@ -2,7 +2,7 @@
 <html lang="en">
     <head>
         <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width", initial-scale="1.0">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Projects Archive</title>
         <link rel="stylesheet" href="styles/projects.css">
         <link rel="icon" type="image/png" href="assets/star.png">
@@ -29,7 +29,6 @@
                         <span class="bg-layer"></span>
                         <span class="project-text">PROJECTS</span>
                     </div>
-
                     <div class="p5-box white-box">
                         <span class="bg-layer"></span>
                         <img src="assets/p5-header.png" alt="ARCHIVE" class="archive-img">
@@ -41,103 +40,210 @@
                 </div>
             </header>
 
-            <div class="target-list">
-                <div class="target-card" onclick="toggleCard(this)">
-                    <div class="rank">I</div>
-                    <div class="content-wrapper">
-                        <div class="main-info">
-                            <div class="details">
-                                <h2>MOONWEFT</h2>
-                                <p>This website you're currently on.</p>
+            <section class="project-stage" aria-label="Projects dossier">
+
+                <!-- ── Sidebar ── -->
+                <aside class="target-list" id="sidebar-container" aria-label="Project selector">
+                    </aside>
+
+                <section class="calling-card" aria-live="polite">
+                    <div class="cc-inner" id="panels-container">
+                        
+                        <article class="project-panel intro-panel active" data-project-panel="intro">
+                            <div class="cc-intro">
+                                <div class="cc-intro-arrow">◄</div>
+                                <div class="cc-intro-label">Select a target</div>
                             </div>
-                            <div class="category">WEB</div>
-                        </div>
+                        </article>
 
-                        <div class="expanded-info">
-                            <p>A personal website built with HTML, CSS and vanilla JS. I finally got around to building a website and have been enjoying the process so far.</p>
-                            <a href="https://github.com/mel-edo/moonweft" target="_blank" class="repo-link">VISIT REPO</a>
                         </div>
-                    </div>
-                </div>
+                </section>
 
-                <div class="target-card" onclick="toggleCard(this)">
-                    <div class="rank">II</div>
-                    <div class="content-wrapper">
-                        <div class="main-info">
-                            <div class="details">
-                                <h2>GB EMULATOR</h2>
-                                <p>Gameboy emulator written in Rust.</p>
-                            </div>
-                            <div class="category">RUST</div>
-                        </div>
-
-                        <div class="expanded-info">
-                            <p>Still WIP. Planned compilation into WebAssembly.</p>
-                            <a href="https://github.com/mel-edo/gbemu-rust" target="_blank" class="repo-link">VISIT REPO</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="target-card" onclick="toggleCard(this)">
-                    <div class="rank">III</div>
-                    <div class="content-wrapper">
-                        <div class="main-info">
-                            <div class="details">
-                                <h2>CHIP-8 EMU</h2>
-                                <p>Chip-8 emulator written in Rust.</p>
-                            </div>
-                            <div class="category">RUST</div>
-                        </div>
-
-                        <div class="expanded-info">
-                            <p>A fully functional Chip-8 emulator. My first venture into emulation development.</p>
-                            <a href="https://github.com/mel-edo/chip8-rust" target="_blank" class="repo-link">VISIT REPO</a>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="target-card" onclick="toggleCard(this)">
-                    <div class="rank">IV</div>
-                    <div class="content-wrapper">
-                        <div class="main-info">
-                            <div class="details">
-                                <h2>LINUX RICE</h2>
-                                <p>My awesomeWM rice.</p>
-                            </div>
-                            <div class="category">UNIX</div>
-                        </div>
-
-                        <div class="expanded-info">
-                            <p>awesomeWM setup including polybar, rofi, conky and other programs. Will be updated soon to a hyprland+quickshell rice.</p>
-                            <a href="https://github.com/mel-edo/awesome-setup" target="_blank" class="repo-link">VISIT REPO</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            </section><!-- /.project-stage -->
 
             <div class="footer-section">
-                <a href="index.html" class="escape-btn">
-                    RETURN
-                </a>
+                <a href="index.html" class="escape-btn">RETURN</a>
             </div>
         </div>
 
         <script>
-            function toggleCard(card) {
-                document.querySelectorAll('.target-card.active').forEach(c => {
-                    if (c !== card) c.classList.remove('active');
+            // 1. The Project Data
+            const projects = [
+                {
+                    id: "sift-video",
+                    rank: "I",
+                    tag: "TARGET I",
+                    title: "SIFT-VIDEO",
+                    category: ["RUST", "C++"],
+                    shortDesc: "Search inside any video using natural language.",
+                    longDesc: "<p>A multimodal video search engine built with a friend. Drop in a video and search for any moment using plain text — it finds the exact timestamp by combining speech transcription (Whisper) and visual frame embeddings (MobileCLIP). Built across 4 Docker services: a C++ ingestion pipeline, Rust/Axum query API, and Qdrant as the vector database.</p>",
+                    image: "assets/sift.gif",
+                    repo: "https://github.com/sourav4243/sift-video"
+                },
+                {
+                    id: "gbemu",
+                    rank: "II",
+                    tag: "TARGET II",
+                    title: "GB EMULATOR",
+                    category: ["RUST"],
+                    shortDesc: "A cycle-accurate Game Boy emulator in Rust.",
+                    longDesc: "<p>A work-in-progress Game Boy emulator written in Rust. Implements the LR35902 CPU with cycle-accurate timing, a full memory bus, and display output. The goal is to also compile it to WebAssembly so it runs entirely in the browser with no installation. Low-level hardware emulation is one of those things that forces you to actually understand how computers work.</p>",
+                    image: "",
+                    repo: "https://github.com/mel-edo/gbemu-rust"
+                },
+                {
+                    id: "dsync",
+                    rank: "III",
+                    tag: "TARGET III",
+                    title: "DSYNC",
+                    category: ["RUST"],
+                    shortDesc: "Zero-config P2P file sync for your local network.",
+                    longDesc: "<p>A file sync daemon for LAN written in Rust. Peers discover each other via mDNS, authenticate using Ed25519 challenge-response, and establish an encrypted channel with X25519 + ChaCha20-Poly1305 — all automatically, with no config files. File transfers use async I/O via Tokio, chunked streaming, LZ4 compression, and Blake3 for integrity checks. Wanted to build something that felt production-grade as a personal project.</p>",
+                    image: "",
+                    repo: "https://github.com/mel-edo/dsync"
+                },
+                {
+                    id: "patchwire",
+                    rank: "IV",
+                    tag: "TARGET IV",
+                    title: "PATCHWIRE",
+                    category: ["RUST", "GTK4"],
+                    shortDesc: "Route audio to multiple devices simultaneously on Linux.",
+                    longDesc: "<p>A PipeWire daemon that automatically links audio sinks on startup so sound plays through multiple output devices at once — no manual wiring every session. Built in Rust with a GTK4 GUI for managing routing configurations. Scratched my own itch after getting tired of rewiring headphones and speakers every time I rebooted.</p>",
+                    image: "",
+                    repo: "https://github.com/mel-edo/patchwire"
+                },
+                {
+                    id: "kvmbook",
+                    rank: "V",
+                    tag: "TARGET V",
+                    title: "KVMBOOK",
+                    category: ["C", "ASM"],
+                    shortDesc: "A minimal x86 hypervisor with a companion book explaining every layer.",
+                    longDesc: "<p>A minimal x86 hypervisor built on Linux KVM in C, co-built with the same friend behind sift-video. Walks through everything from the first ioctl call to a booting kernel, with a companion book documenting every layer of the process. The kind of project where you come out the other side actually understanding what a hypervisor is doing beneath all the abstractions.</p>",
+                    image: "",
+                    repo: "https://github.com/mel-edo/kvmbook"
+                },
+                {
+                    id: "moonweft",
+                    rank: "VI",
+                    tag: "TARGET VI",
+                    title: "MOONWEFT",
+                    category: ["WEB"],
+                    shortDesc: "This website you're currently on.",
+                    longDesc: "<p>A personal website built with HTML, CSS and vanilla JS. I finally got around to building a website and have been enjoying the process so far.</p>",
+                    image: "",
+                    repo: "https://github.com/mel-edo/moonweft"
+                },
+            ];
+
+            // 2. Generate the HTML
+            const sidebarContainer = document.getElementById('sidebar-container');
+            const panelsContainer = document.getElementById('panels-container');
+
+            projects.forEach(proj => {
+                // Build Sidebar Card
+                const cardHTML = `
+                    <div class="target-card" data-project="${proj.id}" role="button" tabindex="0" aria-controls="project-${proj.id}" aria-pressed="false">
+                        <div class="rank">${proj.rank}</div>
+                        <div class="content-wrapper">
+                            <div class="main-info">
+                                <div class="details">
+                                    <h2>${proj.title}</h2>
+                                    <p>${proj.shortDesc}</p>
+                                </div>
+                                <div class="category">${proj.category[0]}</div> 
+                            </div>
+                        </div>
+                    </div>
+                `;
+                sidebarContainer.insertAdjacentHTML('beforeend', cardHTML);
+
+                // Build Project Panel (Redesigned)
+                const imageHTML = proj.image ? `<img src="${proj.image}" alt="${proj.title} preview" class="cc-image">` : '';
+                // Build the badges dynamically
+                const badgesHTML = proj.category.map(cat => `
+                    <div class="cc-num-box">
+                        <span class="cc-num-text">${cat}</span>
+                    </div>
+                `).join('');
+                const panelHTML = `
+                    <article class="project-panel" id="project-${proj.id}" data-project-panel="${proj.id}">
+                            <header class="cc-title-block">
+                                <div class="cc-tag-box">
+                                    <span class="cc-tag-bg"></span>
+                                    <span class="cc-tag-text">${proj.tag}</span>
+                                </div>
+                                <div class="cc-heading-box">
+                                    <span class="cc-heading-bg"></span>
+                                    <span class="cc-heading-text">${proj.title}</span>
+                                </div>
+                                
+                                <div class="cc-badges-container">
+                                    ${badgesHTML}
+                                </div>
+                                
+                            </header>
+
+                        <div class="cc-content-flow">
+                            <div class="cc-body">
+                                ${proj.longDesc}
+                            </div>
+                            ${imageHTML}
+                            <div class="cc-actions">
+                                <a href="${proj.repo}" target="_blank" rel="noopener noreferrer" class="repo-link">VISIT REPO</a>
+                            </div>
+                        </div>
+
+                    </article>
+                `;      
+                panelsContainer.insertAdjacentHTML('beforeend', panelHTML);
+            });
+
+            // 3. Keep your existing interaction logic!
+            function showNeutralState() {
+                document.querySelectorAll('.target-card[data-project]').forEach(c => {
+                    c.classList.remove('active');
+                    c.setAttribute('aria-pressed', 'false');
                 });
-                card.classList.toggle('active');
+                document.querySelectorAll('.project-panel[data-project-panel]').forEach(p => {
+                    p.classList.toggle('active', p.dataset.projectPanel === 'intro');
+                });
             }
 
-            function updateDate() {
-                const dateElement = document.getElementById('dynamic-date');
-                const today = new Date();
-                const month = String(today.getMonth() + 1).padStart(2, '0');
-                const day = String(today.getDate()).padStart(2, '0');
-                dateElement.textContent = `${month}/${day}`;
+            function selectProject(key) {
+                document.querySelectorAll('.target-card[data-project]').forEach(c => {
+                    const on = c.dataset.project === key;
+                    c.classList.toggle('active', on);
+                    c.setAttribute('aria-pressed', String(on));
+                });
+                document.querySelectorAll('.project-panel[data-project-panel]').forEach(p => {
+                    p.classList.toggle('active', p.dataset.projectPanel === key);
+                });
             }
-            document.addEventListener('DOMContentLoaded', updateDate);
+
+            // Attach listeners to newly created cards
+            document.querySelectorAll('.target-card[data-project]').forEach(card => {
+                card.addEventListener('click', () => selectProject(card.dataset.project));
+                card.addEventListener('keydown', e => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        selectProject(card.dataset.project);
+                    }
+                });
+            });
+
+            document.addEventListener('keydown', e => { if (e.key === 'Escape') showNeutralState(); });
+            document.addEventListener('click', e => {
+                if (!document.querySelector('.project-stage').contains(e.target)) showNeutralState();
+            });
+
+            // Date
+            const el = document.getElementById('dynamic-date');
+            const t  = new Date();
+            el.textContent = `${String(t.getMonth()+1).padStart(2,'0')}/${String(t.getDate()).padStart(2,'0')}`;
         </script>
+        
+
     </body>
 </html>
