@@ -66,6 +66,10 @@
         </div>
 
         <script>
+            if (sessionStorage.getItem('heistSuccess') === 'true') {
+                document.body.classList.add('heist-success');
+                sessionStorage.removeItem('heistSuccess');
+            }
             // 1. The Project Data
             const projects = [
                 {
@@ -75,7 +79,7 @@
                     title: "SIFT-VIDEO",
                     category: ["RUST", "C++"],
                     shortDesc: "Search inside any video using natural language.",
-                    longDesc: "<p>A multimodal video search engine built with a friend. Drop in a video and search for any moment using plain text — it finds the exact timestamp by combining speech transcription (Whisper) and visual frame embeddings (MobileCLIP). Built across 4 Docker services: a C++ ingestion pipeline, Rust/Axum query API, and Qdrant as the vector database.</p>",
+                    longDesc: "<p>A multimodal video search engine built with a friend. Drop in a video and search for any moment using plain text.<br> It finds the exact timestamp by combining speech transcription (Whisper) and visual frame embeddings (MobileCLIP). Built across 4 Docker services: a C++ ingestion pipeline, Rust/Axum query API, and Qdrant as the vector database.</p>",
                     image: "assets/sift.gif",
                     repo: "https://github.com/sourav4243/sift-video"
                 },
@@ -97,7 +101,7 @@
                     title: "DSYNC",
                     category: ["RUST"],
                     shortDesc: "Zero-config P2P file sync for your local network.",
-                    longDesc: "<p>A file sync daemon for LAN written in Rust. Peers discover each other via mDNS, authenticate using Ed25519 challenge-response, and establish an encrypted channel with X25519 + ChaCha20-Poly1305 — all automatically, with no config files. File transfers use async I/O via Tokio, chunked streaming, LZ4 compression, and Blake3 for integrity checks. Wanted to build something that felt production-grade as a personal project.</p>",
+                    longDesc: "<p>A file sync daemon for LAN written in Rust. Peers discover each other via mDNS, authenticate using Ed25519 challenge-response, and establish an encrypted channel with X25519 + ChaCha20-Poly1305, all automatically, with no config files. File transfers use async I/O via Tokio, chunked streaming, LZ4 compression, and Blake3 for integrity checks. Wanted to build something that felt production-grade as a personal project.</p>",
                     image: "",
                     repo: "https://github.com/mel-edo/dsync"
                 },
@@ -108,8 +112,8 @@
                     title: "PATCHWIRE",
                     category: ["RUST", "GTK4"],
                     shortDesc: "Route audio to multiple devices simultaneously on Linux.",
-                    longDesc: "<p>A PipeWire daemon that automatically links audio sinks on startup so sound plays through multiple output devices at once — no manual wiring every session. Built in Rust with a GTK4 GUI for managing routing configurations. Scratched my own itch after getting tired of rewiring headphones and speakers every time I rebooted.</p>",
-                    image: "",
+                    longDesc: "<p>A PipeWire daemon that automatically links audio sinks so you can play sound through multiple devices at once, no manual rewiring required every time you reboot. Built in Rust with a GTK4 interface, it watches your audio graph and handles the routing invisibly in the background. I wrote this to scratch my own itch after getting tired of constantly dragging cables in Helvum just to use my headphones and speakers simultaneously.</p>",
+                    image: "assets/patchwire.png",
                     repo: "https://github.com/mel-edo/patchwire"
                 },
                 {
@@ -128,7 +132,7 @@
                     rank: "VI",
                     tag: "TARGET VI",
                     title: "MOONWEFT",
-                    category: ["WEB"],
+                    category: ["HTML", "CSS"],
                     shortDesc: "This website you're currently on.",
                     longDesc: "<p>A personal website built with HTML, CSS and vanilla JS. I finally got around to building a website and have been enjoying the process so far.</p>",
                     image: "",

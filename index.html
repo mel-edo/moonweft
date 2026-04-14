@@ -411,14 +411,59 @@
             }
         initDiscord();
         setInterval(initDiscord, 120000);
+        
+        document.addEventListener("DOMContentLoaded", () => {
+            // 1. Use querySelectorAll to find ALL links to projects.html
+            const projectLinks = document.querySelectorAll('a[href="projects.html"]');
+            const videoOverlay = document.getElementById('transition-overlay');
+            const video = document.getElementById('joker-transition');
+            const secretFrame = document.getElementById('secret-projects-frame');
+
+            // 2. Loop through every link we found and attach the click event
+            if (projectLinks.length > 0 && video && secretFrame) {
+                projectLinks.forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault(); // Stop normal navigation
+
+                        // 3. Show the video overlay, play it, and BLOCK other clicks
+                        videoOverlay.style.display = 'block';
+                        // Turn on pointer events so the overlay acts like a shield, 
+                        // preventing the user from clicking the link twice during the animation.
+                        videoOverlay.style.pointerEvents = 'auto'; 
+                        video.play();
+
+                        const swapTime = 800; // Adjust this timing as needed
+
+                        setTimeout(() => {
+                            secretFrame.style.opacity = '1';
+                        }, swapTime);
+                        
+                        // 4. When the video ends, officially change the URL.
+                        // { once: true } ensures this event only fires one time.
+                        video.addEventListener('ended', () => {
+                            sessionStorage.setItem('heistSuccess', 'true');
+                            window.location.href = link.href;
+                        }, { once: true });
+                    });
+                });
+            }
+        });
         </script>
 
         <footer class="site-footer">
-            <p>♡2025 moonweft</p>
+            <p>♡2026 moonweft</p>
             <p class="mail"><a href="mailto:meledo@duck.com" target="_blank">meledo@duck.com</a></p>
         </footer>
 
         <script src="scripts/oneko.js"></script>
+
+        <iframe id="secret-projects-frame" src="projects.html" style="opacity: 0; pointer-events: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; z-index: 2147483646;"></iframe>
+
+        <div id="transition-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 2147483647; pointer-events: none;">
+            <video id="joker-transition" muted playsinline style="width: 100%; height: 100%; object-fit: cover;">
+                <source src="assets/joker.webm" type="video/webm">
+            </video>
+        </div>
 
     </body>
 

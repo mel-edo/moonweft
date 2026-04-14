@@ -748,8 +748,8 @@ body {
 .ticket-bkg { --t-bg: #e5efe9; color: #2b5c41; }
 .ticket-bkg .ticket-type { color: #508c69; border-color: rgba(43, 92, 65, 0.2); }
 
-.ticket-lbox { --t-bg: #e6eaed; color: #2e3e4a; }
-.ticket-lbox .ticket-type { color: #627b8c; border-color: rgba(46, 62, 74, 0.2); }
+.ticket-anilist { --t-bg: #e6eaed; color: #2e3e4a; }
+.ticket-anilist .ticket-type { color: #627b8c; border-color: rgba(46, 62, 74, 0.2); }
 
 .ticket-ra { --t-bg: #fcf1df; color: #724c16; }
 .ticket-ra .ticket-type { color: #a57833; border-color: rgba(114, 76, 22, 0.2); }
