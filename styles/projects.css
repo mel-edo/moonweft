@@ -181,10 +181,8 @@ body {
     gap: 18px;
     padding: 0;
     width: 100%;
-    position: sticky;
     top: 40px;
 }
-.target-list::-webkit-scrollbar { display: none; }
 
 .target-card {
     position: relative;
@@ -198,6 +196,7 @@ body {
     outline: none;
     min-height: 118px;
     flex-shrink: 0;
+    animation: p5CardEject 0.25s cubic-bezier(0.1, 0.7, 0.1, 1) forwards;
 }
 
 .rank, .content-wrapper { transform: skewX(10deg); }
@@ -325,6 +324,91 @@ body {
 .target-card:hover .category::before,
 .target-card.active .category::before { opacity: 1; }
 
+/* ── The P5 Pagination Buttons ── */
+.p5-page-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: auto; /* Pushes controls to the bottom */
+    padding-top: 10px;
+    border-top: 3px solid var(--p5-black);
+}
+
+.p5-page-btn {
+    background: var(--p5-black);
+    color: var(--p5-white);
+    border: 3px solid var(--p5-white);
+    padding: 5px 20px;
+    font-family: 'Optima Nova', sans-serif;
+    font-weight: 900;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transform: skewX(-10deg);
+    box-shadow: 4px 4px 0px var(--p5-red);
+    transition: all 0.15s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.p5-page-btn:hover:not(:disabled) {
+    background: var(--p5-white);
+    color: var(--p5-black);
+    border-color: var(--p5-black);
+    transform: skewX(-10deg) translate(-3px, -3px);
+    box-shadow: 7px 7px 0px var(--p5-black);
+}
+
+.p5-page-btn:active:not(:disabled) {
+    transform: skewX(-10deg) translate(2px, 2px);
+    box-shadow: 2px 2px 0px var(--p5-black);
+}
+
+.p5-page-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+    box-shadow: none;
+    transform: skewX(-10deg) translate(0, 0);
+}
+
+.p5-page-info {
+    font-family: 'Times New Roman', serif;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: var(--p5-red);
+    letter-spacing: 2px;
+}
+
+/* ── Sidebar Card Load Animation ── */
+@keyframes p5CardEject {
+    0% {
+        opacity: 0;
+        /* Start pushed down, right, and slightly shrunk */
+        transform: skewX(-10deg) translate(30px, 15px) scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        /* Snap into normal position */
+        transform: skewX(-10deg) translate(0, 0) scale(1);
+    }
+}
+
+/* Stagger the animations so they fly in sequentially */
+.target-list .target-card:nth-child(1) { animation-delay: 0.00s; }
+.target-list .target-card:nth-child(2) { animation-delay: 0.05s; }
+.target-list .target-card:nth-child(3) { animation-delay: 0.10s; }
+.target-list .target-card:nth-child(4) { animation-delay: 0.15s; }
+
+/* Keep the card invisible until its specific delay finishes */
+.target-card {
+    opacity: 0; 
+}
+
+.sidebar-return {
+    margin-top: 25px;       /* Adds space between pagination and the button */
+    align-self: center;     /* Centers it in the sidebar flexbox */
+    padding: 10px 45px;     /* Scaled down slightly from the massive footer version */
+    font-size: 1.3rem;      /* Scaled down from 1.6rem */
+    width: fit-content;
+}
+
 /* ─── CALLING CARD ───────────────────────────────────────────── */
 /*
  * The calling card is built from the same "layered p5-box" DNA as the
@@ -353,12 +437,12 @@ body {
     border: 4px solid var(--p5-white);
     background-color: var(--p5-black);
     
-    background-image: repeating-linear-gradient(
-        -45deg,
-        rgba(255, 255, 255, 0.03) 0px,
-        rgba(255, 255, 255, 0.03) 2px,
-        transparent 2px,
-        transparent 8px
+    background-image: repeating-radial-gradient(
+        circle at 50% 50%, 
+        rgba(255, 255, 255, 0.04) 0px,
+        rgba(255, 255, 255, 0.04) 35px,
+        transparent 35px,
+        transparent 70px
     );
     
     box-shadow: 8px 8px 0px var(--p5-black); 
@@ -375,11 +459,11 @@ body {
     right: -20px;
     width: 350px;
     height: 350px;
-    background-image: url('../assets/mask.png'); /* Point to your mask image */
+    background-image: url('../assets/mask.png');
     background-size: contain;
     background-repeat: no-repeat;
     background-position: bottom right;
-    opacity: 0.08; /* Extremely subtle */
+    opacity: 0.04; /* Extremely subtle */
     z-index: 0; /* Keeps it behind text */
     pointer-events: none; /* So it doesn't block clicks */
     transform: rotate(-15deg);
@@ -512,19 +596,6 @@ body {
     z-index: 5;
 }
 
-/* 6. Custom P5 Scrollbar for the Content Area */
-.cc-content-flow::-webkit-scrollbar {
-    width: 8px;
-}
-.cc-content-flow::-webkit-scrollbar-track {
-    background: var(--p5-black);
-    border-left: 2px solid var(--p5-red);
-}
-.cc-content-flow::-webkit-scrollbar-thumb {
-    background: var(--p5-white);
-    border: 2px solid var(--p5-black);
-}
-
 .cc-actions {
     margin-top: 10px;
 }
@@ -625,30 +696,66 @@ body {
     margin-bottom: 0;
 }
 
-/* ── Intro placeholder ── */
+/* ── Intro placeholder (Take Your Time Image Motif) ── */
 .cc-intro {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     flex: 1;
-    text-align: center;
-    gap: 16px;
-    opacity: 0.6;
     pointer-events: none;
 }
 
-.cc-intro-label {
-    font-size: 0.9rem;
-    color: var(--p5-white);
-    text-transform: uppercase;
-    letter-spacing: 3px;
-    font-weight: 900;
+.p5-motif {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    transform: skewX(-10deg) rotate(-5deg);
+    opacity: 0.85;
+    animation: p5Breathe 4s ease-in-out infinite;
 }
 
-@keyframes arrowPulse {
-    0%, 100% { transform: translateX(0); opacity: 0.5; }
-    50%       { transform: translateX(-10px); opacity: 1; }
+/* This is the magic rule for transparent PNGs */
+.motif-img {
+    display: block;
+    /* Acts exactly like text-shadow, tracing the edge of your image */
+    filter: drop-shadow(6px 6px 0px var(--p5-black)); 
+}
+
+/* 1. Top Left */
+.motif-take { 
+    width: 140px; /* Adjust this to scale your image */
+    align-self: flex-start; 
+    margin-left: -20px; 
+}
+
+/* 2. Middle, overlapping */
+.motif-your { 
+    width: 110px; 
+    z-index: 2; 
+    margin-top: -15px; /* Negative margin pulls it up over "TAKE" */
+}
+
+/* 3. Bottom Right, overlapping */
+.motif-time { 
+    width: 180px; 
+    align-self: flex-end; 
+    margin-right: -30px; 
+    margin-top: -25px; /* Negative margin pulls it up over "YOUR" */
+}
+
+/* ── The Double-Thump Heartbeat Effect ── */
+@keyframes p5Breathe {
+    0%, 100% { 
+        transform: skewX(-10deg) rotate(-5deg) scale(1); 
+        filter: drop-shadow(6px 6px 0px var(--p5-black));
+    }
+    50% { 
+        /* Slightly straightens out and grows, shadow extends */
+        transform: skewX(-8deg) rotate(-3deg) scale(1.05); 
+        filter: drop-shadow(10px 10px 0px var(--p5-black));
+    }
 }
 
 /* ── Panels ── */

@@ -51,8 +51,11 @@
                         
                         <article class="project-panel intro-panel active" data-project-panel="intro">
                             <div class="cc-intro">
-                                <div class="cc-intro-arrow">◄</div>
-                                <div class="cc-intro-label">Select a target</div>
+                                <div class="p5-motif">
+                                    <img src="assets/take.png" alt="TAKE" class="motif-img motif-take">
+                                    <img src="assets/your.png" alt="YOUR" class="motif-img motif-your">
+                                    <img src="assets/time.png" alt="TIME" class="motif-img motif-time">
+                                </div>
                             </div>
                         </article>
 
@@ -60,10 +63,6 @@
                 </section>
 
             </section><!-- /.project-stage -->
-
-            <div class="footer-section">
-                <a href="index.html" class="escape-btn">RETURN</a>
-            </div>
         </div>
 
         <script>
@@ -137,68 +136,108 @@
                 },
             ];
 
-            // 2. Generate the HTML
+            // --- Pagination Configuration ---
+            const itemsPerPage = 3; // Change this depending on how many fit your screen
+            let currentPage = 1;
+            const totalPages = Math.ceil(projects.length / itemsPerPage);
+
             const sidebarContainer = document.getElementById('sidebar-container');
             const panelsContainer = document.getElementById('panels-container');
 
+            // Generate ALL the project panels right away (hidden by default)
             projects.forEach(proj => {
-                // Build Sidebar Card
-                const cardHTML = `
-                    <div class="target-card" data-project="${proj.id}" role="button" tabindex="0" aria-controls="project-${proj.id}" aria-pressed="false">
-                        <div class="rank">${proj.rank}</div>
-                        <div class="content-wrapper">
-                            <div class="main-info">
-                                <div class="details">
-                                    <h2>${proj.title}</h2>
-                                    <p>${proj.shortDesc}</p>
-                                </div>
-                                <div class="category">${proj.category[0]}</div> 
-                            </div>
-                        </div>
-                    </div>
-                `;
-                sidebarContainer.insertAdjacentHTML('beforeend', cardHTML);
-
-                // Build Project Panel (Redesigned)
-                const imageHTML = proj.image ? `<img src="${proj.image}" alt="${proj.title} preview" class="cc-image">` : '';
-                // Build the badges dynamically
+                // (Keep your exact panelHTML generation code here!)
                 const badgesHTML = proj.category.map(cat => `
                     <div class="cc-num-box">
                         <span class="cc-num-text">${cat}</span>
                     </div>
                 `).join('');
+
                 const panelHTML = `
                     <article class="project-panel" id="project-${proj.id}" data-project-panel="${proj.id}">
-                            <header class="cc-title-block">
-                                <div class="cc-tag-box">
-                                    <span class="cc-tag-bg"></span>
-                                    <span class="cc-tag-text">${proj.tag}</span>
-                                </div>
-                                <div class="cc-heading-box">
-                                    <span class="cc-heading-bg"></span>
-                                    <span class="cc-heading-text">${proj.title}</span>
-                                </div>
-                                
-                                <div class="cc-badges-container">
-                                    ${badgesHTML}
-                                </div>
-                                
-                            </header>
-
-                        <div class="cc-content-flow">
-                            <div class="cc-body">
-                                ${proj.longDesc}
+                        <header class="cc-title-block">
+                            <div class="cc-tag-box">
+                                <span class="cc-tag-bg"></span>
+                                <span class="cc-tag-text">${proj.tag}</span>
                             </div>
-                            ${imageHTML}
+                            <div class="cc-heading-box">
+                                <span class="cc-heading-bg"></span>
+                                <span class="cc-heading-text">${proj.title}</span>
+                            </div>
+                            <div class="cc-badges-container">${badgesHTML}</div>
+                        </header>
+                        <div class="cc-content-flow">
+                            <div class="cc-body">${proj.longDesc}</div>
+                            ${proj.image ? `<img src="${proj.image}" alt="preview" class="cc-image">` : ''}
                             <div class="cc-actions">
                                 <a href="${proj.repo}" target="_blank" rel="noopener noreferrer" class="repo-link">VISIT REPO</a>
                             </div>
                         </div>
-
                     </article>
-                `;      
+                `;
                 panelsContainer.insertAdjacentHTML('beforeend', panelHTML);
             });
+
+            // Function to render the sidebar cards for the current page
+            function renderSidebar() {
+                sidebarContainer.innerHTML = ''; // Clear current sidebar
+                
+                const startIndex = (currentPage - 1) * itemsPerPage;
+                const endIndex = startIndex + itemsPerPage;
+                const currentProjects = projects.slice(startIndex, endIndex);
+
+                // Inject the cards
+                currentProjects.forEach(proj => {
+                    const cardHTML = `
+                        <div class="target-card" data-project="${proj.id}" role="button" tabindex="0">
+                            <div class="rank">${proj.rank}</div>
+                            <div class="content-wrapper">
+                                <div class="main-info">
+                                    <div class="details">
+                                        <h2>${proj.title}</h2>
+                                        <p>${proj.shortDesc}</p>
+                                    </div>
+                                    <div class="category">${proj.category[0]}</div>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+                    sidebarContainer.insertAdjacentHTML('beforeend', cardHTML);
+                });
+
+                // Add the Pagination Controls at the bottom of the list
+                if (totalPages > 1) {
+                    const controlsHTML = `
+                        <div class="p5-page-controls">
+                            <button class="p5-page-btn" id="btn-prev" ${currentPage === 1 ? 'disabled' : ''}>▲</button>
+                            <span class="p5-page-info">${currentPage} / ${totalPages}</span>
+                            <button class="p5-page-btn" id="btn-next" ${currentPage === totalPages ? 'disabled' : ''}>▼</button>
+                        </div>
+                    `;
+                    sidebarContainer.insertAdjacentHTML('beforeend', controlsHTML);
+
+                    // Attach event listeners to the new buttons
+                    document.getElementById('btn-prev')?.addEventListener('click', () => {
+                        if (currentPage > 1) { currentPage--; renderSidebar(); }
+                    });
+                    document.getElementById('btn-next')?.addEventListener('click', () => {
+                        if (currentPage < totalPages) { currentPage++; renderSidebar(); }
+                    });
+                }
+                // INJECT THE RETURN BUTTON AT THE VERY END OF THE SIDEBAR
+                const returnBtnHTML = `
+                    <a href="index.html" class="escape-btn sidebar-return">RETURN</a>
+                `;
+                sidebarContainer.insertAdjacentHTML('beforeend', returnBtnHTML);
+
+                // Re-attach click listeners to the newly rendered cards
+                document.querySelectorAll('.target-card[data-project]').forEach(card => {
+                    card.addEventListener('click', () => selectProject(card.dataset.project));
+                });
+            }
+
+            // Initial render
+            renderSidebar();
 
             // 3. Keep your existing interaction logic!
             function showNeutralState() {
