@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Media | moonweft</title>
+        <link rel="stylesheet" href="styles/media.css">
+        <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=VT323&display=swap" rel="stylesheet">
+        <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+    </head>
+
+    <body>
+        <nav class="sg-nav">
+            <a href="index.html"><span class="sg-nav-text">HOME</span></a>
+            <a href="projects.html"><span class="sg-nav-text">PROJECTS</span></a>
+            <span class="active"><span class="sg-nav-text">MEDIA</span></span>
+            <a href="community.html"><span class="sg-nav-text">BOARD</span></a>
+            <a href="notes.html"><span class="sg-nav-text">BLOG</span></a>
+        </nav>
+
+        <main>
+            <div class="sg-title-banner">
+                <div class="sg-deco-ring red-ring"></div>
+                <div class="sg-deco-ring white-ring"></div>
+                
+                <h1>MEDIA GALLERY</h1>
+                <p class="sg-subtitle">ACT 1</p>
+            </div>
+
+            <div class="sonic-gallery">
+                
+                <div class="sonic-frame-wrapper">
+                    <div class="sonic-ring"></div>
+                    <div class="sonic-frame">
+                        <div class="corner-node top-left"></div>
+                        <div class="corner-node bottom-right"></div>
+                        <div class="badge-stripes"><div class="badge-white-inner"></div></div>
+                        <img src="assets/photo1.jpg" alt="Gallery Image 1">
+                    </div>
+                    <div class="sg-pill-label">PHOTO_01 // SYSTEM</div>
+                </div>
+
+                <div class="sonic-frame-wrapper">
+                    <div class="sonic-ring" style="right: -20px; left: auto; top: -10px;"></div>
+                    <div class="sonic-frame">
+                        <div class="corner-node top-left"></div>
+                        <div class="corner-node bottom-right"></div>
+                        <div class="badge-stripes"><div class="badge-white-inner"></div></div>
+                        <img src="assets/photo2.jpg" alt="Gallery Image 2">
+                    </div>
+                    <div class="sg-pill-label">PHOTO_02 // TERMINAL</div>
+                </div>
+
+                <div class="sonic-frame-wrapper">
+                    <div class="sonic-ring"></div>
+                    <div class="sonic-frame">
+                        <div class="corner-node top-left"></div>
+                        <div class="corner-node bottom-right"></div>
+                        <div class="badge-stripes"><div class="badge-white-inner"></div></div>
+                        <img src="assets/photo3.jpg" alt="Gallery Image 3">
+                    </div>
+                    <div class="sg-pill-label">PHOTO_03 // ARCHIVE</div>
+                </div>
+
+            </div>
+        </main>
+
+        <iframe id="secret-projects-frame" src="projects.html" style="opacity: 0; pointer-events: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; z-index: 2147483646;"></iframe>
+
+        <div id="transition-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 2147483647; pointer-events: none;">
+            <video id="joker-transition" muted playsinline style="width: 100%; height: 100%; object-fit: cover;">
+                <source src="assets/joker.webm" type="video/webm">
+            </video>
+        </div>
+
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const projectLinks = document.querySelectorAll('a[href="projects.html"]');
+                const videoOverlay = document.getElementById('transition-overlay');
+                const video = document.getElementById('joker-transition');
+                const secretFrame = document.getElementById('secret-projects-frame');
+
+                if (projectLinks.length > 0 && video && secretFrame) {
+                    projectLinks.forEach(link => {
+                        link.addEventListener('click', (e) => {
+                            e.preventDefault(); 
+                            
+                            videoOverlay.style.display = 'block';
+                            videoOverlay.style.pointerEvents = 'auto'; 
+                            video.play();
+                            
+                            const swapTime = 800; 
+                            
+                            setTimeout(() => {
+                                secretFrame.style.opacity = '1';
+                            }, swapTime);
+                            
+                            video.addEventListener('ended', () => {
+                                sessionStorage.setItem('heistSuccess', 'true');
+                                window.location.href = link.href;
+                            }, { once: true });
+                        });
+                    });
+                }
+            });
+        </script>
+    </body>
+</html>

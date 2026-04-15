@@ -1,0 +1,287 @@
+/* ─── STANDALONE CSS RESET ─── */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+html, body {
+    margin: 0;
+    padding: 0;
+    min-height: 100vh;
+    font-family: sans-serif;
+    overflow-x: hidden;
+    background-color: var(--su-bg-gray);
+    background-image: 
+        radial-gradient(rgba(0,0,0,0.04) 3px, transparent 4px),
+        radial-gradient(circle at 10% 20%, transparent 80px, rgba(0,0,0,0.03) 81px, rgba(0,0,0,0.03) 100px, transparent 101px),
+        radial-gradient(circle at 90% 70%, transparent 120px, rgba(0,0,0,0.03) 121px, rgba(0,0,0,0.03) 150px, transparent 151px);
+    background-size: 30px 30px, 100% 100%, 100% 100%;
+    
+    /* This ensures the pattern doesn't break or stretch when you bounce */
+    background-attachment: fixed;
+}
+
+/* ─── SONIC UI COLOR PALETTE ─── */
+:root {
+    --su-yellow: #ffcc00;
+    --su-blue: #0088ff;
+    --su-red: #d91c1c; 
+    --su-black: #0a0a0a;
+    --su-white: #ffffff;
+    --su-bg-gray: #f5f5f5;
+}
+
+/* ─── The Custom Sega Navbar ─── */
+.sg-nav {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding: 25px 0;
+    position: relative;
+    z-index: 20;
+    flex-wrap: wrap;
+}
+
+/* Base button shape for BOTH links and the active item */
+.sg-nav a, 
+.sg-nav .active {
+    display: inline-block;
+    background: var(--su-white);
+    border: 4px solid var(--su-black);
+    border-radius: 20px;
+    padding: 6px 25px;
+    text-decoration: none;
+    transform: skewX(-15deg);
+    box-shadow: 4px 4px 0px rgba(0,0,0,0.2);
+    transition: all 0.2s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Remove the pointer finger for the non-link active item */
+.sg-nav .active {
+    cursor: default; 
+    /* Force it into the popped-up, yellow active state */
+    background: var(--su-yellow);
+    transform: skewX(-15deg) translateY(-4px);
+    box-shadow: 4px 8px 0px rgba(0,0,0,0.4);
+    border-color: var(--su-blue);
+}
+
+/* The hover state for actual clickable links */
+.sg-nav a:hover {
+    background: var(--su-yellow);
+    transform: skewX(-15deg) translateY(-4px);
+    box-shadow: 4px 8px 0px rgba(0,0,0,0.4);
+    border-color: var(--su-blue);
+}
+
+/* Un-skew the text inside the button (Used inside BOTH links and active) */
+.sg-nav-text {
+    display: inline-block;
+    font-family: 'Optima Nova', Arial, sans-serif;
+    font-weight: 900;
+    font-size: 1.2rem;
+    color: var(--su-white);
+    transform: skewX(15deg);
+    /* Heavy black stroke */
+    text-shadow: 
+        -2px -2px 0 var(--su-black),  
+         2px -2px 0 var(--su-black),
+        -2px  2px 0 var(--su-black),
+         2px  2px 0 var(--su-black),
+         0px  3px 0 var(--su-black);
+}
+
+/* ─── The Jagged Blue Banner ─── */
+.sg-title-banner {
+    position: relative;
+    background-color: var(--su-blue);
+    padding: 40px 40px 30px;
+    margin-bottom: 80px;
+    overflow: hidden;
+    box-shadow: 0px 10px 20px rgba(0, 136, 255, 0.2);
+}
+
+/* The Magic Zigzag Edge */
+.sg-title-banner::after {
+    content: "";
+    position: absolute;
+    bottom: -20px; 
+    left: 0; right: 0; height: 20px;
+    background: 
+        linear-gradient(45deg, transparent 33.333%, var(--su-bg-gray) 33.333%, var(--su-bg-gray) 66.667%, transparent 66.667%),
+        linear-gradient(-45deg, transparent 33.333%, var(--su-bg-gray) 33.333%, var(--su-bg-gray) 66.667%, transparent 66.667%);
+    background-size: 40px 40px;
+    background-position: 0 -20px;
+    z-index: 10;
+}
+
+/* ─── Heavy Outlined Banner Text ─── */
+.sg-title-banner h1 {
+    position: relative;
+    font-family: 'Optima Nova', Arial, sans-serif;
+    font-weight: 900;
+    font-size: 4rem;
+    color: var(--su-white);
+    margin: 0;
+    line-height: 1;
+    transform: scaleX(1.1) skewX(-10deg); 
+    transform-origin: left;
+    text-shadow: 
+        -3px -3px 0 var(--su-black),  
+         3px -3px 0 var(--su-black),
+        -3px  3px 0 var(--su-black),
+         3px  3px 0 var(--su-black),
+         0px  5px 0 var(--su-black),
+         6px  8px 0 var(--su-black);
+    z-index: 5;
+    letter-spacing: 2px;
+}
+
+.sg-subtitle {
+    position: relative;
+    font-family: 'Optima Nova', Arial, sans-serif;
+    font-weight: 900;
+    font-size: 1.8rem;
+    color: #66ccff; 
+    margin: 5px 0 0 10px;
+    transform: scaleX(1.1) skewX(-10deg);
+    transform-origin: left;
+    text-shadow: 
+        -2px -2px 0 var(--su-black),  
+         2px -2px 0 var(--su-black),
+        -2px  2px 0 var(--su-black),
+         2px  2px 0 var(--su-black),
+         3px  4px 0 var(--su-black);
+    z-index: 5;
+}
+
+/* ─── Concentric Decorative Rings ─── */
+.sg-deco-ring { position: absolute; border-radius: 50%; z-index: 1; }
+
+.red-ring {
+    top: -50px; right: 10%; width: 200px; height: 200px;
+    border: 25px solid var(--su-red);
+    box-shadow: inset 0 0 0 8px var(--su-black), 0 0 0 8px var(--su-black);
+}
+
+.white-ring {
+    top: 20px; right: 5%; width: 120px; height: 120px;
+    border: 15px solid var(--su-white);
+    box-shadow: inset 0 0 0 5px var(--su-black), 0 0 0 5px var(--su-black);
+}
+
+/* ─── The Gallery Grid & Frames ─── */
+.sonic-gallery {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 60px;
+    justify-content: center;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.sonic-frame-wrapper {
+    position: relative;
+    margin: 20px; 
+}
+
+.sonic-frame {
+    position: relative;
+    width: 360px;
+    height: 240px;
+    background-color: var(--su-black);
+    border: 8px solid var(--su-blue);
+    border-radius: 12px;
+    box-shadow: 10px 10px 0px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+    transition: transform 0.2s ease;
+}
+
+/* The Heavy Inner Vignette */
+.sonic-frame::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    box-shadow: inset 0 0 35px 10px rgba(0,0,0,0.9);
+    border-radius: 4px;
+    pointer-events: none;
+    transition: box-shadow 0.2s ease;
+}
+
+.sonic-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    border-radius: 4px;
+}
+
+/* Blue Corner Nodes */
+.corner-node {
+    position: absolute; width: 30px; height: 30px;
+    background-color: var(--su-blue); border-radius: 50%; z-index: 4;
+}
+.corner-node.top-left { top: -15px; left: -15px; }
+.corner-node.bottom-right { bottom: -15px; right: -15px; }
+
+/* The Red & Black Hazard Badge */
+.badge-stripes {
+    position: absolute; top: -30px; right: -25px; width: 90px; height: 90px;
+    background: repeating-linear-gradient(45deg, var(--su-red), var(--su-red) 10px, var(--su-black) 10px, var(--su-black) 20px);
+    border: 5px solid var(--su-blue); border-radius: 50%; z-index: 5;
+    display: flex; align-items: center; justify-content: center;
+    box-shadow: 4px 4px 0px rgba(0,0,0,0.3);
+}
+
+.badge-white-inner {
+    width: 50px; height: 50px; background-color: var(--su-white); border-radius: 50%;
+}
+
+/* The Yellow Rings */
+.sonic-ring {
+    position: absolute; bottom: -20px; left: -25px; width: 70px; height: 70px;
+    border: 8px solid var(--su-yellow); border-radius: 50%; z-index: 1;
+    box-shadow: 4px 4px 0px rgba(0,0,0,0.1);
+    outline: 2px solid rgba(0,0,0,0.05); 
+}
+
+/* ─── Hover Pill Info Labels ─── */
+.sg-pill-label {
+    position: absolute;
+    bottom: -15px;
+    right: -10px;
+    background: var(--su-white);
+    color: var(--su-black);
+    font-weight: 900;
+    font-family: 'VT323', monospace;
+    font-size: 1.2rem;
+    padding: 5px 20px;
+    border-radius: 20px; 
+    border: 3px solid var(--su-black);
+    box-shadow: 4px 4px 0px var(--su-black);
+    z-index: 10;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.2s, transform 0.2s;
+    pointer-events: none;
+}
+
+/* ─── Simplistic Interactions ─── */
+.sonic-frame-wrapper:hover .sonic-frame {
+    transform: translateY(-4px);
+}
+.sonic-frame-wrapper:hover .sonic-frame::after {
+    box-shadow: inset 0 0 15px 5px rgba(0,0,0,0.5);
+}
+.sonic-frame-wrapper:hover .sg-pill-label {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* ─── Responsive ─── */
+@media (max-width: 800px) {
+    .sg-title-banner h1 { font-size: 3rem; }
+    .sg-subtitle { font-size: 1.4rem; }
+    .sonic-frame { width: 300px; height: 200px; }
+    .red-ring { width: 120px; height: 120px; right: 0; }
+    .white-ring { display: none; }
+}

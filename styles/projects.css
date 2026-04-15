@@ -191,12 +191,13 @@ body {
     color: var(--p5-white);
     cursor: pointer;
     border: 3px solid var(--p5-black);
+    opacity: 1;
     transform: skewX(-10deg);
     transition: transform 0.28s cubic-bezier(0.25, 0.8, 0.25, 1), border-color 0.28s ease, box-shadow 0.28s ease;
     outline: none;
     min-height: 118px;
     flex-shrink: 0;
-    animation: p5CardEject 0.25s cubic-bezier(0.1, 0.7, 0.1, 1) forwards;
+    animation: p5CardEject 0.3s cubic-bezier(0.1, 0.7, 0.1, 1) backwards;
 }
 
 .rank, .content-wrapper { transform: skewX(10deg); }
@@ -219,14 +220,9 @@ body {
     box-shadow: 0 0 0 4px rgba(240,240,240,0.35), 8px 8px 0px var(--p5-red);
 }
 
-body.heist-success .target-card {
-    animation: none !important;
-    opacity: 1 !important;
-    transform: skewX(-10deg) translate(0, 0) scale(1) !important;
-}
-
+body.heist-success .target-card,
 body.heist-success .project-panel {
-    animation: none !important;
+    animation: none;
 }
 
 .rank {
@@ -398,17 +394,6 @@ body.heist-success .project-panel {
         /* Snap into normal position */
         transform: skewX(-10deg) translate(0, 0) scale(1);
     }
-}
-
-/* Stagger the animations so they fly in sequentially */
-.target-list .target-card:nth-child(1) { animation-delay: 0.00s; }
-.target-list .target-card:nth-child(2) { animation-delay: 0.05s; }
-.target-list .target-card:nth-child(3) { animation-delay: 0.10s; }
-.target-list .target-card:nth-child(4) { animation-delay: 0.15s; }
-
-/* Keep the card invisible until its specific delay finishes */
-.target-card {
-    opacity: 0; 
 }
 
 .sidebar-return {

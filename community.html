@@ -30,6 +30,7 @@
             <nav class="nav-scrap">
                 <a href="index.html">[home]</a>
                 <a href="projects.html">[projects]</a>
+                <a href="media.html">[media]</a>
                 <span class="nav-here">[board]</span>
                 <a href="notes.html">[blog]</a>
             </nav>
@@ -162,6 +163,9 @@
                     <div class="button-grid">
                         <a href="https://integral-space.vercel.app/" target="_blank" rel="noopener noreferrer" title="integral-space">
                             <img src="assets/placeholder.gif" alt="integral-space">
+                        </a>
+                        <a href="https://www.aketawi.space/" target="_blank" rel="noopener noreferrer" title="aketawi">
+                            <img src="assets/aketawi.gif" alt="aketawi">
                         </a>
                     </div>
 
@@ -671,7 +675,44 @@
 
         // Initial load
         loadGuestbook(1);
+        document.addEventListener("DOMContentLoaded", () => {
+            const projectLinks = document.querySelectorAll('a[href="projects.html"]');
+            const videoOverlay = document.getElementById('transition-overlay');
+            const video = document.getElementById('joker-transition');
+            const secretFrame = document.getElementById('secret-projects-frame');
+
+            if (projectLinks.length > 0 && video && secretFrame) {
+                projectLinks.forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault(); 
+
+                        videoOverlay.style.display = 'block';
+                        videoOverlay.style.pointerEvents = 'auto'; 
+                        video.play();
+
+                        const swapTime = 800; 
+
+                        setTimeout(() => {
+                            secretFrame.style.opacity = '1';
+                        }, swapTime);
+                        
+                        video.addEventListener('ended', () => {
+                            sessionStorage.setItem('heistSuccess', 'true');
+                            window.location.href = link.href;
+                        }, { once: true });
+                    });
+                });
+            }
+        });
         </script>
+
+        <iframe id="secret-projects-frame" src="projects.html" style="opacity: 0; pointer-events: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; z-index: 2147483646;"></iframe>
+
+        <div id="transition-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 2147483647; pointer-events: none;">
+            <video id="joker-transition" muted playsinline style="width: 100%; height: 100%; object-fit: cover;">
+                <source src="assets/joker.webm" type="video/webm">
+            </video>
+        </div>
 
     </body>
 </html>

@@ -191,9 +191,10 @@
                 const currentProjects = projects.slice(startIndex, endIndex);
 
                 // Inject the cards
-                currentProjects.forEach(proj => {
+                currentProjects.forEach((proj, index) => {
+                    const delay = index * 0.08;
                     const cardHTML = `
-                        <div class="target-card" data-project="${proj.id}" role="button" tabindex="0">
+                        <div class="target-card" data-project="${proj.id}" role="button" tabindex="0" style="animation-delay: ${delay}s;">
                             <div class="rank">${proj.rank}</div>
                             <div class="content-wrapper">
                                 <div class="main-info">
@@ -222,10 +223,10 @@
 
                     // Attach event listeners to the new buttons
                     document.getElementById('btn-prev')?.addEventListener('click', () => {
-                        if (currentPage > 1) { currentPage--; renderSidebar(); }
+                        if (currentPage > 1) { document.body.classList.remove('heist-success'); currentPage--; renderSidebar(); }
                     });
                     document.getElementById('btn-next')?.addEventListener('click', () => {
-                        if (currentPage < totalPages) { currentPage++; renderSidebar(); }
+                        if (currentPage < totalPages) { document.body.classList.remove('heist-success'); currentPage++; renderSidebar(); }
                     });
                 }
                 // INJECT THE RETURN BUTTON AT THE VERY END OF THE SIDEBAR

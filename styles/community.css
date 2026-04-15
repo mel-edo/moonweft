@@ -48,9 +48,9 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 /* ──────────────────────────────
-   BODY — dark wall
+   HTML, BODY — dark wall
 ────────────────────────────── */
-body {
+html, body {
     background: var(--wall);
     min-height: 100vh;
     font-family: 'Nunito', sans-serif;
@@ -66,6 +66,8 @@ body {
             90deg, transparent 0px, transparent 3px,
             rgba(255,255,255,0.008) 3px, rgba(255,255,255,0.008) 4px
         );
+    /* THE FIX: Paints the absolute back layer and locks the texture */
+    background-attachment: fixed;
 }
 
 /* ──────────────────────────────
