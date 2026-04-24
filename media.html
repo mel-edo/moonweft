@@ -5,11 +5,18 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>Media | moonweft</title>
         <link rel="stylesheet" href="styles/media.css">
-        <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=VT323&display=swap" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=VT323&display=swap" rel="stylesheet">
         <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
     </head>
 
     <body>
+        <div class="sg-bg-watermark">
+            <div class="wm-ring ring-1"></div>
+            <div class="wm-ring ring-2"></div>
+            <div class="wm-ring ring-3"></div>
+            <div class="wm-ring ring-4"></div>
+        </div>
+
         <nav class="sg-nav">
             <a href="index.html"><span class="sg-nav-text">HOME</span></a>
             <a href="projects.html"><span class="sg-nav-text">PROJECTS</span></a>
@@ -27,54 +34,147 @@
                 <p class="sg-subtitle">ACT 1</p>
             </div>
 
-            <div class="sonic-gallery">
-                
-                <div class="sonic-frame-wrapper">
-                    <div class="sonic-ring"></div>
-                    <div class="sonic-frame">
-                        <div class="corner-node top-left"></div>
-                        <div class="corner-node bottom-right"></div>
-                        <div class="badge-stripes"><div class="badge-white-inner"></div></div>
-                        <img src="assets/photo1.jpg" alt="Gallery Image 1">
-                    </div>
-                    <div class="sg-pill-label">PHOTO_01 // SYSTEM</div>
-                </div>
-
-                <div class="sonic-frame-wrapper">
-                    <div class="sonic-ring" style="right: -20px; left: auto; top: -10px;"></div>
-                    <div class="sonic-frame">
-                        <div class="corner-node top-left"></div>
-                        <div class="corner-node bottom-right"></div>
-                        <div class="badge-stripes"><div class="badge-white-inner"></div></div>
-                        <img src="assets/photo2.jpg" alt="Gallery Image 2">
-                    </div>
-                    <div class="sg-pill-label">PHOTO_02 // TERMINAL</div>
-                </div>
-
-                <div class="sonic-frame-wrapper">
-                    <div class="sonic-ring"></div>
-                    <div class="sonic-frame">
-                        <div class="corner-node top-left"></div>
-                        <div class="corner-node bottom-right"></div>
-                        <div class="badge-stripes"><div class="badge-white-inner"></div></div>
-                        <img src="assets/photo3.jpg" alt="Gallery Image 3">
-                    </div>
-                    <div class="sg-pill-label">PHOTO_03 // ARCHIVE</div>
-                </div>
-
-            </div>
+            <div class="sonic-gallery"></div>
+            
         </main>
 
         <iframe id="secret-projects-frame" src="projects.html" style="opacity: 0; pointer-events: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; z-index: 2147483646;"></iframe>
-
         <div id="transition-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 2147483647; pointer-events: none;">
             <video id="joker-transition" muted playsinline style="width: 100%; height: 100%; object-fit: cover;">
                 <source src="assets/joker.webm" type="video/webm">
             </video>
         </div>
 
+        <div id="sg-lightbox" class="sg-lightbox">
+            <div class="sg-lightbox-content">
+                <span class="sg-close-btn">&times;</span>
+                <img id="sg-lightbox-img" class="sg-lightbox-img" src="" alt="Expanded View">
+                <div id="sg-lightbox-caption" class="sg-pill-label lightbox-caption"></div>
+            </div>
+        </div>
+
         <script>
             document.addEventListener("DOMContentLoaded", () => {
+                // --- 1. Gallery Logic ---
+                const galleryContainer = document.querySelector('.sonic-gallery');
+
+                async function loadGallery() {
+                    try {
+                        const response = await fetch('data/gallery-data.json');
+                        if (!response.ok) {
+                            throw new Error(`HTTP error! status: ${response.status}`);
+                        }
+                        const data = await response.json();
+                        renderGallery(data);
+                    } catch (error) {
+                        console.error("Failed to load gallery data:", error);
+                        if (galleryContainer) {
+                            galleryContainer.innerHTML = '<p style="color: white; text-align: center; font-family: \'VT323\', monospace; font-size: 1.5rem;">CONNECTION ERROR // GALLERY OFFLINE</p>';
+                        }
+                    }
+                }
+
+                const getRandom = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+
+                function renderGallery(images) {
+                    galleryContainer.innerHTML = ''; 
+                    
+                    images.forEach(img => {
+                        // 1. Randomly pick ONLY Bullseye or Hazard
+                        const badgeTypes = ['bullseye', 'hazard'];
+                        const chosenBadge = badgeTypes[getRandom(0, 1)]; 
+                        
+                        let badgeHTML = '';
+                        if (chosenBadge === 'bullseye') {
+                            badgeHTML = `<div class="sg-bullseye-badge"></div>`;
+                        } else {
+                            badgeHTML = `<div class="sg-hazard-bubble"><div class="hazard-stripes"></div></div>`;
+                        }
+
+                        // 2. Randomly generate 1 to 3 stars
+                        const numStars = getRandom(1, 3);
+                        let starsHTML = '';
+                        for (let i = 0; i < numStars; i++) {
+                            const color = getRandom(0, 1) === 0 ? 'red-star' : 'white-star';
+                            const topOrBottom = getRandom(0, 1) === 0 ? `top: ${getRandom(-30, 20)}px;` : `bottom: ${getRandom(-30, 20)}px;`;
+                            const leftOrRight = getRandom(0, 1) === 0 ? `left: ${getRandom(-40, -10)}px;` : `right: ${getRandom(-40, -10)}px;`;
+                            const size = getRandom(2, 4) + 'rem';
+                            
+                            starsHTML += `<div class="sg-star ${color}" style="${topOrBottom} ${leftOrRight} font-size: ${size};">★</div>`;
+                        }
+
+                        // 3. Randomize Ring Position (Stationary)
+                        const ringPosition = getRandom(0, 1) === 0 
+                            ? 'bottom: -20px; left: -25px;' 
+                            : 'top: -10px; right: -20px; left: auto; bottom: auto;';
+
+                        // 4. Construct the final frame
+                        const frameHTML = `
+                            <div class="sonic-frame-wrapper">
+                                ${starsHTML}
+                                <div class="sonic-ring" style="${ringPosition}"></div>
+                                <div class="sonic-frame">
+                                    <div class="corner-node top-left"></div>
+                                    <div class="corner-node bottom-right"></div>
+                                    ${badgeHTML}
+                                    <img src="${img.url}" alt="${img.alt}" loading="lazy">
+                                </div>
+                                <div class="sg-pill-label">${img.label}</div>
+                            </div>
+                        `;
+                        
+                        galleryContainer.insertAdjacentHTML('beforeend', frameHTML);
+                    });
+                }
+
+                if (galleryContainer) {
+                    loadGallery();
+                }
+                
+                // --- 1.5 Lightbox Gallery Logic ---
+                const lightbox = document.getElementById('sg-lightbox');
+                const lightboxImg = document.getElementById('sg-lightbox-img');
+                const lightboxCaption = document.getElementById('sg-lightbox-caption');
+                const closeBtn = document.querySelector('.sg-close-btn');
+
+                // Open lightbox when clicking a frame
+                galleryContainer.addEventListener('click', (e) => {
+                    const wrapper = e.target.closest('.sonic-frame-wrapper');
+                    if (!wrapper) return; // If they clicked the background, do nothing
+
+                    // Grab the specific image and text from the clicked wrapper
+                    const img = wrapper.querySelector('img');
+                    const label = wrapper.querySelector('.sg-pill-label').innerText;
+
+                    // Populate the lightbox
+                    lightboxImg.src = img.src;
+                    lightboxImg.alt = img.alt;
+                    lightboxCaption.innerText = label;
+
+                    // Show it
+                    lightbox.classList.add('active');
+                });
+
+                // Close lightbox when clicking the X
+                closeBtn.addEventListener('click', () => {
+                    lightbox.classList.remove('active');
+                });
+
+                // Close lightbox when clicking the dark background (outside the image)
+                lightbox.addEventListener('click', (e) => {
+                    if (e.target === lightbox) {
+                        lightbox.classList.remove('active');
+                    }
+                });
+
+                // Close lightbox with the Escape key
+                document.addEventListener('keydown', (e) => {
+                    if (e.key === 'Escape' && lightbox.classList.contains('active')) {
+                        lightbox.classList.remove('active');
+                    }
+                });
+
+                // --- 2. Joker Transition Logic ---
                 const projectLinks = document.querySelectorAll('a[href="projects.html"]');
                 const videoOverlay = document.getElementById('transition-overlay');
                 const video = document.getElementById('joker-transition');
@@ -84,17 +184,11 @@
                     projectLinks.forEach(link => {
                         link.addEventListener('click', (e) => {
                             e.preventDefault(); 
-                            
                             videoOverlay.style.display = 'block';
                             videoOverlay.style.pointerEvents = 'auto'; 
                             video.play();
-                            
                             const swapTime = 800; 
-                            
-                            setTimeout(() => {
-                                secretFrame.style.opacity = '1';
-                            }, swapTime);
-                            
+                            setTimeout(() => { secretFrame.style.opacity = '1'; }, swapTime);
                             video.addEventListener('ended', () => {
                                 sessionStorage.setItem('heistSuccess', 'true');
                                 window.location.href = link.href;

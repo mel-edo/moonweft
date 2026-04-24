@@ -1,0 +1,17 @@
+[
+    {
+        "url": "https://your-cloudflare-r2-link.com/photo1.jpg",
+        "alt": "Server rack system glowing blue",
+        "label": "PHOTO_01 // SYSTEM"
+    },
+    {
+        "url": "https://your-cloudflare-r2-link.com/photo2.jpg",
+        "alt": "Green terminal code on a black screen",
+        "label": "PHOTO_02 // TERMINAL"
+    },
+    {
+        "url": "https://your-cloudflare-r2-link.com/photo3.jpg",
+        "alt": "Physical paper archives in a dark room",
+        "label": "PHOTO_03 // ARCHIVE"
+    }
+]
