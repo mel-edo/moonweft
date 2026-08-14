@@ -1,202 +1,250 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Media | moonweft</title>
-        <link rel="stylesheet" href="styles/media.css">
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&family=VT323&display=swap" rel="stylesheet">
-        <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
-    </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MEDIA GALLERY ~ moonweft</title>
+    <link rel="stylesheet" href="styles/media.css">
+    <link href="https://fonts.googleapis.com/css2?family=VT323&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+</head>
 
-    <body>
-        <div class="sg-bg-watermark">
-            <div class="wm-ring ring-1"></div>
-            <div class="wm-ring ring-2"></div>
-            <div class="wm-ring ring-3"></div>
-            <div class="wm-ring ring-4"></div>
+<body class="retro-body">
+
+    <!-- Background Watermark Ring Accent -->
+    <div class="bg-ring-accent"></div>
+
+    <!-- Top Navigation -->
+    <nav class="sg-nav">
+        <a href="index.html" class="nav-tab"><span class="sg-nav-text">HOME</span></a>
+        <a href="projects.html" class="nav-tab"><span class="sg-nav-text">PROJECTS</span></a>
+        <span class="active nav-tab"><span class="sg-nav-text">MEDIA</span></span>
+        <a href="community.html" class="nav-tab"><span class="sg-nav-text">BOARD</span></a>
+        <a href="notes.html" class="nav-tab"><span class="sg-nav-text">BLOG</span></a>
+    </nav>
+
+    <!-- Page Title Banner -->
+    <header class="page-header">
+        <div class="banner-badge">
+            <span class="gold-ring-icon">●</span> ACT 1 // VISUAL LOG
         </div>
+        <h1>MEDIA GALLERY</h1>
+        <p class="subtitle">[ ARCHIVE SYSTEM // SELECT A DATE TO JUMP ]</p>
+    </header>
 
-        <nav class="sg-nav">
-            <a href="index.html"><span class="sg-nav-text">HOME</span></a>
-            <a href="projects.html"><span class="sg-nav-text">PROJECTS</span></a>
-            <span class="active"><span class="sg-nav-text">MEDIA</span></span>
-            <a href="community.html"><span class="sg-nav-text">BOARD</span></a>
-            <a href="notes.html"><span class="sg-nav-text">BLOG</span></a>
-        </nav>
-
-        <main>
-            <div class="sg-title-banner">
-                <div class="sg-deco-ring red-ring"></div>
-                <div class="sg-deco-ring white-ring"></div>
-                
-                <h1>MEDIA GALLERY</h1>
-                <p class="sg-subtitle">ACT 1</p>
+    <!-- Main Container: Sidebar + Stream -->
+    <div class="gallery-container">
+        
+        <!-- Retro Timeline Sidebar -->
+        <aside class="timeline-sidebar win-box">
+            <div class="win-title-bar">
+                <span class="win-title">TIMELINE.EXE</span>
             </div>
+            <div class="win-content">
+                <ul id="timeline-menu">
+                    <!-- Dynamic timeline links generated via JS -->
+                </ul>
+            </div>
+        </aside>
 
-            <div class="sonic-gallery"></div>
-            
+        <!-- Gallery Stream -->
+        <main id="gallery-stream" class="gallery-stream">
+            <!-- Dynamic month sections generated via JS -->
         </main>
+    </div>
 
-        <iframe id="secret-projects-frame" src="projects.html" style="opacity: 0; pointer-events: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; z-index: 2147483646;"></iframe>
-        <div id="transition-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 2147483647; pointer-events: none;">
-            <video id="joker-transition" muted playsinline style="width: 100%; height: 100%; object-fit: cover;">
-                <source src="assets/joker.webm" type="video/webm">
-            </video>
-        </div>
-
-        <div id="sg-lightbox" class="sg-lightbox">
-            <div class="sg-lightbox-content">
-                <span class="sg-close-btn">&times;</span>
-                <img id="sg-lightbox-img" class="sg-lightbox-img" src="" alt="Expanded View">
-                <div id="sg-lightbox-caption" class="sg-pill-label lightbox-caption"></div>
+    <!-- Retro Lightbox Modal -->
+    <div id="sg-lightbox" class="sg-lightbox">
+        <div class="sg-lightbox-content win-box">
+            <div class="win-title-bar">
+                <span id="lightbox-title-text" class="win-title">image_preview.png</span>
+                <span class="sg-close-btn win-close">&times;</span>
             </div>
+            <div class="lightbox-img-frame">
+                <img id="sg-lightbox-img" src="" alt="Expanded View">
+            </div>
+            <div id="sg-lightbox-caption" class="lightbox-caption"></div>
         </div>
+    </div>
 
-        <script>
-            document.addEventListener("DOMContentLoaded", () => {
-                // --- 1. Gallery Logic ---
-                const galleryContainer = document.querySelector('.sonic-gallery');
+    <!-- Footer with classic Neocities badges -->
+    <footer class="page-footer">
+        <div class="footer-rings">
+            <span class="ring-dot red">★</span>
+            <span class="ring-dot gold">●</span>
+            <span class="ring-dot white">★</span>
+        </div>
+        <p class="footer-text">MOONWEFT MEDIA ARCHIVE // ALL RIGHTS RESERVED</p>
+    </footer>
 
-                async function loadGallery() {
-                    try {
-                        const response = await fetch('data/gallery-data.json');
-                        if (!response.ok) {
-                            throw new Error(`HTTP error! status: ${response.status}`);
-                        }
-                        const data = await response.json();
-                        renderGallery(data);
-                    } catch (error) {
-                        console.error("Failed to load gallery data:", error);
-                        if (galleryContainer) {
-                            galleryContainer.innerHTML = '<p style="color: white; text-align: center; font-family: \'VT323\', monospace; font-size: 1.5rem;">CONNECTION ERROR // GALLERY OFFLINE</p>';
-                        }
+    <!-- Joker Transition Elements (Preserved) -->
+    <iframe id="secret-projects-frame" src="projects.html" style="opacity: 0; pointer-events: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; z-index: 2147483646;"></iframe>
+    <div id="transition-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 2147483647; pointer-events: none;">
+        <video id="joker-transition" muted playsinline style="width: 100%; height: 100%; object-fit: cover;">
+            <source src="assets/joker.webm" type="video/webm">
+        </video>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const galleryStream = document.getElementById('gallery-stream');
+            const timelineMenu = document.getElementById('timeline-menu');
+
+            async function loadGallery() {
+                try {
+                    const response = await fetch('data/gallery-data.json');
+                    if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                    const data = await response.json();
+                    renderGallery(data);
+                } catch (error) {
+                    console.error("Failed to load gallery data:", error);
+                    if (galleryStream) {
+                        galleryStream.innerHTML = `
+                            <div class="win-box error-box">
+                                <div class="win-title-bar"><span class="win-title">SYSTEM ERROR</span></div>
+                                <p style="padding: 1.5rem; font-family: 'VT323', monospace; font-size: 1.3rem;">
+                                    [ CONNECTION FAILED ] // GALLERY DATA OFFLINE
+                                </p>
+                            </div>`;
                     }
                 }
+            }
 
-                const getRandom = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+            function renderGallery(images) {
+                galleryStream.innerHTML = '';
+                timelineMenu.innerHTML = '';
 
-                function renderGallery(images) {
-                    galleryContainer.innerHTML = ''; 
-                    
-                    images.forEach(img => {
-                        // 1. Randomly pick ONLY Bullseye or Hazard
-                        const badgeTypes = ['bullseye', 'hazard'];
-                        const chosenBadge = badgeTypes[getRandom(0, 1)]; 
-                        
-                        let badgeHTML = '';
-                        if (chosenBadge === 'bullseye') {
-                            badgeHTML = `<div class="sg-bullseye-badge"></div>`;
-                        } else {
-                            badgeHTML = `<div class="sg-hazard-bubble"><div class="hazard-stripes"></div></div>`;
+                // Group by Month Year
+                const groups = {};
+                images.sort((a, b) => new Date(b.date) - new Date(a.date));
+
+                images.forEach(img => {
+                    const dateObj = new Date(img.date);
+                    const monthYear = dateObj.toLocaleString('en-US', { month: 'long', year: 'numeric' });
+                    if (!groups[monthYear]) groups[monthYear] = [];
+                    groups[monthYear].push(img);
+                });
+
+                Object.keys(groups).forEach((monthYear, index) => {
+                    const sectionId = monthYear.toLowerCase().replace(/\s+/g, '-');
+
+                    // 1. Sidebar menu item
+                    const li = document.createElement('li');
+                    li.innerHTML = `<a href="#${sectionId}" class="timeline-link ${index === 0 ? 'active' : ''}">
+                        <span class="bullet">▶</span> ${monthYear.toUpperCase()}
+                    </a>`;
+                    const link = li.querySelector('a');
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault();
+                        const targetSection = document.getElementById(sectionId);
+                        if (targetSection) {
+                            targetSection.scrollIntoView({ behavior: 'smooth' });
                         }
-
-                        // 2. Randomly generate 1 to 3 stars
-                        const numStars = getRandom(1, 3);
-                        let starsHTML = '';
-                        for (let i = 0; i < numStars; i++) {
-                            const color = getRandom(0, 1) === 0 ? 'red-star' : 'white-star';
-                            const topOrBottom = getRandom(0, 1) === 0 ? `top: ${getRandom(-30, 20)}px;` : `bottom: ${getRandom(-30, 20)}px;`;
-                            const leftOrRight = getRandom(0, 1) === 0 ? `left: ${getRandom(-40, -10)}px;` : `right: ${getRandom(-40, -10)}px;`;
-                            const size = getRandom(2, 4) + 'rem';
-                            
-                            starsHTML += `<div class="sg-star ${color}" style="${topOrBottom} ${leftOrRight} font-size: ${size};">★</div>`;
-                        }
-
-                        // 3. Randomize Ring Position (Stationary)
-                        const ringPosition = getRandom(0, 1) === 0 
-                            ? 'bottom: -20px; left: -25px;' 
-                            : 'top: -10px; right: -20px; left: auto; bottom: auto;';
-
-                        // 4. Construct the final frame
-                        const frameHTML = `
-                            <div class="sonic-frame-wrapper">
-                                ${starsHTML}
-                                <div class="sonic-ring" style="${ringPosition}"></div>
-                                <div class="sonic-frame">
-                                    <div class="corner-node top-left"></div>
-                                    <div class="corner-node bottom-right"></div>
-                                    ${badgeHTML}
-                                    <img src="${img.url}" alt="${img.alt}" loading="lazy">
-                                </div>
-                                <div class="sg-pill-label">${img.label}</div>
-                            </div>
-                        `;
-                        
-                        galleryContainer.insertAdjacentHTML('beforeend', frameHTML);
                     });
-                }
+                    timelineMenu.appendChild(li);
 
-                if (galleryContainer) {
-                    loadGallery();
-                }
-                
-                // --- 1.5 Lightbox Gallery Logic ---
+                    // 2. Main section
+                    const section = document.createElement('section');
+                    section.id = sectionId;
+                    section.className = 'month-section';
+
+                    let cardsHTML = groups[monthYear].map(img => `
+                        <div class="photo-card win-box-card">
+                            <div class="card-tag">★</div>
+                            <div class="img-wrapper">
+                                <img src="${img.url}" alt="${img.alt}" loading="lazy">
+                            </div>
+                            <div class="photo-info">
+                                <span class="photo-label">${img.label}</span>
+                                <span class="photo-date">${new Date(img.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
+                            </div>
+                        </div>
+                    `).join('');
+
+                    section.innerHTML = `
+                        <div class="section-header">
+                            <h2 class="month-heading">${monthYear.toUpperCase()}</h2>
+                            <div class="section-line"></div>
+                        </div>
+                        <div class="photo-grid">${cardsHTML}</div>
+                    `;
+                    galleryStream.appendChild(section);
+                });
+
+                initLightbox();
+                initScrollSpy();
+            }
+
+            // Lightbox logic
+            function initLightbox() {
                 const lightbox = document.getElementById('sg-lightbox');
                 const lightboxImg = document.getElementById('sg-lightbox-img');
                 const lightboxCaption = document.getElementById('sg-lightbox-caption');
+                const lightboxTitle = document.getElementById('lightbox-title-text');
                 const closeBtn = document.querySelector('.sg-close-btn');
 
-                // Open lightbox when clicking a frame
-                galleryContainer.addEventListener('click', (e) => {
-                    const wrapper = e.target.closest('.sonic-frame-wrapper');
-                    if (!wrapper) return; // If they clicked the background, do nothing
+                galleryStream.addEventListener('click', (e) => {
+                    const card = e.target.closest('.photo-card');
+                    if (!card) return;
 
-                    // Grab the specific image and text from the clicked wrapper
-                    const img = wrapper.querySelector('img');
-                    const label = wrapper.querySelector('.sg-pill-label').innerText;
+                    const img = card.querySelector('img');
+                    const label = card.querySelector('.photo-label').innerText;
 
-                    // Populate the lightbox
                     lightboxImg.src = img.src;
                     lightboxImg.alt = img.alt;
                     lightboxCaption.innerText = label;
-
-                    // Show it
+                    lightboxTitle.innerText = `${label.toLowerCase().replace(/\s+/g, '_')}.png`;
                     lightbox.classList.add('active');
                 });
 
-                // Close lightbox when clicking the X
-                closeBtn.addEventListener('click', () => {
-                    lightbox.classList.remove('active');
-                });
+                const closeAction = () => lightbox.classList.remove('active');
+                closeBtn.addEventListener('click', closeAction);
+                lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeAction(); });
+                document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAction(); });
+            }
 
-                // Close lightbox when clicking the dark background (outside the image)
-                lightbox.addEventListener('click', (e) => {
-                    if (e.target === lightbox) {
-                        lightbox.classList.remove('active');
-                    }
-                });
-
-                // Close lightbox with the Escape key
-                document.addEventListener('keydown', (e) => {
-                    if (e.key === 'Escape' && lightbox.classList.contains('active')) {
-                        lightbox.classList.remove('active');
-                    }
-                });
-
-                // --- 2. Joker Transition Logic ---
-                const projectLinks = document.querySelectorAll('a[href="projects.html"]');
-                const videoOverlay = document.getElementById('transition-overlay');
-                const video = document.getElementById('joker-transition');
-                const secretFrame = document.getElementById('secret-projects-frame');
-
-                if (projectLinks.length > 0 && video && secretFrame) {
-                    projectLinks.forEach(link => {
-                        link.addEventListener('click', (e) => {
-                            e.preventDefault(); 
-                            videoOverlay.style.display = 'block';
-                            videoOverlay.style.pointerEvents = 'auto'; 
-                            video.play();
-                            const swapTime = 800; 
-                            setTimeout(() => { secretFrame.style.opacity = '1'; }, swapTime);
-                            video.addEventListener('ended', () => {
-                                sessionStorage.setItem('heistSuccess', 'true');
-                                window.location.href = link.href;
-                            }, { once: true });
-                        });
+            // Scrollspy for sidebar link active status
+            function initScrollSpy() {
+                const sections = document.querySelectorAll('.month-section');
+                const navLinks = document.querySelectorAll('.timeline-link');
+                window.addEventListener('scroll', () => {
+                    let current = '';
+                    sections.forEach(section => {
+                        if (window.scrollY >= (section.offsetTop - 150)) {
+                            current = section.getAttribute('id');
+                        }
                     });
-                }
-            });
-        </script>
-    </body>
+                    navLinks.forEach(link => {
+                        link.classList.remove('active');
+                        if (link.getAttribute('href') === `#${current}`) link.classList.add('active');
+                    });
+                });
+            }
+
+            loadGallery();
+
+            // Joker Transition Logic
+            const projectLinks = document.querySelectorAll('a[href="projects.html"]');
+            const videoOverlay = document.getElementById('transition-overlay');
+            const video = document.getElementById('joker-transition');
+            const secretFrame = document.getElementById('secret-projects-frame');
+
+            if (projectLinks.length > 0 && video && secretFrame) {
+                projectLinks.forEach(link => {
+                    link.addEventListener('click', (e) => {
+                        e.preventDefault(); 
+                        videoOverlay.style.display = 'block'; 
+                        videoOverlay.style.pointerEvents = 'auto'; 
+                        video.play();
+                        setTimeout(() => { secretFrame.style.opacity = '1'; }, 800);
+                        video.addEventListener('ended', () => { 
+                            sessionStorage.setItem('heistSuccess', 'true'); 
+                            window.location.href = link.href; 
+                        }, { once: true });
+                    });
+                });
+            }
+        });
+    </script>
+</body>
 </html>

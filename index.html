@@ -171,11 +171,7 @@
 
                     <div class="card photos-panel" style="background:#000; padding:10px; border:1px solid #444; font-family:'VT323', monospace;">
                         <div class="photos-header" style="color:var(--accent); font-size:1.1rem; padding-bottom:5px; margin-bottom:10px;">[photos]</div>
-                        <div class="photos-grid">
-                                <a href="media.html" class="photo-link"><img src="assets/photo1.jpg" alt="Gallery preview 1"></a>
-                                <a href="media.html" class="photo-link"><img src="assets/photo2.jpg" alt="Gallery preview 2"></a>
-                                <a href="media.html" class="photo-link"><img src="assets/photo3.jpg" alt="Gallery preview 3"></a>
-                                <a href="media.html" class="photo-link"><img src="assets/photo4.jpg" alt="Gallery preview 4"></a>
+                        <div class="photos-grid" id="photos-grid">
                         </div>
                     </div>
 
@@ -452,6 +448,30 @@
                 });
             }
         });
+        </script>
+        <script>
+            // Fetch your gallery JSON file
+            fetch('data/gallery-data.json')
+                .then(response => response.json())
+                .then(photos => {
+                    const grid = document.getElementById('photos-grid');
+                    if (!grid) return;
+                    const latestPhotos = photos.slice(0, 4);
+
+                    latestPhotos.forEach(photo => {
+                        const link = document.createElement('a');
+                        link.href = 'media.html';
+                        link.className = 'photo-link';
+
+                        const img = document.createElement('img');
+                        img.src = photo.src || photo.url || photo.image;
+                        img.alt = photo.alt || photo.caption || 'Gallery preview';
+
+                        link.appendChild(img);
+                        grid.appendChild(link);
+                    });
+                })
+                .catch(error => console.error("Could not load photos:", error));
         </script>
 
         <footer class="site-footer">

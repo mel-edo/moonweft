@@ -672,10 +672,6 @@ img {
     height: 100%;
     object-fit: cover;
     display: block;
-    /* Starts muted and slightly darkened */
-    filter: grayscale(80%) brightness(0.7);
-    /* Only transitioning the color filter */
-    transition: filter 0.15s ease;
 }
 
 /* On hover: The border snaps to your accent color, and the image pops to full vibrancy. No movement at all. */

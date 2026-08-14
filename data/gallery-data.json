@@ -1,17 +1,100 @@
 [
-    {
-        "url": "https://your-cloudflare-r2-link.com/photo1.jpg",
-        "alt": "Server rack system glowing blue",
-        "label": "PHOTO_01 // SYSTEM"
-    },
-    {
-        "url": "https://your-cloudflare-r2-link.com/photo2.jpg",
-        "alt": "Green terminal code on a black screen",
-        "label": "PHOTO_02 // TERMINAL"
-    },
-    {
-        "url": "https://your-cloudflare-r2-link.com/photo3.jpg",
-        "alt": "Physical paper archives in a dark room",
-        "label": "PHOTO_03 // ARCHIVE"
-    }
+  {
+    "id": "1",
+    "url": "https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?q=80&w=800&auto=format&fit=crop",
+    "alt": "Morning coffee shop setup with warm sunlight",
+    "label": "Morning Coffee",
+    "date": "2026-08-12"
+  },
+  {
+    "id": "2",
+    "url": "https://images.unsplash.com/photo-1519501025264-65ba15a82390?q=80&w=800&auto=format&fit=crop",
+    "alt": "Neon city street lights at twilight",
+    "label": "Cyber Neon",
+    "date": "2026-08-08"
+  },
+  {
+    "id": "3",
+    "url": "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?q=80&w=800&auto=format&fit=crop",
+    "alt": "Golden hour over a calm ocean beach",
+    "label": "Summer Tide",
+    "date": "2026-08-03"
+  },
+  {
+    "id": "4",
+    "url": "https://images.unsplash.com/photo-1492691527719-9d1e07e534b4?q=80&w=800&auto=format&fit=crop",
+    "alt": "Hiker looking out over misty forest mountain ridge",
+    "label": "Misty Peaks",
+    "date": "2026-08-01"
+  },
+  {
+    "id": "5",
+    "url": "https://images.unsplash.com/photo-1513151233558-d860c5398176?q=80&w=800&auto=format&fit=crop",
+    "alt": "Retro arcade machine cabinet with colorful CRT screen",
+    "label": "Pixel Nostalgia",
+    "date": "2026-07-28"
+  },
+  {
+    "id": "6",
+    "url": "https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?q=80&w=800&auto=format&fit=crop",
+    "alt": "Lush green valley under dramatic sky",
+    "label": "Green Horizon",
+    "date": "2026-07-19"
+  },
+  {
+    "id": "7",
+    "url": "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=800&auto=format&fit=crop",
+    "alt": "Matrix style green digital code stream on black background",
+    "label": "Code Flow",
+    "date": "2026-07-11"
+  },
+  {
+    "id": "8",
+    "url": "https://images.unsplash.com/photo-1469474968028-56623f02e42e?q=80&w=800&auto=format&fit=crop",
+    "alt": "Sunlight beaming through pine trees in a mountain pass",
+    "label": "Forest Ray",
+    "date": "2026-07-02"
+  },
+  {
+    "id": "9",
+    "url": "https://images.unsplash.com/photo-1509198397868-475647b2a1e5?q=80&w=800&auto=format&fit=crop",
+    "alt": "Retro vinyl record playing on turntable",
+    "label": "Groove Analog",
+    "date": "2026-06-25"
+  },
+  {
+    "id": "10",
+    "url": "https://images.unsplash.com/photo-1518791841217-8f162f1e1131?q=80&w=800&auto=format&fit=crop",
+    "alt": "Cat lounging comfortably near a sunlit window",
+    "label": "Lazy Afternoon",
+    "date": "2026-06-14"
+  },
+  {
+    "id": "11",
+    "url": "https://images.unsplash.com/photo-1534447677768-be436bb09401?q=80&w=800&auto=format&fit=crop",
+    "alt": "Starry night sky over desert dunes",
+    "label": "Stargazing",
+    "date": "2026-06-05"
+  },
+  {
+    "id": "12",
+    "url": "https://images.unsplash.com/photo-1526772662000-3f88f10405ff?q=80&w=800&auto=format&fit=crop",
+    "alt": "Minimalist Japanese urban architecture and street scene",
+    "label": "Tokyo Lines",
+    "date": "2026-05-29"
+  },
+  {
+    "id": "13",
+    "url": "https://images.unsplash.com/photo-1508739773434-c26b3d09e071?q=80&w=800&auto=format&fit=crop",
+    "alt": "Vibrant purple and orange sunset reflections over lake water",
+    "label": "Twilight Glow",
+    "date": "2026-05-18"
+  },
+  {
+    "id": "14",
+    "url": "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=800&auto=format&fit=crop",
+    "alt": "Developer desk setup with laptop, code editor, and tea cup",
+    "label": "Late Night Dev",
+    "date": "2026-05-04"
+  }
 ]
