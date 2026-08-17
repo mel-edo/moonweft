@@ -33,7 +33,7 @@
   },
   {
     "title": "It takes Two",
-    "status": "playing"
+    "status": "completed"
   },
   {
     "title": "Unleashed Recompiled",
@@ -41,6 +41,22 @@
   },
   {
     "title": "osu!",
+    "status": "playing"
+  },
+  {
+    "title": "Zenless Zone Zero",
+    "status": "playing"
+  },
+  {
+    "title": "Split Fiction",
+    "status": "playing"
+  },
+  {
+    "title": "Left 4 Dead 2",
+    "status": "playing"
+  },
+  {
+    "title": "UmaMusume Pretty Derby",
     "status": "playing"
   }
 ]
