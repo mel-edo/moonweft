@@ -321,8 +321,8 @@ html, body {
 .postit-2 {
     background: var(--postit-green);
     color: #1a4a18;
-    top: 40%;
-    left: 47%;
+    bottom: 10%;
+    left: 48%;
     transform: rotate(-3deg);
 }
 
@@ -342,7 +342,7 @@ html, body {
 .polaroid {
     position: absolute;
     z-index: 30;
-    top: 42%;
+    bottom: 4%;
     right: 1%;
     transform: rotate(6deg);
     background: #faf8f4;
@@ -382,7 +382,7 @@ html, body {
     overflow: visible;  /* chibi tooltip floats above; bg art is mask-contained */
     /* Explicit z-index from the start: prevents GPU layer re-rasterization
        (and text pixelation) when z-index is changed on chibi-active */
-    z-index: 1;
+    z-index: 2;
 }
 
 /* No hover transform on paper — static feel matches the corkboard vibe */
@@ -440,11 +440,49 @@ html, body {
 .tint-cryo    { background: var(--paper-cryo); }
 .tint-dendro  { background: var(--paper-dendro); }
 
+/* ──────────────────────────────
+   BOARD COLUMNS
+────────────────────────────── */
+
+.board-column {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+    min-width: 0;
+    position: relative;
+    z-index: 2;
+}
+
+.board-column-left {
+    grid-column: 1;
+}
+
+.board-column-right {
+    grid-column: 2;
+}
+
+
 /* Scatter — hand-placed feel */
-.paper-1 { transform: rotate(-1.5deg); grid-column: 1 / 2; }
-.paper-2 { transform: rotate(1.2deg);  grid-column: 2 / 4; margin-top: 28px; }
-.paper-3 { transform: rotate(0.8deg);  grid-column: 1 / 2; }
-.paper-4 { transform: rotate(-1.8deg); grid-column: 2 / 4; width: 90%; justify-self: center; margin-top: 50px; }
+
+.paper-1 {
+    transform: rotate(-1.5deg);
+}
+
+.paper-2 {
+    transform: rotate(1.2deg);
+    margin-top: 28px;
+}
+
+.paper-3 {
+    transform: rotate(0.8deg);
+}
+
+.paper-4 {
+    transform: rotate(-1.8deg);
+    width: 90%;
+    align-self: center;
+    margin-top: 26px;
+}
 
 /* ──────────────────────────────
    WASHI TAPE — decorative strips
@@ -486,9 +524,9 @@ html, body {
     width: 80px;
     height: 20px;
     background-color: rgba(127, 212, 245, 0.4);
-    top: 0px;
+    top: -10px;
     right: 8%;
-    transform: rotate(-6deg);
+    transform: rotate(-10deg);
 }
 
 .washi-dendro {
@@ -504,42 +542,99 @@ html, body {
    ELEMENT PINS — purely decorative thumbtacks
    (click behaviour removed; easter egg moved to paper-title hover)
 ────────────────────────────── */
+.thread-canvas {
+    position: absolute;
+    inset: 0;
+
+    width: 100%;
+    height: 100%;
+
+    z-index: 0;
+    pointer-events: none;
+}
+
 .pin {
     position: absolute;
     width: 16px;
     height: 16px;
     border-radius: 50%;
     cursor: default;
-    z-index: 101;
+    z-index: 10;
     border: 1.5px solid rgba(255,255,255,0.5);
-    /* Compositor layer — keeps the pin isolated so it never triggers
-       parent re-rasterization */
     will-change: transform;
-    transform: translateZ(0);
 }
+
+
+/* ── Guestbook ── */
 
 .pin-electro {
-    top: 12px; right: 22px;
-    background: radial-gradient(circle at 40% 35%, rgba(255,255,255,0.5), var(--electro) 70%);
-    box-shadow: 0 0 8px var(--electro), 0 2px 6px rgba(0,0,0,0.2);
+    top: 12px;
+    right: 22px;
+    background:
+        radial-gradient(
+            circle at 40% 35%,
+            rgba(255,255,255,0.5),
+            var(--electro) 70%
+        );
+    box-shadow:
+        0 0 8px var(--electro),
+        0 2px 6px rgba(0,0,0,0.2);
 }
+
+
+/* ── Neighbours ── */
 
 .pin-pyro {
-    top: 15px; right: 28px;
-    background: radial-gradient(circle at 40% 35%, rgba(255,255,255,0.5), var(--pyro) 70%);
-    box-shadow: 0 0 8px var(--pyro), 0 2px 6px rgba(0,0,0,0.2);
+    top: 15px;
+    right: 28px;
+    background:
+        radial-gradient(
+            circle at 40% 35%,
+            rgba(255,255,255,0.5),
+            var(--pyro) 70%
+        );
+
+    box-shadow:
+        0 0 8px var(--pyro),
+        0 2px 6px rgba(0,0,0,0.2);
 }
+
+
+/* ── Recently ── */
 
 .pin-cryo {
-    top: 15px; right: 30px;
-    background: radial-gradient(circle at 40% 35%, rgba(255,255,255,0.5), var(--cryo) 70%);
-    box-shadow: 0 0 8px var(--cryo), 0 2px 6px rgba(0,0,0,0.2);
+    top: 15px;
+    right: 30px;
+
+    background:
+        radial-gradient(
+            circle at 40% 35%,
+            rgba(255,255,255,0.5),
+            var(--cryo) 70%
+        );
+
+    box-shadow:
+        0 0 8px var(--cryo),
+        0 2px 6px rgba(0,0,0,0.2);
 }
 
+
+/* ── Games ── */
+
 .pin-dendro {
-    top: 10px; left: 75%; transform: translateX(-50%) translateZ(0);
-    background: radial-gradient(circle at 40% 35%, rgba(255,255,255,0.5), var(--dendro) 70%);
-    box-shadow: 0 0 8px var(--dendro), 0 2px 6px rgba(0,0,0,0.2);
+    top: 10px;
+    right: 28px;
+
+    background:
+        radial-gradient(
+            circle at 40% 35%,
+            rgba(255,255,255,0.5),
+            var(--dendro) 70%
+        );
+
+    box-shadow:
+        0 0 8px var(--dendro),
+        0 2px 6px rgba(0,0,0,0.2);
 }
 
 
@@ -1406,28 +1501,61 @@ html, body {
    RESPONSIVE
 ────────────────────────────── */
 @media (max-width: 750px) {
+
     .board-frame {
         margin: 16px 8px;
         padding: 24px 14px 30px;
         border-width: 12px;
     }
 
-    .corkboard { grid-template-columns: 1fr; }
-
-    .paper-1, .paper-2, .paper-3, .paper-4 {
-        transform: none;
-        margin-top: 0;
+    .corkboard {
+        grid-template-columns: 1fr;
     }
 
-    .label-content h1 { font-size: 2.2rem; }
-    .paper { padding: 20px 16px 18px; }
-    .button-row { flex-direction: column; align-items: flex-start; }
-    .btn-code { width: 100%; min-width: unset; }
-    .anilist-grid { grid-template-columns: repeat(auto-fill, minmax(90px, 1fr)); }
+    .board-column-left,
+    .board-column-right {
+        grid-column: 1;
+    }
 
-    /* Hide decorative elements on small screens */
+    .board-column {
+        gap: 20px;
+    }
+
+    .paper-1,
+    .paper-2,
+    .paper-3,
+    .paper-4 {
+        transform: none;
+        margin-top: 0;
+        width: 100%;
+    }
+
+    .label-content h1 {
+        font-size: 2.2rem;
+    }
+
+    .paper {
+        padding: 20px 16px 18px;
+    }
+
+    .button-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .btn-code {
+        width: 100%;
+        min-width: unset;
+    }
+
+    .anilist-grid {
+        grid-template-columns:
+            repeat(auto-fill, minmax(90px, 1fr));
+    }
     .string-svg,
     .doodle,
     .postit,
-    .polaroid { display: none; }
+    .polaroid {
+        display: none;
+    }
 }

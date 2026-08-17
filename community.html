@@ -38,9 +38,11 @@
             <!-- THE CORKBOARD -->
             <main class="corkboard">
                 <!-- Dynamically rendered cozy threads overlay -->
-                <canvas id="thread-canvas" style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 100; pointer-events: none;"></canvas>
-
-                <!-- ✧ STRINGS HAVE BEEN MOVED TO DYNAMIC CANVAS!! ✧ -->
+                <canvas
+                    id="thread-canvas"
+                    class="thread-canvas"
+                    aria-hidden="true"
+                ></canvas>
 
                 <!-- DOODLES scattered on the cork ✧ -->
                 <span class="doodle doodle-1" aria-hidden="true">★</span>
@@ -65,188 +67,361 @@
                     <span class="polaroid-caption">   untitled</span>
                 </div>
 
-                <!-- GUESTBOOK — Keqing (electro) -->
-                <section class="paper paper-1 tint-electro">
-                    <div class="washi washi-electro"></div>
-                    <div class="pin pin-electro"></div>
-                    <h2 class="paper-title"><img src="assets/keqing-icon.webp" alt="" class="char-icon"> leave a note ✉</h2>
-                    <div class="guestbook-wrap">
+                <!-- LEFT COLUMN -->
+                <div class="board-column board-column-left">
 
-                        <!-- Entry form -->
-                        <form class="gb-form" id="gb-form" novalidate>
+                    <!-- GUESTBOOK — Keqing (electro) -->
+                    <section class="paper paper-1 tint-electro">
+                        <div class="washi washi-electro"></div>
+                        <div class="pin pin-electro"></div>
 
-                            <!-- HONEYPOT — hidden from humans, bots fill it -->
-                            <input type="text" name="website_url" id="website_url"
-                                tabindex="-1" autocomplete="off"
-                                style="position:absolute;left:-9999px;opacity:0;height:0;">
+                        <h2 class="paper-title">
+                            <img src="assets/keqing-icon.webp" alt="" class="char-icon">
+                            leave a note ✉
+                        </h2>
 
-                            <div class="gb-form-row">
+                        <div class="guestbook-wrap">
+
+                            <!-- Entry form -->
+                            <form class="gb-form" id="gb-form" novalidate>
+
+                                <!-- HONEYPOT — hidden from humans, bots fill it -->
+                                <input
+                                    type="text"
+                                    name="website_url"
+                                    id="website_url"
+                                    tabindex="-1"
+                                    autocomplete="off"
+                                    style="position:absolute;left:-9999px;opacity:0;height:0;"
+                                >
+
+                                <div class="gb-form-row">
+                                    <div class="gb-field">
+                                        <label for="gb-name">name *</label>
+                                        <input
+                                            type="text"
+                                            id="gb-name"
+                                            maxlength="32"
+                                            placeholder="your name"
+                                            required
+                                        >
+                                    </div>
+
+                                    <div class="gb-field">
+                                        <label for="gb-site">
+                                            site <span class="optional">(optional)</span>
+                                        </label>
+                                        <input
+                                            type="url"
+                                            id="gb-site"
+                                            placeholder="https://yoursite.com"
+                                        >
+                                    </div>
+                                </div>
+
                                 <div class="gb-field">
-                                    <label for="gb-name">name *</label>
-                                    <input type="text" id="gb-name" maxlength="32"
-                                        placeholder="your name" required>
+                                    <label for="gb-message">
+                                        message *
+                                        <span class="optional">(max 280 chars)</span>
+                                    </label>
+
+                                    <textarea
+                                        id="gb-message"
+                                        maxlength="280"
+                                        rows="3"
+                                        placeholder="say hello, drop a thought, sign the board."
+                                        required
+                                    ></textarea>
+
+                                    <div class="gb-char-count">
+                                        <span id="gb-chars">0</span>/280
+                                    </div>
                                 </div>
-                                <div class="gb-field">
-                                    <label for="gb-site">site <span class="optional">(optional)</span></label>
-                                    <input type="url" id="gb-site"
-                                        placeholder="https://yoursite.com">
+
+                                <!-- Color picker -->
+                                <div class="gb-color-row">
+                                    <span class="gb-color-label">note color:</span>
+
+                                    <div class="gb-color-options">
+                                        <label class="color-opt">
+                                            <input
+                                                type="radio"
+                                                name="gb-color"
+                                                value="#c8a8ff"
+                                                checked
+                                            >
+                                            <span style="background:#c8a8ff"></span>
+                                        </label>
+
+                                        <label class="color-opt">
+                                            <input
+                                                type="radio"
+                                                name="gb-color"
+                                                value="#ff9d5c"
+                                            >
+                                            <span style="background:#ff9d5c"></span>
+                                        </label>
+
+                                        <label class="color-opt">
+                                            <input
+                                                type="radio"
+                                                name="gb-color"
+                                                value="#a0d6eb"
+                                            >
+                                            <span style="background:#a0d6eb"></span>
+                                        </label>
+
+                                        <label class="color-opt">
+                                            <input
+                                                type="radio"
+                                                name="gb-color"
+                                                value="#8fd96a"
+                                            >
+                                            <span style="background:#8fd96a"></span>
+                                        </label>
+
+                                        <label class="color-opt">
+                                            <input
+                                                type="radio"
+                                                name="gb-color"
+                                                value="#f5e87a"
+                                            >
+                                            <span style="background:#f5e87a"></span>
+                                        </label>
+                                    </div>
                                 </div>
+
+                                <button
+                                    type="submit"
+                                    class="gb-submit"
+                                    id="gb-submit"
+                                >
+                                    leave a note
+                                </button>
+
+                                <div class="gb-status" id="gb-status"></div>
+                            </form>
+
+                            <!-- Entries list -->
+                            <div class="gb-entries" id="gb-entries">
+                                <span class="al-placeholder">loading entries...</span>
                             </div>
 
-                            <div class="gb-field">
-                                <label for="gb-message">message * <span class="optional">(max 280 chars)</span></label>
-                                <textarea id="gb-message" maxlength="280" rows="3"
-                                        placeholder="say hello, drop a thought, sign the board." required></textarea>
-                                <div class="gb-char-count"><span id="gb-chars">0</span>/280</div>
+                            <!-- Pagination -->
+                            <div
+                                class="gb-pagination"
+                                id="gb-pagination"
+                            ></div>
+
+                        </div>
+                    </section>
+
+
+                    <!-- RECENTLY — Layla (cryo) -->
+                    <section class="paper paper-3 tint-cryo">
+                        <div class="washi washi-cryo"></div>
+                        <div class="pin pin-cryo"></div>
+
+                        <h2 class="paper-title">
+                            <img src="assets/layla-icon.webp" alt="" class="char-icon">
+                            recently ♡
+                        </h2>
+
+                        <p class="paper-sub">
+                            recently completed and rated milestones.
+                        </p>
+
+                        <!-- AniList user stats -->
+                        <div class="al-stats" id="al-stats">
+
+                            <div class="al-stat">
+                                <strong id="al-anime-count">—</strong>
+                                <span>anime</span>
                             </div>
 
-                            <!-- Color picker -->
-                            <div class="gb-color-row">
-                                <span class="gb-color-label">note color:</span>
-                                <div class="gb-color-options">
-                                    <label class="color-opt">
-                                        <input type="radio" name="gb-color" value="#c8a8ff" checked>
-                                        <span style="background:#c8a8ff"></span>
-                                    </label>
-                                    <label class="color-opt">
-                                        <input type="radio" name="gb-color" value="#ff9d5c">
-                                        <span style="background:#ff9d5c"></span>
-                                    </label>
-                                    <label class="color-opt">
-                                        <input type="radio" name="gb-color" value="#a0d6eb">
-                                        <span style="background:#a0d6eb"></span>
-                                    </label>
-                                    <label class="color-opt">
-                                        <input type="radio" name="gb-color" value="#8fd96a">
-                                        <span style="background:#8fd96a"></span>
-                                    </label>
-                                    <label class="color-opt">
-                                        <input type="radio" name="gb-color" value="#f5e87a">
-                                        <span style="background:#f5e87a"></span>
-                                    </label>
-                                </div>
+                            <span class="al-dot">·</span>
+
+                            <div class="al-stat">
+                                <strong id="al-hours">—</strong>
+                                <span>hrs watched</span>
                             </div>
 
-                            <button type="submit" class="gb-submit" id="gb-submit">
-                                leave a note
-                            </button>
-                            <div class="gb-status" id="gb-status"></div>
-                        </form>
+                            <span class="al-dot">·</span>
 
-                        <!-- Entries list -->
-                        <div class="gb-entries" id="gb-entries">
-                            <span class="al-placeholder">loading entries...</span>
+                            <div class="al-stat">
+                                <strong id="al-chapters">—</strong>
+                                <span>chapters read</span>
+                            </div>
+
                         </div>
 
-                        <!-- Pagination -->
-                        <div class="gb-pagination" id="gb-pagination"></div>
-
-                    </div>
-                </section>
-
-                <!-- NEIGHBOURS — Yoimiya (pyro) -->
-                <section class="paper paper-2 tint-pyro">
-                    <div class="washi washi-pyro"></div>
-                    <div class="pin pin-pyro"></div>
-                    <h2 class="paper-title"><img src="assets/yoimiya-icon.webp" alt="" class="char-icon"> neighbours ✦</h2>
-                    <p class="paper-sub">sites i visit. link back if you'd like.</p>
-
-                    <div class="my-button-block">
-                        <span class="sub-label">my button, grab it!</span>
-                        <div class="button-row">
-                            <img src="assets/moonweft_88x31.png" alt="moonweft 88x31" class="site-btn">
-                            <textarea readonly class="btn-code"><a href="https://mel-edo.github.io/moonweft/"><img src="https://mel-edo.github.io/moonweft/assets/moonweft_88x31.png" alt="moonweft"></a></textarea>
+                        <div id="anilist-content" class="anilist-grid">
+                            <span class="al-placeholder">loading...</span>
                         </div>
-                    </div>
+                    </section>
 
-                    <span class="sub-label">cool people</span>
-                    <div class="button-grid">
-                        <a href="https://integral-space.vercel.app/" target="_blank" rel="noopener noreferrer" title="integral-space">
-                            <img src="assets/placeholder.gif" alt="integral-space">
-                        </a>
-                        <a href="https://www.aketawi.space/" target="_blank" rel="noopener noreferrer" title="aketawi">
-                            <img src="assets/aketawi.gif" alt="aketawi">
-                        </a>
-                    </div>
+                </div>
 
-                    <div style="margin-top: 24px;"></div>
-                    <span class="sub-label">elsewhere ➹</span>
-                    <div class="ticket-grid">
-                        <a href="https://osu.ppy.sh/users/11462331" target="_blank" class="ticket ticket-osu" style="transform: rotate(-3deg);">
-                            <span class="ticket-type">token</span>
-                            <span class="ticket-name">osu!</span>
-                        </a>
-                        <a href="https://steamcommunity.com/id/meledo/" target="_blank" class="ticket ticket-steam" style="transform: rotate(2deg) translateY(4px);">
-                            <span class="ticket-type">pass</span>
-                            <span class="ticket-name">steam</span>
-                        </a>
-                        <a href="https://backloggd.com/u/Meledo/" target="_blank" class="ticket ticket-bkg" style="transform: rotate(-1deg) translateY(2px);">
-                            <span class="ticket-type">log</span>
-                            <span class="ticket-name">backloggd</span>
-                        </a>
-                        <a href="https://anilist.co/user/meledo/" target="_blank" class="ticket ticket-anilist" style="transform: rotate(4deg);">
-                            <span class="ticket-type">track</span>
-                            <span class="ticket-name">anilist</span>
-                        </a>
-                        <a href="https://retroachievements.org/user/meledo" target="_blank" class="ticket ticket-ra" style="transform: rotate(-2deg) translateY(6px);">
-                            <span class="ticket-type">retro</span>
-                            <span class="ticket-name">rachv</span>
-                        </a>
-                    </div>
-                </section>
 
-                <!-- CURRENTLY — Layla (cryo) -->
-                <section class="paper paper-3 tint-cryo">
-                    <div class="washi washi-cryo"></div>
-                    <div class="pin pin-cryo"></div>
-                    <h2 class="paper-title"><img src="assets/layla-icon.webp" alt="" class="char-icon"> recently ♡</h2>
-                    <p class="paper-sub">recently completed and rated milestones.</p>
-                    <!-- AniList user stats -->
-                    <div class="al-stats" id="al-stats">
-                        <div class="al-stat">
-                            <strong id="al-anime-count">—</strong>
-                            <span>anime</span>
+                <!-- RIGHT COLUMN -->
+                <div class="board-column board-column-right">
+
+                    <!-- NEIGHBOURS — Yoimiya (pyro) -->
+                    <section class="paper paper-2 tint-pyro">
+                        <div class="washi washi-pyro"></div>
+                        <div class="pin pin-pyro"></div>
+
+                        <h2 class="paper-title">
+                            <img src="assets/yoimiya-icon.webp" alt="" class="char-icon">
+                            neighbours ✦
+                        </h2>
+
+                        <p class="paper-sub">
+                            sites i visit. link back if you'd like.
+                        </p>
+
+                        <div class="my-button-block">
+                            <span class="sub-label">my button, grab it!</span>
+
+                            <div class="button-row">
+                                <img
+                                    src="assets/moonweft_88x31.png"
+                                    alt="moonweft 88x31"
+                                    class="site-btn"
+                                >
+
+                                <textarea readonly class="btn-code"><a href="https://mel-edo.github.io/moonweft/"><img src="https://mel-edo.github.io/moonweft/assets/moonweft_88x31.png" alt="moonweft"></a></textarea>
+                            </div>
                         </div>
-                        <span class="al-dot">·</span>
-                        <div class="al-stat">
-                            <strong id="al-hours">—</strong>
-                            <span>hrs watched</span>
+
+                        <span class="sub-label">cool people</span>
+
+                        <div class="button-grid">
+                            <a
+                                href="https://integral-space.vercel.app/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                title="integral-space"
+                            >
+                                <img
+                                    src="assets/placeholder.gif"
+                                    alt="integral-space"
+                                >
+                            </a>
+
+                            <a
+                                href="https://www.aketawi.space/"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                title="aketawi"
+                            >
+                                <img
+                                    src="assets/aketawi.gif"
+                                    alt="aketawi"
+                                >
+                            </a>
                         </div>
-                        <span class="al-dot">·</span>
-                        <div class="al-stat">
-                            <strong id="al-chapters">—</strong>
-                            <span>chapters read</span>
+
+                        <div style="margin-top: 24px;"></div>
+
+                        <span class="sub-label">elsewhere ➹</span>
+
+                        <div class="ticket-grid">
+
+                            <a
+                                href="https://osu.ppy.sh/users/11462331"
+                                target="_blank"
+                                class="ticket ticket-osu"
+                                style="transform: rotate(-3deg);"
+                            >
+                                <span class="ticket-type">token</span>
+                                <span class="ticket-name">osu!</span>
+                            </a>
+
+                            <a
+                                href="https://steamcommunity.com/id/meledo/"
+                                target="_blank"
+                                class="ticket ticket-steam"
+                                style="transform: rotate(2deg) translateY(4px);"
+                            >
+                                <span class="ticket-type">pass</span>
+                                <span class="ticket-name">steam</span>
+                            </a>
+
+                            <a
+                                href="https://backloggd.com/u/Meledo/"
+                                target="_blank"
+                                class="ticket ticket-bkg"
+                                style="transform: rotate(-1deg) translateY(2px);"
+                            >
+                                <span class="ticket-type">log</span>
+                                <span class="ticket-name">backloggd</span>
+                            </a>
+
+                            <a
+                                href="https://anilist.co/user/meledo/"
+                                target="_blank"
+                                class="ticket ticket-anilist"
+                                style="transform: rotate(4deg);"
+                            >
+                                <span class="ticket-type">track</span>
+                                <span class="ticket-name">anilist</span>
+                            </a>
+
+                            <a
+                                href="https://retroachievements.org/user/meledo"
+                                target="_blank"
+                                class="ticket ticket-ra"
+                                style="transform: rotate(-2deg) translateY(6px);"
+                            >
+                                <span class="ticket-type">retro</span>
+                                <span class="ticket-name">rachv</span>
+                            </a>
+
                         </div>
-                    </div>
-                    <div id="anilist-content" class="anilist-grid">
-                        <span class="al-placeholder">loading...</span>
-                    </div>
-                </section>
+                    </section>
 
-                <!-- GAMES — Kirara (dendro) -->
-                <section class="paper paper-4 tint-dendro">
-                    <div class="washi washi-dendro"></div>
-                    <div class="pin pin-dendro"></div>
-                    <h2 class="paper-title">
-                        <img src="assets/kirara-icon.webp" alt="" class="char-icon"> games ※
-                    </h2>
-                    <p class="paper-sub"><strong id="ra-points" style="color: var(--ink);">—</strong> pts · retro grinding and current obsessions.</p>
 
-                    <!-- RA Recently Played -->
-                    <span class="sub-label">recently on retroachievements</span>
-                    <div class="ra-grid" id="ra-content">
-                        <span class="al-placeholder">loading...</span>
-                    </div>
+                    <!-- GAMES — Kirara (dendro) -->
+                    <section class="paper paper-4 tint-dendro">
+                        <div class="washi washi-dendro"></div>
+                        <div class="pin pin-dendro"></div>
 
-                    <!-- Divider -->
-                    <div class="games-divider"></div>
+                        <h2 class="paper-title">
+                            <img src="assets/kirara-icon.webp" alt="" class="char-icon">
+                            games ※
+                        </h2>
 
-                    <!-- Hand-curated modern games -->
-                    <span class="sub-label">modern shelf</span>
-                    <div class="games-grid" id="games-content">
-                        <span class="al-placeholder">loading...</span>
-                    </div>
-                </section>
+                        <p class="paper-sub">
+                            <strong
+                                id="ra-points"
+                                style="color: var(--ink);"
+                            >—</strong>
+                            pts · retro grinding and current obsessions.
+                        </p>
+
+                        <!-- RA Recently Played -->
+                        <span class="sub-label">
+                            recently on retroachievements
+                        </span>
+
+                        <div class="ra-grid" id="ra-content">
+                            <span class="al-placeholder">loading...</span>
+                        </div>
+
+                        <!-- Divider -->
+                        <div class="games-divider"></div>
+
+                        <!-- Hand-curated modern games -->
+                        <span class="sub-label">modern shelf</span>
+
+                        <div class="games-grid" id="games-content">
+                            <span class="al-placeholder">loading...</span>
+                        </div>
+
+                    </section>
+
+                </div>
 
             </main>
 
@@ -471,80 +646,280 @@
                         '<span class="al-placeholder">couldn\'t load games</span>';
                 });
 
-            // ── DRAW COZY THREADS NATIVELY ──
+            // DRAW COZY THREADS NATIVELY
+
             function updateThreads() {
                 const canvas = document.getElementById('thread-canvas');
-                if(!canvas) return;
                 const board = document.querySelector('.corkboard');
+
+                if (!canvas || !board) return;
+
                 const rect = board.getBoundingClientRect();
-                
-                // Match physical pixels to prevent blurring
-                canvas.width = board.offsetWidth;
-                canvas.height = board.offsetHeight;
-                
+
+                const dpr = window.devicePixelRatio || 1;
+
+                canvas.width = Math.round(board.offsetWidth * dpr);
+                canvas.height = Math.round(board.offsetHeight * dpr);
+
+                canvas.style.width = `${board.offsetWidth}px`;
+                canvas.style.height = `${board.offsetHeight}px`;
+
                 const ctx = canvas.getContext('2d');
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-                
-                // We order them explicitly by how they physically render in the DOM (1, 2, 3, 4)
-                const pins = Array.from(document.querySelectorAll('.pin'));
-                if(pins.length < 4) return;
-                
-                // Map pins into exact X/Y pixels relative to canvas
-                const p = pins.map(pin => {
+
+                if (!ctx) return;
+
+                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+                ctx.clearRect(
+                    0,
+                    0,
+                    board.offsetWidth,
+                    board.offsetHeight
+                );
+
+
+                // ─────────────────────────────────
+                // FIND PINS
+                // ─────────────────────────────────
+
+                const pins = [
+                    document.querySelector('.pin-electro'),
+                    document.querySelector('.pin-pyro'),
+                    document.querySelector('.pin-cryo'),
+                    document.querySelector('.pin-dendro')
+                ].filter(Boolean);
+
+                if (pins.length < 4) return;
+
+
+                // ─────────────────────────────────
+                // CONVERT PIN POSITIONS
+                // TO BOARD-LOCAL COORDINATES
+                // ─────────────────────────────────
+
+                const points = pins.map(pin => {
                     const r = pin.getBoundingClientRect();
-                    return { x: (r.left - rect.left) + r.width/2, y: (r.top - rect.top) + r.height/2 };
+
+                    return {
+                        x: (r.left - rect.left) + (r.width / 2),
+                        y: (r.top - rect.top) + (r.height / 2)
+                    };
                 });
-                
-                function drawCurve(p1, p2, curveX, curveY, dashed) {
-                    ctx.beginPath();
-                    ctx.moveTo(p1.x, p1.y);
+
+
+                // ─────────────────────────────────
+                // THREAD STYLE
+                // ─────────────────────────────────
+
+                ctx.lineWidth = 2;
+
+                ctx.strokeStyle = 'rgba(170, 75, 75, 0.48)';
+
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+
+                /*
+                * Very subtle shadow makes the thread feel
+                * like physical string sitting on cork.
+                */
+                ctx.shadowColor = 'rgba(60, 30, 20, 0.12)';
+                ctx.shadowBlur = 1;
+                ctx.shadowOffsetY = 1;
+
+
+                // ─────────────────────────────────
+                // CURVED THREAD
+                // ─────────────────────────────────
+
+                function drawThread(
+                    p1,
+                    p2,
+                    curveX = 0,
+                    curveY = 0,
+                    dashed = false
+                ) {
                     const mx = ((p1.x + p2.x) / 2) + curveX;
                     const my = ((p1.y + p2.y) / 2) + curveY;
+
+                    ctx.beginPath();
+                    ctx.moveTo(p1.x, p1.y);
                     ctx.quadraticCurveTo(mx, my, p2.x, p2.y);
-                    
-                    if (dashed) {
-                        ctx.setLineDash([6, 5]);
-                        ctx.strokeStyle = 'rgba(196, 108, 108, 0.25)';
-                        ctx.lineWidth = 1.2;
-                    } else {
-                        ctx.setLineDash([]);
-                        ctx.strokeStyle = 'rgba(196, 108, 108, 0.45)';
-                        ctx.lineWidth = 2.0;
-                    }
+
+                    ctx.setLineDash(
+                        dashed ? [6, 5] : []
+                    );
+
+                    // Darker physical thread
+                    ctx.strokeStyle = dashed
+                        ? 'rgba(145, 60, 60, 0.40)'
+                        : 'rgba(145, 60, 60, 0.58)';
+
+                    ctx.lineWidth = 2.2;
+                    ctx.stroke();
+
+                    // Tiny highlight
+                    ctx.beginPath();
+                    ctx.moveTo(p1.x, p1.y);
+                    ctx.quadraticCurveTo(mx, my, p2.x, p2.y);
+
+                    ctx.strokeStyle = dashed
+                        ? 'rgba(235, 170, 170, 0.30)'
+                        : 'rgba(235, 170, 170, 0.38)';
+
+                    ctx.lineWidth = 0.7;
                     ctx.stroke();
                 }
-                
-                // Tactile shadow
-                ctx.shadowColor = 'rgba(0,0,0,0.3)';
-                ctx.shadowOffsetY = 3;
-                ctx.shadowBlur = 4;
-                
-                // Top horizontal droop
-                drawCurve(p[0], p[1], 0, 45, false);
-                // Left vertical swoop
-                drawCurve(p[0], p[2], 30, 0, false);
-                // Right vertical swoop
-                drawCurve(p[1], p[3], -30, 0, false);
-                // Detective diagonal thread
-                drawCurve(p[1], p[2], -15, 15, true);
-                // Bottom horizontal droop
-                drawCurve(p[2], p[3], 0, 40, false);
 
-                // ERASE thread at pin locations to make them look like they are 'over'
-                ctx.globalCompositeOperation = 'destination-out';
+
+                // ─────────────────────────────────
+                // THREAD ROUTE
+                //
+                // 1 → 2 → 4 → 3
+                //
+                // This gives the board a more natural
+                // "string connecting pinned notes" look
+                // instead of a spider-web.
+                // ─────────────────────────────────
+
+                const [guestbook, neighbours, recently, games] = points;
+
+
+                // Guestbook → Neighbours
+                drawThread(
+                    guestbook,
+                    neighbours,
+                    0,
+                    75
+                );
+
+
+                // Neighbours → Games
+                drawThread(
+                    neighbours,
+                    games,
+                    45,
+                    0
+                );
+
+
+                // Games → Recently
+                drawThread(
+                    games,
+                    recently,
+                    0,
+                    75
+                );
+
+
+                // Recently → Guestbook
+                drawThread(
+                    recently,
+                    guestbook,
+                    -55,
+                    0
+                );
+
+
+                /*
+                * Tiny extra dashed connection gives it that
+                * hand-pinned scrapbook feel without creating
+                * a giant web.
+                */
+                drawThread(
+                    neighbours,
+                    recently,
+                    -25,
+                    35,
+                    true
+                );
+
+
+                /*
+                * Reset canvas state so later drawing isn't
+                * affected by the thread's shadow/dash state.
+                */
                 ctx.setLineDash([]);
                 ctx.shadowColor = 'transparent';
-                p.forEach(point => {
-                    ctx.beginPath();
-                    ctx.arc(point.x, point.y, 10, 0, Math.PI * 2);
-                    ctx.fill();
+                ctx.shadowBlur = 0;
+                ctx.shadowOffsetY = 0;
+            }
+            // ─────────────────────────────────────
+            // KEEP THREADS ATTACHED DURING
+            // DYNAMIC CONTENT / LAYOUT CHANGES
+            // ─────────────────────────────────────
+
+            let threadFrame = null;
+
+            function scheduleThreadUpdate() {
+                if (threadFrame !== null) {
+                    cancelAnimationFrame(threadFrame);
+                }
+
+                threadFrame = requestAnimationFrame(() => {
+                    threadFrame = null;
+                    updateThreads();
                 });
-                ctx.globalCompositeOperation = 'source-over';
             }
 
-            // Tie logic tightly to window so fonts pushing layout will definitely get caught!
-            window.addEventListener('load', () => setTimeout(updateThreads, 150));
-            window.addEventListener('resize', updateThreads);
+
+            const board = document.querySelector('.corkboard');
+
+            if (board && 'ResizeObserver' in window) {
+
+                const threadResizeObserver =
+                    new ResizeObserver(() => {
+                        scheduleThreadUpdate();
+                    });
+
+
+                // Board itself
+                threadResizeObserver.observe(board);
+
+
+                // Both independent columns
+                document
+                    .querySelectorAll('.board-column')
+                    .forEach(column => {
+                        threadResizeObserver.observe(column);
+                    });
+
+
+                // Every paper
+                document
+                    .querySelectorAll('.paper')
+                    .forEach(paper => {
+                        threadResizeObserver.observe(paper);
+                    });
+            }
+
+
+            /*
+            * Resize still matters because the pins move when
+            * the viewport changes even if the board's height
+            * happens not to change.
+            */
+            window.addEventListener(
+                'resize',
+                scheduleThreadUpdate
+            );
+
+
+            /*
+            * First draw after the initial layout.
+            */
+            window.addEventListener('load', () => {
+                scheduleThreadUpdate();
+            });
+
+
+            /*
+            * Fonts can change text dimensions after initial
+            * layout. Give them a chance to settle.
+            */
+            if (document.fonts?.ready) {
+                document.fonts.ready.then(() => {
+                    scheduleThreadUpdate();
+                });
+            }
         </script>
     
         <script>
