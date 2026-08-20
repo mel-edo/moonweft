@@ -349,7 +349,7 @@ html, body {
     padding: 8px 8px 14px;
     width: 90px;
     box-shadow: 2px 4px 12px rgba(0,0,0,0.3);
-    pointer-events: none;
+    pointer-events: auto;
 }
 
 .polaroid-photo {
@@ -545,10 +545,8 @@ html, body {
 .thread-canvas {
     position: absolute;
     inset: 0;
-
     width: 100%;
     height: 100%;
-
     z-index: 0;
     pointer-events: none;
 }
@@ -624,19 +622,130 @@ html, body {
 .pin-dendro {
     top: 10px;
     right: 28px;
-
     background:
         radial-gradient(
             circle at 40% 35%,
             rgba(255,255,255,0.5),
             var(--dendro) 70%
         );
-
     box-shadow:
         0 0 8px var(--dendro),
         0 2px 6px rgba(0,0,0,0.2);
 }
 
+.pin-extra {
+    position: absolute;
+    /*
+     * Adjust these two values depending on
+     * the final height of the board.
+     */
+    left: 78%;
+    top: 88%;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background:
+        radial-gradient(
+            circle at 38% 32%,
+            rgba(255,255,255,0.65),
+            #f5b000 60%,
+            #c88700 100%
+        );
+    border: 1.5px solid rgba(255,255,255,0.55);
+    box-shadow:
+        0 0 8px rgba(245,176,0,0.55),
+        0 2px 6px rgba(0,0,0,0.25);
+
+    z-index: 10;
+}
+
+/* ──────────────────────────────
+   INTERNET CHECKPOINT SCRAP
+   ────────────────────────────── */
+
+.checkpoint-scrap {
+    position: absolute;
+    left: 59%;
+    top: 82%;
+    width: 150px;
+    padding: 12px 14px 13px;
+    background: #f2ece0;
+    color: #302820;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(50, 35, 25, 0.35);
+    box-shadow:
+        3px 4px 7px rgba(0, 0, 0, 0.18);
+    transform:
+        rotate(-3deg);
+    z-index: 3;
+}
+
+/*
+ * Little piece of tape at the top.
+ */
+.checkpoint-scrap::before {
+    content: '';
+    position: absolute;
+    top: -7px;
+    left: 50%;
+    width: 52px;
+    height: 15px;
+    transform:
+        translateX(-50%)
+        rotate(2deg);
+    background:
+        rgba(255, 248, 220, 0.58);
+    border:
+        1px solid rgba(255,255,255,0.25);
+    pointer-events: none;
+}
+
+.checkpoint-scrap-title {
+    font-family: 'Caveat', cursive;
+    font-size: 1.45rem;
+    font-weight: 700;
+    line-height: 0.95;
+    color: #352820;
+}
+
+.checkpoint-scrap-sub {
+    margin-top: 8px;
+    font-family: 'Caveat', cursive;
+    font-size: 1rem;
+    color: #77685c;
+}
+
+/* ──────────────────────────────
+   CHECKPOINT BONFIRE
+   ────────────────────────────── */
+
+.board-bonfire {
+    position: absolute;
+    left: 63%;
+    top: 89%;
+    width: 92px;
+    text-decoration: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    z-index: 6;
+    transform: rotate(4deg);
+}
+
+.board-bonfire img {
+    width: 72px;
+    height: auto;
+    image-rendering: pixelated;
+    opacity: 80%;
+    filter:
+        drop-shadow(
+            2px 3px 2px rgba(0,0,0,0.25)
+        );
+    transition:
+        transform 0.2s ease,
+        filter 0.2s ease;
+}
 
 /* ──────────────────────────────
    PAPER CONTENT

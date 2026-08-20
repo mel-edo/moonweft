@@ -61,11 +61,43 @@
                 </div>
 
                 <!-- POLAROID tucked on the board ✧ -->
-                <div class="polaroid" aria-hidden="true">
+                <a href="media.html" class="polaroid" aria-label="open media">
                     <div class="polaroid-photo">
                     </div>
                     <span class="polaroid-caption">   untitled</span>
+                </a>
+
+                <!-- EXTRA PIN IN EMPTY CORK SPACE -->
+                <div
+                    class="pin pin-extra"
+                    aria-hidden="true"
+                ></div>
+
+                <!-- INTERNET CHECKPOINT -->
+                <div class="checkpoint-scrap">
+                    <span class="checkpoint-scrap-title">
+                        internet
+                    </span>
+
+                    <span class="checkpoint-scrap-title">
+                        checkpoint
+                    </span>
+
+                    <span class="checkpoint-scrap-sub">
+                        take a little break
+                    </span>
                 </div>
+
+                <a
+                    href="checkpoint.html"
+                    class="board-bonfire"
+                    aria-label="Visit the Internet Checkpoint"
+                >
+                    <img
+                        src="assets/bonfire.png"
+                        alt="bonfire"
+                    >
+                </a>
 
                 <!-- LEFT COLUMN -->
                 <div class="board-column board-column-left">
@@ -244,6 +276,13 @@
                             <div class="al-stat">
                                 <strong id="al-hours">—</strong>
                                 <span>hrs watched</span>
+                            </div>
+
+                            <span class="al-dot">·</span>
+
+                            <div class="al-stat">
+                                <strong id="al-manga-count">—</strong>
+                                <span>manga</span>
                             </div>
 
                             <span class="al-dot">·</span>
@@ -501,6 +540,7 @@
                     const hours = Math.round(stats.anime.minutesWatched / 60);
                     document.getElementById('al-anime-count').textContent = stats.anime.count;
                     document.getElementById('al-hours').textContent = hours.toLocaleString();
+                    document.getElementById('al-manga-count').textContent = stats.manga.count;
                     document.getElementById('al-chapters').textContent = stats.manga.chaptersRead.toLocaleString();
                 }
 
@@ -685,7 +725,8 @@
                     document.querySelector('.pin-electro'),
                     document.querySelector('.pin-pyro'),
                     document.querySelector('.pin-cryo'),
-                    document.querySelector('.pin-dendro')
+                    document.querySelector('.pin-dendro'),
+                    document.querySelector('.pin-extra')
                 ].filter(Boolean);
 
                 if (pins.length < 4) return;
@@ -742,28 +783,46 @@
 
                     ctx.beginPath();
                     ctx.moveTo(p1.x, p1.y);
-                    ctx.quadraticCurveTo(mx, my, p2.x, p2.y);
 
-                    ctx.setLineDash(
-                        dashed ? [6, 5] : []
+                    ctx.quadraticCurveTo(
+                        mx,
+                        my,
+                        p2.x,
+                        p2.y
                     );
 
-                    // Darker physical thread
-                    ctx.strokeStyle = dashed
-                        ? 'rgba(145, 60, 60, 0.40)'
-                        : 'rgba(145, 60, 60, 0.58)';
+                    ctx.setLineDash(
+                        dashed ? [7, 5] : []
+                    );
 
-                    ctx.lineWidth = 2.2;
+                    /*
+                    * Dark physical thread.
+                    */
+                    ctx.strokeStyle = dashed
+                        ? 'rgba(130, 50, 50, 0.48)'
+                        : 'rgba(130, 50, 50, 0.72)';
+
+                    ctx.lineWidth = 2.4;
                     ctx.stroke();
 
-                    // Tiny highlight
+
+                    /*
+                    * Small highlight makes it feel like
+                    * actual string rather than a CSS line.
+                    */
                     ctx.beginPath();
                     ctx.moveTo(p1.x, p1.y);
-                    ctx.quadraticCurveTo(mx, my, p2.x, p2.y);
+
+                    ctx.quadraticCurveTo(
+                        mx,
+                        my,
+                        p2.x,
+                        p2.y
+                    );
 
                     ctx.strokeStyle = dashed
-                        ? 'rgba(235, 170, 170, 0.30)'
-                        : 'rgba(235, 170, 170, 0.38)';
+                        ? 'rgba(245, 190, 190, 0.28)'
+                        : 'rgba(245, 190, 190, 0.42)';
 
                     ctx.lineWidth = 0.7;
                     ctx.stroke();
@@ -780,7 +839,13 @@
                 // instead of a spider-web.
                 // ─────────────────────────────────
 
-                const [guestbook, neighbours, recently, games] = points;
+                const [
+                    guestbook,
+                    neighbours,
+                    games,
+                    extra,
+                    recently
+                ] = points;
 
 
                 // Guestbook → Neighbours
@@ -788,7 +853,7 @@
                     guestbook,
                     neighbours,
                     0,
-                    75
+                    70
                 );
 
 
@@ -796,19 +861,27 @@
                 drawThread(
                     neighbours,
                     games,
-                    45,
+                    40,
                     0
                 );
 
 
-                // Games → Recently
+                // Games → Extra pin
                 drawThread(
                     games,
-                    recently,
-                    0,
-                    75
+                    extra,
+                    30,
+                    45
                 );
 
+
+                // Extra → Recently
+                drawThread(
+                    extra,
+                    recently,
+                    -35,
+                    20
+                );
 
                 // Recently → Guestbook
                 drawThread(
@@ -817,7 +890,6 @@
                     -55,
                     0
                 );
-
 
                 /*
                 * Tiny extra dashed connection gives it that
