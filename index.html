@@ -357,22 +357,42 @@
 
         <script>
             const steamWorkerUrl = "https://moonweft-music.meledo.workers.dev/steam";
+
             function updateSteam() {
                 fetch(steamWorkerUrl)
                     .then(res => res.json())
                     .then(data => {
-                        const games = data.response.games;
+                        const games = data.response?.games;
+                        const steamIcon = document.getElementById('steam-icon');
+                        
                         if (games && games.length > 0) {
                             const game = games[0];
                             document.getElementById('steam-game').textContent = game.name;
-                            const imgUrl = `http://media.steampowered.com/steamcommunity/public/images/apps/${game.appid}/${game.img_icon_url}.jpg`;
-                            document.getElementById('steam-icon').src = imgUrl;
+
+                            // Fall back to your local steam icon if Steam returns a 404 image
+                            steamIcon.onerror = () => {
+                                steamIcon.src = 'assets/steam-icon.png';
+                            };
+
+                            const iconHash = game.img_icon_url || game.img_logo_url;
+
+                            if (iconHash) {
+                                steamIcon.src = `https://cdn.cloudflare.steamstatic.com/steamcommunity/public/images/apps/${game.appid}/${iconHash}.jpg`;
+                            } else {
+                                steamIcon.src = 'assets/steam-icon.png';
+                            }
                         } else {
                             document.getElementById('steam-game').textContent = "Offline";
+                            steamIcon.src = 'assets/steam-icon.png';
                         }
                     })
-                    .catch(err => console.error("Steam error:", err));
+                    .catch(err => {
+                        console.error("Steam error:", err);
+                        document.getElementById('steam-game').textContent = "Offline";
+                        document.getElementById('steam-icon').src = 'assets/steam-icon.png';
+                    });
             }
+
             updateSteam();
             setInterval(updateSteam, 300000);
         </script>
@@ -450,28 +470,29 @@
         });
         </script>
         <script>
-            // Fetch your gallery JSON file
-            fetch('data/gallery-data.json')
-                .then(response => response.json())
-                .then(photos => {
-                    const grid = document.getElementById('photos-grid');
-                    if (!grid) return;
-                    const latestPhotos = photos.slice(0, 4);
+            const favoritePhotos = [
+                { src: 'assets/media/2024/01/IMG-20240125-WA0004.webp', alt: 'Favorite Photo 1' },
+                { src: 'assets/media/2025/12/PXL_20251218_155018822.webp', alt: 'Favorite Photo 2' },
+                { src: 'assets/media/2026/06/PXL_20260627_095428119.webp', alt: 'Favorite Photo 3' },
+                { src: 'assets/media/2026/01/PXL_20260124_102750685.webp', alt: 'Favorite Photo 4' }
+            ];
 
-                    latestPhotos.forEach(photo => {
-                        const link = document.createElement('a');
-                        link.href = 'media.html';
-                        link.className = 'photo-link';
+            const grid = document.getElementById('photos-grid');
 
-                        const img = document.createElement('img');
-                        img.src = photo.src || photo.url || photo.image;
-                        img.alt = photo.alt || photo.caption || 'Gallery preview';
+            if (grid) {
+                favoritePhotos.forEach(photo => {
+                    const link = document.createElement('a');
+                    link.href = 'media.html';
+                    link.className = 'photo-link';
 
-                        link.appendChild(img);
-                        grid.appendChild(link);
-                    });
-                })
-                .catch(error => console.error("Could not load photos:", error));
+                    const img = document.createElement('img');
+                    img.src = photo.src;
+                    img.alt = photo.alt;
+
+                    link.appendChild(img);
+                    grid.appendChild(link);
+                });
+            }
         </script>
 
         <footer class="site-footer">
