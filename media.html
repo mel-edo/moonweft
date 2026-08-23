@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MEDIA GALLERY ~ moonweft</title>
+    <title>Media Gallery ~ moonweft</title>
     <link rel="stylesheet" href="styles/media.css">
     <link href="https://fonts.googleapis.com/css2?family=VT323&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
@@ -26,10 +26,10 @@
     <!-- Page Title Banner -->
     <header class="page-header">
         <div class="banner-badge">
-            <span class="gold-ring-icon">●</span> ACT 1 // VISUAL LOG
+            <span class="gold-ring-icon">●</span> WELCOME
         </div>
         <h1>MEDIA GALLERY</h1>
-        <p class="subtitle">[ ARCHIVE SYSTEM // SELECT A DATE TO JUMP ]</p>
+        <p class="subtitle">[ SELECT A DATE TO JUMP ]</p>
     </header>
 
     <!-- Main Container: Sidebar + Stream -->
@@ -38,7 +38,7 @@
         <!-- Retro Timeline Sidebar -->
         <aside class="timeline-sidebar win-box">
             <div class="win-title-bar">
-                <span class="win-title">TIMELINE.EXE</span>
+                <span class="win-title">TIMELINE</span>
             </div>
             <div class="win-content">
                 <ul id="timeline-menu">
@@ -77,6 +77,11 @@
         <p class="footer-text">MOONWEFT MEDIA ARCHIVE // ALL RIGHTS RESERVED</p>
     </footer>
 
+    <!-- Return to Top Button -->
+    <button id="back-to-top" class="back-to-top-btn win-box" aria-label="Back to top">
+        <span class="arrow-up">▲</span>
+    </button>
+
     <!-- Joker Transition Elements (Preserved) -->
     <iframe id="secret-projects-frame" src="projects.html" style="opacity: 0; pointer-events: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; z-index: 2147483646;"></iframe>
     <div id="transition-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 2147483647; pointer-events: none;">
@@ -89,6 +94,38 @@
         document.addEventListener("DOMContentLoaded", () => {
             const galleryStream = document.getElementById('gallery-stream');
             const timelineMenu = document.getElementById('timeline-menu');
+
+            // Single source of truth for "which year is expanded"
+            let currentTrackedYear = null;
+
+            function setActiveYear(year) {
+                currentTrackedYear = year;
+                document.querySelectorAll('.year-group').forEach(yg => {
+                    const match = yg.dataset.year === year;
+                    yg.classList.toggle('open', match);
+                    yg.classList.toggle('active', match);
+                });
+            }
+
+            // Back to Top Button
+            const backToTopBtn = document.getElementById('back-to-top');
+            if (backToTopBtn) {
+                let btnTicking = false;
+
+                window.addEventListener('scroll', () => {
+                    if (!btnTicking) {
+                        requestAnimationFrame(() => {
+                            backToTopBtn.classList.toggle('visible', window.scrollY > 400);
+                            btnTicking = false;
+                        });
+                        btnTicking = true;
+                    }
+                });
+
+                backToTopBtn.addEventListener('click', () => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+                });
+            }
 
             async function loadGallery() {
                 try {
@@ -114,68 +151,125 @@
                 galleryStream.innerHTML = '';
                 timelineMenu.innerHTML = '';
 
-                // Group by Month Year
-                const groups = {};
                 images.sort((a, b) => new Date(b.date) - new Date(a.date));
 
+                const yearGroups = {};
                 images.forEach(img => {
                     const dateObj = new Date(img.date);
-                    const monthYear = dateObj.toLocaleString('en-US', { month: 'long', year: 'numeric' });
-                    if (!groups[monthYear]) groups[monthYear] = [];
-                    groups[monthYear].push(img);
+                    const year = dateObj.getFullYear().toString();
+                    const month = dateObj.toLocaleString('en-US', { month: 'long' });
+
+                    if (!yearGroups[year]) yearGroups[year] = {};
+                    if (!yearGroups[year][month]) yearGroups[year][month] = [];
+                    yearGroups[year][month].push(img);
                 });
 
-                Object.keys(groups).forEach((monthYear, index) => {
-                    const sectionId = monthYear.toLowerCase().replace(/\s+/g, '-');
+                const monthNames = [
+                    "January", "February", "March", "April", "May", "June",
+                    "July", "August", "September", "October", "November", "December"
+                ];
 
-                    // 1. Sidebar menu item
-                    const li = document.createElement('li');
-                    li.innerHTML = `<a href="#${sectionId}" class="timeline-link ${index === 0 ? 'active' : ''}">
-                        <span class="bullet">▶</span> ${monthYear.toUpperCase()}
-                    </a>`;
-                    const link = li.querySelector('a');
-                    link.addEventListener('click', (e) => {
-                        e.preventDefault();
-                        const targetSection = document.getElementById(sectionId);
-                        if (targetSection) {
-                            targetSection.scrollIntoView({ behavior: 'smooth' });
+                const sortedYears = Object.keys(yearGroups).sort((a, b) => Number(b) - Number(a));
+
+                sortedYears.forEach((year) => {
+                    const yearLi = document.createElement('li');
+                    // No inline 'open active' here anymore — setActiveYear() handles it after render
+                    yearLi.className = 'year-group';
+                    yearLi.dataset.year = year;
+
+                    const sortedMonths = Object.keys(yearGroups[year]).sort((a, b) => {
+                        return monthNames.indexOf(b) - monthNames.indexOf(a);
+                    });
+
+                    const monthListHTML = sortedMonths.map((month) => {
+                        const sectionId = `section-${year}-${month.toLowerCase()}`;
+                        return `
+                            <li>
+                                <a href="#${sectionId}" class="timeline-link" data-year="${year}">
+                                    <span class="bullet">▶</span> ${month.toUpperCase()}
+                                </a>
+                            </li>
+                        `;
+                    }).join('');
+
+                    yearLi.innerHTML = `
+                        <button class="year-header">
+                            <span class="arrow-icon">▶</span> ${year}
+                        </button>
+                        <ul class="month-sub-menu">
+                            ${monthListHTML}
+                        </ul>
+                    `;
+
+                    // Manual year click: expand this year, collapse the rest
+                    const yearBtn = yearLi.querySelector('.year-header');
+                    yearBtn.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        setActiveYear(year);
+                        const firstSection = document.querySelector(`.month-section[data-year="${year}"]`);
+                        if (firstSection) {
+                            firstSection.scrollIntoView({ behavior: 'smooth' });
                         }
                     });
-                    timelineMenu.appendChild(li);
 
-                    // 2. Main section
-                    const section = document.createElement('section');
-                    section.id = sectionId;
-                    section.className = 'month-section';
+                    // Manual month click: expand its year immediately, then smooth-scroll
+                    yearLi.querySelectorAll('.timeline-link').forEach(link => {
+                        link.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            setActiveYear(link.dataset.year);
+                            const targetId = link.getAttribute('href').substring(1);
+                            const targetSection = document.getElementById(targetId);
+                            if (targetSection) {
+                                targetSection.scrollIntoView({ behavior: 'smooth' });
+                            }
+                        });
+                    });
 
-                    let cardsHTML = groups[monthYear].map(img => `
-                        <div class="photo-card win-box-card">
-                            <div class="card-tag">★</div>
-                            <div class="img-wrapper">
-                                <img src="${img.url}" alt="${img.alt}" loading="lazy">
+                    timelineMenu.appendChild(yearLi);
+
+                    sortedMonths.forEach(month => {
+                        const sectionId = `section-${year}-${month.toLowerCase()}`;
+                        const section = document.createElement('section');
+                        section.id = sectionId;
+                        section.className = 'month-section';
+                        section.dataset.year = year;
+
+                        let cardsHTML = yearGroups[year][month].map(img => {
+                            const date = new Date(img.date).toLocaleDateString('en-US', {
+                                month: 'short', day: 'numeric', year: 'numeric'
+                            });
+                            return `
+                                <div class="photo-card win-box-card" data-full="${img.url}" data-date="${date}" data-id="${img.id}">
+                                    <div class="card-tag">★</div>
+                                    <div class="img-wrapper">
+                                        <img src="${img.url}" alt="${img.alt}">
+                                    </div>
+                                    <div class="photo-info">
+                                        <span class="photo-label">${date}</span>
+                                        <span class="photo-date">${img.id}</span>
+                                    </div>
+                                </div>
+                            `;
+                        }).join('');
+
+                        section.innerHTML = `
+                            <div class="section-header">
+                                <h2 class="month-heading">${month.toUpperCase()} ${year}</h2>
+                                <div class="section-line"></div>
                             </div>
-                            <div class="photo-info">
-                                <span class="photo-label">${img.label}</span>
-                                <span class="photo-date">${new Date(img.date).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</span>
-                            </div>
-                        </div>
-                    `).join('');
-
-                    section.innerHTML = `
-                        <div class="section-header">
-                            <h2 class="month-heading">${monthYear.toUpperCase()}</h2>
-                            <div class="section-line"></div>
-                        </div>
-                        <div class="photo-grid">${cardsHTML}</div>
-                    `;
-                    galleryStream.appendChild(section);
+                            <div class="photo-grid">${cardsHTML}</div>
+                        `;
+                        galleryStream.appendChild(section);
+                    });
                 });
+
+                // Expand the newest year by default (matches what's actually in view at load)
+                setActiveYear(sortedYears[0]);
 
                 initLightbox();
                 initScrollSpy();
             }
 
-            // Lightbox logic
             function initLightbox() {
                 const lightbox = document.getElementById('sg-lightbox');
                 const lightboxImg = document.getElementById('sg-lightbox-img');
@@ -186,44 +280,66 @@
                 galleryStream.addEventListener('click', (e) => {
                     const card = e.target.closest('.photo-card');
                     if (!card) return;
-
                     const img = card.querySelector('img');
-                    const label = card.querySelector('.photo-label').innerText;
-
-                    lightboxImg.src = img.src;
-                    lightboxImg.alt = img.alt;
-                    lightboxCaption.innerText = label;
-                    lightboxTitle.innerText = `${label.toLowerCase().replace(/\s+/g, '_')}.png`;
-                    lightbox.classList.add('active');
+                    const date = card.dataset.date;
+                    const id = card.dataset.id;
+                    if (img) {
+                        lightboxImg.src = img.src;
+                        lightboxImg.alt = img.alt || 'Expanded View';
+                        lightboxCaption.innerHTML = `<span class="caption-date">${date}</span> <span class="caption-id">// ${id}</span>`;
+                        lightboxTitle.innerText = `${id}.webp`;
+                        lightbox.classList.add('active');
+                        document.body.classList.add('modal-open');
+                    }
                 });
 
-                const closeAction = () => lightbox.classList.remove('active');
+                const closeAction = () => {
+                    lightbox.classList.remove('active');
+                    document.body.classList.remove('modal-open');
+                };
                 closeBtn.addEventListener('click', closeAction);
                 lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeAction(); });
                 document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAction(); });
             }
 
-            // Scrollspy for sidebar link active status
+            // ScrollSpy: expands whichever year's section is currently in view, collapses the rest
             function initScrollSpy() {
                 const sections = document.querySelectorAll('.month-section');
                 const navLinks = document.querySelectorAll('.timeline-link');
-                window.addEventListener('scroll', () => {
-                    let current = '';
+                let ticking = false;
+
+                function updateOnScroll() {
+                    let currentSectionId = '';
+                    let currentYear = '';
+
                     sections.forEach(section => {
-                        if (window.scrollY >= (section.offsetTop - 150)) {
-                            current = section.getAttribute('id');
+                        if (window.scrollY >= (section.offsetTop - 160)) {
+                            currentSectionId = section.getAttribute('id');
+                            currentYear = section.dataset.year;
                         }
                     });
+
                     navLinks.forEach(link => {
-                        link.classList.remove('active');
-                        if (link.getAttribute('href') === `#${current}`) link.classList.add('active');
+                        link.classList.toggle('active', link.getAttribute('href') === `#${currentSectionId}`);
                     });
+
+                    if (currentYear && currentYear !== currentTrackedYear) {
+                        setActiveYear(currentYear);
+                    }
+                    ticking = false;
+                }
+
+                window.addEventListener('scroll', () => {
+                    if (!ticking) {
+                        requestAnimationFrame(updateOnScroll);
+                        ticking = true;
+                    }
                 });
             }
 
             loadGallery();
 
-            // Joker Transition Logic
+            // Joker Transition Logic (unchanged)
             const projectLinks = document.querySelectorAll('a[href="projects.html"]');
             const videoOverlay = document.getElementById('transition-overlay');
             const video = document.getElementById('joker-transition');
@@ -232,14 +348,14 @@
             if (projectLinks.length > 0 && video && secretFrame) {
                 projectLinks.forEach(link => {
                     link.addEventListener('click', (e) => {
-                        e.preventDefault(); 
-                        videoOverlay.style.display = 'block'; 
-                        videoOverlay.style.pointerEvents = 'auto'; 
+                        e.preventDefault();
+                        videoOverlay.style.display = 'block';
+                        videoOverlay.style.pointerEvents = 'auto';
                         video.play();
                         setTimeout(() => { secretFrame.style.opacity = '1'; }, 800);
-                        video.addEventListener('ended', () => { 
-                            sessionStorage.setItem('heistSuccess', 'true'); 
-                            window.location.href = link.href; 
+                        video.addEventListener('ended', () => {
+                            sessionStorage.setItem('heistSuccess', 'true');
+                            window.location.href = link.href;
                         }, { once: true });
                     });
                 });

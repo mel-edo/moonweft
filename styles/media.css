@@ -43,6 +43,10 @@ body {
     position: relative;
 }
 
+body.modal-open {
+    overflow: hidden;
+}
+
 body.retro-body {
     background-color: transparent;
     color: var(--text-main);
@@ -186,13 +190,130 @@ body.retro-body {
     letter-spacing: 0.05em;
 }
 
+.back-to-top-btn {
+    position: fixed;
+    bottom: 1.75rem;
+    right: 1.75rem;
+    width: 3rem;
+    height: 3rem;
+    background: var(--sonic-gold);
+    color: var(--border-dark);
+    border: 2px solid var(--border-dark);
+    box-shadow: 3px 3px 0px var(--border-dark);
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: var(--font-pixel);
+    font-size: 1.4rem;
+    z-index: 500;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(10px);
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease, background 0.15s ease;
+}
+
+.back-to-top-btn.visible {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.back-to-top-btn:hover {
+    background: #ffffff;
+    transform: translate(-1px, -1px);
+    box-shadow: 4px 4px 0px var(--border-dark);
+}
+
+.back-to-top-btn:active {
+    transform: translate(1px, 1px);
+    box-shadow: none;
+}
+
+.back-to-top-btn .arrow-up {
+    line-height: 1;
+}
+
+@media (max-width: 768px) {
+    .back-to-top-btn {
+        bottom: 1.25rem;
+        right: 1.25rem;
+        width: 2.75rem;
+        height: 2.75rem;
+    }
+}
+
 /* --- Timeline Sidebar --- */
 .timeline-sidebar {
     width: 210px;
     flex-shrink: 0;
+    align-self: flex-start;
     position: sticky;
     top: 4.5rem;
-    height: fit-content;
+    max-height: calc(100vh - 6rem);
+    display: flex;
+    flex-direction: column;
+}
+
+.timeline-sidebar .win-content {
+    padding: 0.5rem;
+    overflow-y: auto;
+    flex-grow: 1;
+}
+
+.year-group {
+    margin-bottom: 0.35rem;
+}
+
+.year-header {
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: 1px solid transparent;
+    font-family: var(--font-pixel);
+    font-size: 1.25rem;
+    color: var(--text-main);
+    padding: 0.3rem 0.5rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    transition: background 0.15s ease;
+}
+
+.year-header:hover {
+    background: #f0eee6;
+    border-color: var(--border-dark);
+}
+
+.year-group.active .year-header {
+    background: var(--sonic-gold);
+    font-weight: bold;
+    border-color: var(--border-dark);
+    box-shadow: 2px 2px 0px var(--border-dark);
+}
+
+.year-group .arrow-icon {
+    display: inline-block;
+    font-size: 0.75rem;
+    transition: transform 0.2s ease;
+}
+
+.year-group.open .arrow-icon {
+    transform: rotate(90deg);
+}
+
+.timeline-sidebar .month-sub-menu {
+    list-style: none;
+    padding-left: 0.8rem;
+    display: none;
+    flex-direction: column;
+    gap: 0.2rem;
+    margin-top: 0.2rem;
+}
+
+.year-group.open .month-sub-menu {
+    display: flex;
 }
 
 .win-content {
@@ -333,12 +454,14 @@ body.retro-body {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 0.75rem;
     background: #fdfdfc;
 }
 
-.photo-label {
-    font-size: 0.85rem;
-    font-weight: 600;
+.photo-label,
+.photo-date {
+    font-family: var(--font-pixel);
+    font-size: 1.15rem;
     color: var(--text-main);
     white-space: nowrap;
     overflow: hidden;
@@ -346,8 +469,6 @@ body.retro-body {
 }
 
 .photo-date {
-    font-family: var(--font-pixel);
-    font-size: 1rem;
     color: var(--text-muted);
 }
 
@@ -376,8 +497,8 @@ body.retro-body {
 }
 
 .sg-lightbox-content {
-    width: 100%;
-    max-width: 850px;
+    width: auto;
+    max-width: 90vw;
     max-height: 90vh;
     display: flex;
     flex-direction: column;
@@ -388,23 +509,44 @@ body.retro-body {
     padding: 0.5rem;
     display: flex;
     justify-content: center;
+    align-items: center;
+    max-width: 90vw;
     max-height: 70vh;
     overflow: hidden;
 }
 
+#sg-lightbox-img,
 .sg-lightbox-img {
+    display: block;
     max-width: 100%;
     max-height: 68vh;
+    width: auto;
+    height: auto;
     object-fit: contain;
 }
 
 .lightbox-caption {
     padding: 0.75rem 1rem;
     font-family: var(--font-pixel);
-    font-size: 1.3rem;
+    font-size: 1.35rem;
     background: #f0eee6;
     border-top: 2px solid var(--border-dark);
     color: var(--text-main);
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.lightbox-caption .caption-date {
+    font-family: var(--font-pixel);
+    font-size: 1.35rem;
+    color: var(--text-main);
+}
+
+.lightbox-caption .caption-id {
+    font-family: var(--font-pixel);
+    font-size: 1.35rem;
+    color: var(--text-muted);
 }
 
 .win-close {
