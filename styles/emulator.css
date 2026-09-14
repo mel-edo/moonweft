@@ -14,9 +14,12 @@ body.gb-theme {
     user-select: none;
     -webkit-user-select: none;
     background-color: var(--bg-color);
-    background-image: radial-gradient(#d3bfa6 2px, transparent 2px);
-    background-size: 20px 20px;
-    margin: 0;
+    background-image: 
+        linear-gradient(rgba(211, 191, 166, 0.8) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(211, 191, 166, 0.8) 1px, transparent 1px),
+        linear-gradient(rgba(211, 191, 166, 0.3) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(211, 191, 166, 0.3) 1px, transparent 1px);
+    background-size: 100px 100px, 100px 100px, 20px 20px, 20px 20px;
     font-family: var(--font-pixel);
     color: #000;
     display: flex;
@@ -100,7 +103,7 @@ body.gb-theme {
     height: 840px;
     border-radius: 10px 10px 80px 10px;
     border: var(--pixel-border);
-    box-shadow: 15px 15px 0px #000;
+    box-shadow: 15px 15px 0px #000, inset -20px -20px 0px rgba(0, 0, 0, 0.15);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -142,6 +145,16 @@ body.gb-theme {
     height: 12px;
     background-color: var(--gb-accent);
     border: 2px solid #000;
+    border-radius: 50%;
+}
+
+.battery-text {
+    position: absolute;
+    left: 12px;
+    top: 153px;
+    color: #a0a0a0;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
 }
 
 .screen-glass {
@@ -210,13 +223,13 @@ body.gb-theme {
 }
 
 .arr-up {
-    top: 5px;
-    left: 54px;
+    top: 7px;
+    left: 52px;
 }
 
 .arr-down {
-    bottom: 5px;
-    left: 54px;
+    bottom: 7px;
+    left: 52px;
 }
 
 .arr-left {
@@ -299,8 +312,8 @@ body.gb-theme {
 
 .speaker {
     position: absolute;
-    bottom: 0px;
-    right: 30px;
+    bottom: -30px;
+    right: 25px;
     display: flex;
     gap: 12px;
     transform: rotate(-25deg);
@@ -366,7 +379,7 @@ body.gb-theme {
 .return-btn {
     position: static;
     transform: none;
-    align-self: flex-start;
+    align-self: center;
 }
 
 .return-btn:hover {

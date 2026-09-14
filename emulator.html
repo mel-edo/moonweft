@@ -3,6 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A custom Game Boy emulator built in Rust and WebAssembly. Play classic .gb and .dmg ROMs directly in your browser.">
     <title>emulator ~ moonweft</title>
     <link rel="stylesheet" href="styles/emulator.css">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/gb-favicon.png">
@@ -21,6 +23,7 @@
 
                 <div class="bezel">
                     <div class="battery-light"></div>
+                    <div class="battery-text">BAT</div>
                     <div class="screen-glass">
                         <canvas id="canvas" width="160" height="144">Your browser does not support Canvas.</canvas>
                     </div>
@@ -69,18 +72,15 @@
         </div>
         <div class="right-column">
             <div class="emulator-note">
-                <h2>Moonweft Game Boy Emulator</h2>
-                <p>Welcome to my custom Game Boy emulator, entirely built in Rust and compiled to WebAssembly!</p>
-                <p><strong>Controls:</strong></p>
+                <h2>Moonweft Emulator</h2>
+                <p>A custom Game Boy emulator built in Rust & WebAssembly.</p>
                 <ul>
                     <li><strong>D-Pad:</strong> Arrow Keys</li>
-                    <li><strong>A:</strong> X</li>
-                    <li><strong>B:</strong> Z</li>
-                    <li><strong>Start:</strong> Enter</li>
-                    <li><strong>Select:</strong> Backspace</li>
+                    <li><strong>A / B:</strong> X / Z</li>
+                    <li><strong>Start / Select:</strong> Enter / Backspace</li>
                     <li><strong>Fast Forward:</strong> Hold Shift</li>
                 </ul>
-                <p>Click "Insert Cartridge" above the Game Boy to load a .gb or .dmg ROM file and start playing.</p>
+                <p style="margin-top: 15px;">Click <strong>"INSERT CARTRIDGE"</strong> above to load a .gb or .dmg ROM file and start playing!</p>
             </div>
             <a href="index.html" class="return-btn">RETURN</a>
         </div>
@@ -91,7 +91,8 @@
     <script>
         document.getElementById('fileinput').addEventListener('change', function (e) {
             if (this.files.length > 0) {
-                document.querySelector('.custom-file-upload').innerText = this.files[0].name.substring(0, 15) + '...';
+                const name = this.files[0].name;
+                document.querySelector('.custom-file-upload').innerText = name.length > 15 ? name.substring(0, 15) + '...' : name;
             }
         });
     </script>
