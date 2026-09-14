@@ -1,3 +1,4 @@
+* { user-select: none; -webkit-user-select: none; }
 :root {
     --bg-deep: #1a1a2e;
     --nintendo-purple: #4834d4;

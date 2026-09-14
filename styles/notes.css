@@ -1,3 +1,4 @@
+* { user-select: none; -webkit-user-select: none; }
 :root {
     --bg-blue: #181926;
     --line-blue: #364a8b;
