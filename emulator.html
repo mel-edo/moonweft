@@ -4,16 +4,53 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="A custom Game Boy emulator built in Rust and WebAssembly. Play classic .gb and .dmg ROMs directly in your browser.">
+    <meta name="description"
+        content="A custom Game Boy emulator built in Rust and WebAssembly. Play classic .gb and .dmg ROMs directly in your browser.">
     <title>emulator ~ moonweft</title>
     <link rel="stylesheet" href="styles/emulator.css">
-    <link rel="icon" type="image/png" sizes="32x32" href="assets/gb-favicon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/gameboy_icon.png">
 </head>
 
 <body class="gb-theme">
 
     <div class="layout-container">
-        <div class="left-column">
+        <a href="index.html" class="return-btn">RETURN</a>
+
+        <div class="side-panel left-panel">
+            <div class="emulator-note rom-library-panel">
+                <h2>BUILT-IN GAMES</h2>
+                <p style="margin-bottom: 15px;">Choose a free homebrew game below to play, or load up your own ROM using
+                    <strong>INSERT CARTRIDGE</strong>.</p>
+                <ul class="rom-library">
+                    <li>
+                        <button class="rom-btn" data-rom="roms/2048.gb">▶ PLAY</button>
+                        <div class="rom-info">
+                            <span class="rom-title">2048-GB</span>
+                            <span class="rom-author">by <a href="https://github.com/Sokobanya/2048-gb"
+                                    target="_blank">Sokobanya</a></span>
+                        </div>
+                    </li>
+                    <li>
+                        <button class="rom-btn" data-rom="roms/flappy.gb">▶ PLAY</button>
+                        <div class="rom-info">
+                            <span class="rom-title">Flappy Boy</span>
+                            <span class="rom-author">by <a href="https://github.com/bitnenfer/flappyboy"
+                                    target="_blank">bitnenfer</a></span>
+                        </div>
+                    </li>
+                    <li>
+                        <button class="rom-btn" data-rom="roms/retroid.gb">▶ PLAY</button>
+                        <div class="rom-info">
+                            <span class="rom-title">Retroid</span>
+                            <span class="rom-author">by <a href="https://github.com/jonas-f/Retroid"
+                                    target="_blank">JonasF</a></span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="center-panel">
             <div class="rom-loader">
                 <label for="fileinput" class="custom-file-upload">INSERT CARTRIDGE</label>
                 <input type="file" id="fileinput" accept=".gb,.dmg" autocomplete="off" />
@@ -29,7 +66,9 @@
                         <canvas id="canvas" width="160" height="144">Your browser does not support Canvas.</canvas>
                     </div>
                     <div class="gb-logo">
-                        <span class="gb-font">GAME BOY</span> <span class="gbc-text"><span class="c-c">C</span><span class="c-o1">O</span><span class="c-l">L</span><span class="c-o2">O</span><span class="c-r">R</span></span>
+                        <span class="gb-font">GAME BOY</span> <span class="gbc-text"><span class="c-c">C</span><span
+                                class="c-o1">O</span><span class="c-l">L</span><span class="c-o2">O</span><span
+                                class="c-r">R</span></span>
                     </div>
                 </div>
 
@@ -70,11 +109,14 @@
 
             </main>
         </div>
-        <div class="right-column">
+
+        <div class="side-panel right-panel">
             <div class="emulator-note">
                 <h2>
-                    <span class="note-mw">Moonweft</span> 
-                    <span class="c-c">E</span><span class="c-o1">m</span><span class="c-l">u</span><span class="c-o2">l</span><span class="c-r">a</span><span class="c-c">t</span><span class="c-o1">o</span><span class="c-l">r</span>
+                    <span class="note-mw">Moonweft</span>
+                    <span class="c-c">E</span><span class="c-o1">m</span><span class="c-l">u</span><span
+                        class="c-o2">l</span><span class="c-r">a</span><span class="c-c">t</span><span
+                        class="c-o1">o</span><span class="c-l">r</span>
                 </h2>
                 <p>A custom Game Boy emulator built in Rust & WebAssembly.</p>
                 <ul>
@@ -83,9 +125,7 @@
                     <li><strong>Start / Select:</strong> Enter / Backspace</li>
                     <li><strong>Fast Forward:</strong> Hold Shift</li>
                 </ul>
-                <p style="margin-top: 15px;">Click <strong>"INSERT CARTRIDGE"</strong> above to load a .gb or .dmg ROM file and start playing!</p>
             </div>
-            <a href="index.html" class="return-btn">RETURN</a>
         </div>
     </div>
 

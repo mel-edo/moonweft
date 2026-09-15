@@ -33,34 +33,7 @@ body.gb-theme {
     -webkit-font-smoothing: none;
 }
 
-.return-btn {
-    position: absolute;
-    bottom: 30px;
-    left: 50%;
-    transform: translateX(-50%);
-    font-family: var(--font-pixel);
-    background-color: #fff;
-    color: #000;
-    padding: 8px 30px;
-    border: var(--pixel-border);
-    text-decoration: none;
-    font-size: 2.5rem;
-    box-shadow: 8px 8px 0px #000;
-    transition: transform 0.1s, box-shadow 0.1s;
-    z-index: 100;
-    text-transform: uppercase;
-}
 
-.return-btn:hover {
-    transform: translate(calc(-50% + 4px), 4px);
-    box-shadow: 4px 4px 0px #000;
-    background-color: #f0f0f0;
-}
-
-.return-btn:active {
-    transform: translate(calc(-50% + 8px), 8px);
-    box-shadow: 0px 0px 0px #000;
-}
 
 .rom-loader {
     margin-bottom: -15px;
@@ -387,23 +360,23 @@ body.gb-theme {
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    gap: 80px;
-    max-width: 1200px;
+    gap: 40px;
     width: 100%;
+    max-width: 1400px;
 }
 
-.left-column {
+.center-panel {
     display: flex;
     flex-direction: column;
     align-items: center;
     transform: scale(0.9);
 }
 
-.right-column {
+.side-panel {
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    max-width: 450px;
+    align-items: center;
+    width: 320px;
 }
 
 .emulator-note {
@@ -411,10 +384,17 @@ body.gb-theme {
     color: #e5d9f2;
     border: var(--pixel-border);
     box-shadow: 10px 10px 0px #000;
-    padding: 30px;
-    margin-bottom: 40px;
-    font-size: 1.5rem;
-    line-height: 1.2;
+    padding: 25px;
+    border-radius: 5px 30px 5px 30px;
+    font-size: 1.1rem;
+    line-height: 1.4;
+    width: 320px;
+    box-sizing: border-box;
+}
+
+.rom-library-panel {
+    background-color: #2b2b2b;
+    border-color: #000;
 }
 
 .emulator-note h2 {
@@ -438,17 +418,106 @@ body.gb-theme {
 }
 
 .return-btn {
-    position: static;
-    transform: none;
-    align-self: center;
+    position: fixed;
+    top: 50%;
+    left: 20px;
+    transform: translateY(-50%) rotate(180deg);
+    z-index: 100;
+    font-family: var(--font-pixel);
+    background-color: #fff;
+    color: #000;
+    padding: 30px 10px;
+    border: var(--pixel-border);
+    text-decoration: none;
+    font-size: 1.8rem;
+    box-shadow: -6px -6px 0px #000; /* Flips to +6 +6 on screen when rotated 180 */
+    transition: transform 0.1s, box-shadow 0.1s, background-color 0.2s;
+    text-transform: uppercase;
+    
+    /* Text sideways (reads top-to-bottom natively, flipped to bottom-to-top by rotate) */
+    writing-mode: vertical-rl;
 }
 
 .return-btn:hover {
-    transform: translate(4px, 4px);
-    box-shadow: 4px 4px 0px #000;
+    transform: translate(2px, calc(-50% + 2px)) rotate(180deg);
+    box-shadow: -4px -4px 0px #000;
+    background-color: #f0f0f0;
 }
 
 .return-btn:active {
-    transform: translate(8px, 8px);
+    transform: translate(6px, calc(-50% + 6px)) rotate(180deg);
     box-shadow: 0px 0px 0px #000;
+}
+
+.divider {
+    height: 4px;
+    background: repeating-linear-gradient(90deg, #e5d9f2 0, #e5d9f2 4px, transparent 4px, transparent 8px);
+    margin: 20px 0;
+    width: 100%;
+}
+
+.rom-library {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.rom-library li {
+    display: flex;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 8px 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.rom-btn {
+    font-family: var(--font-pixel);
+    background: #e5d9f2;
+    color: #000;
+    border: 2px solid #000;
+    padding: 4px 10px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 2px 2px 0 #000;
+    margin-right: 12px;
+    transition: transform 0.1s, box-shadow 0.1s, background 0.2s;
+}
+
+.rom-btn:hover {
+    background: #92c900;
+}
+
+.rom-btn:active {
+    transform: translate(2px, 2px);
+    box-shadow: 0 0 0 #000;
+}
+
+.rom-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.rom-title {
+    font-size: 1.3rem;
+    font-weight: bold;
+    color: #e5d9f2;
+}
+
+.rom-author {
+    font-size: 1rem;
+    color: #a0a0a0;
+}
+
+.rom-author a {
+    color: #92c900;
+    text-decoration: none;
+}
+
+.rom-author a:hover {
+    text-decoration: underline;
 }

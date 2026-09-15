@@ -738,7 +738,7 @@ body {
 
 .gbemu-link {
     position: absolute;
-    right: 17%;
+    right: 15%;
     top: -5%;
     z-index: 30;
     transform: rotate(-8deg);
@@ -746,13 +746,14 @@ body {
 
 .gbemu-icon {
     width: 70px;
-    height: 70px;
-    border-radius: 8px;
+    height: auto;
     image-rendering: pixelated;
-    box-shadow: 2px 4px 12px rgba(0, 0, 0, 0.3);
-    border: 2px solid #fff;
     opacity: 80%;
-    transition: transform 0.2s;
+    filter:
+        drop-shadow(2px 3px 2px rgba(0, 0, 0, 0.25));
+    transition:
+        transform 0.2s ease,
+        filter 0.2s ease;
 }
 
 .gbemu-scrap::before {
