@@ -115,15 +115,46 @@
                         <div class="blog-list" id="homepage-blog-list"></div>
                     </div>
 
-                    <a href="checkpoint.html" class="checkpoint-banner">
-                        <div class="cp-icon">
-                            <img src="assets/bonfire.png" alt="bonfire">
+                    <hr class="dashed-line">
+
+                    <a href="emulator.html" class="gb-banner">
+                        <div class="gb-banner-screen-wrapper">
+                            <div class="gb-banner-light"></div>
+                            <div class="gb-banner-screen">
+                                <div class="gb-boot-logo">moonweft</div>
+                            </div>
                         </div>
-                        <div class="cp-text">
-                            <div class="cp-title">INTERNET CHECKPOINT</div>
-                            <div class="cp-sub">Take a rest. Save your progress</div>
+                        <div class="gb-banner-text">
+                            <div class="gb-title">PLAY GAME BOY</div>
+                            <div class="gb-sub">Live emulator running in the browser</div>
                         </div>
-                        <div class="cp-arrow">-></div>
+                        <div class="gb-banner-controls">
+                            <div class="gb-banner-dpad">
+                                <div class="gb-dpad-v"></div>
+                                <div class="gb-dpad-h"></div>
+                            </div>
+                            <div class="gb-banner-buttons">
+                                <div class="gb-btn"></div>
+                                <div class="gb-btn"></div>
+                            </div>
+                        </div>
+                    </a>
+
+                    <a href="checkpoint.html" class="retro-checkpoint">
+                        <div class="rc-header">
+                            <span class="rc-title-text">REST AREA</span>
+                            <span class="rc-close-btn">X</span>
+                        </div>
+                        <div class="rc-content">
+                            <div class="rc-icon">
+                                <img src="assets/bonfire.png" alt="bonfire">
+                            </div>
+                            <div class="rc-text">
+                                <div class="rc-title">INTERNET CHECKPOINT</div>
+                                <div class="rc-sub">Take a rest. Save your progress</div>
+                            </div>
+                            <div class="rc-arrow">-></div>
+                        </div>
                     </a>
 
                 </main>
@@ -507,8 +538,8 @@
     </script>
 
     <footer class="site-footer">
-        <p>♡2026 moonweft</p>
-        <p class="mail"><a href="mailto:meledo@duck.com" target="_blank">meledo@duck.com</a></p>
+        <p>♡2026 moonweft &nbsp;&bull;&nbsp; <span class="mail"><a href="mailto:meledo@duck.com"
+                    target="_blank">meledo@duck.com</a></span></p>
     </footer>
 
     <script src="scripts/oneko.js"></script>
@@ -539,7 +570,7 @@
                     clickCount++;
                     if (clickCount === 1) {
                         document.body.classList.add("easter-egg-active");
-                        
+
                         let cursorStyle = document.createElement('style');
                         cursorStyle.id = 'easter-egg-cursor-style';
                         document.head.appendChild(cursorStyle);
@@ -559,8 +590,11 @@
                             `;
                         }, 100);
                     }
-                    const phraseIndex = Math.min(clickCount, phrases.length - 1);
-                    homeLink.innerText = `[${phrases[phraseIndex]}]`;
+                    if (clickCount >= phrases.length) {
+                        homeLink.style.display = 'none';
+                    } else {
+                        homeLink.innerText = `[${phrases[clickCount]}]`;
+                    }
                 });
             }
         });

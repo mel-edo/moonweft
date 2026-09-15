@@ -817,3 +817,255 @@ img {
         gap: 1rem;
     }
 }
+
+/* --- GB Banner --- */
+.gb-banner {
+    display: flex;
+    align-items: center;
+    background: #68217a; /* Grape Purple */
+    border: 4px solid #000;
+    box-shadow: 6px 6px 0 rgba(0,0,0,1);
+    padding: 1rem;
+    margin-bottom: 20px;
+    text-decoration: none;
+    color: #e5d9f2; /* Lavender */
+    gap: 1rem;
+    border-radius: 10px 10px 30px 10px; /* Slight GBC curve at bottom right */
+    transition: transform 0.2s, box-shadow 0.2s;
+    overflow: hidden;
+    position: relative;
+}
+
+.gb-banner:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 8px 8px 0 rgba(0,0,0,1);
+}
+
+.gb-banner-screen-wrapper {
+    background: #222;
+    padding: 10px;
+    border-radius: 5px 5px 20px 5px;
+    border: 3px solid #000;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.gb-banner-light {
+    position: absolute;
+    left: 4px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 6px;
+    height: 6px;
+    background-color: #555;
+    border-radius: 50%;
+    transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.gb-banner:hover .gb-banner-light {
+    background-color: #ff3b30;
+    box-shadow: 0 0 4px #ff3b30;
+}
+
+.gb-banner-screen {
+    width: 80px;
+    height: 60px;
+    background: #8bac0f; /* GB Green */
+    border: 2px solid #000;
+    margin-left: 8px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: inset 2px 2px 5px rgba(0,0,0,0.3);
+}
+
+.gb-boot-logo {
+    font-family: 'Arial Black', Impact, sans-serif;
+    font-size: 0.65rem;
+    color: #306230; /* Dark GB green */
+    position: absolute;
+    top: -20px; /* Starts hidden above */
+    left: 50%;
+    transform: translateX(-50%);
+    transition: top 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.gb-banner:hover .gb-boot-logo {
+    top: 22px; /* Drops down to center */
+}
+
+.gb-banner-text {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.gb-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 2px 2px 0 #000;
+}
+
+.gb-sub {
+    font-size: 1.1rem;
+    color: #e5d9f2;
+}
+
+.gb-banner-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.gb-banner-dpad {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    filter: drop-shadow(2px 2px 0px #000);
+}
+
+.gb-dpad-v, .gb-dpad-h {
+    position: absolute;
+    background: #222;
+}
+
+.gb-dpad-v {
+    width: 10px;
+    height: 30px;
+    left: 10px;
+}
+
+.gb-dpad-h {
+    width: 30px;
+    height: 10px;
+    top: 10px;
+}
+
+.gb-banner-buttons {
+    display: flex;
+    gap: 5px;
+    transform: rotate(-15deg);
+}
+
+.gb-btn {
+    width: 12px;
+    height: 12px;
+    background: #222;
+    border-radius: 50%;
+    box-shadow: 2px 2px 0 #000;
+    transition: transform 0.1s, box-shadow 0.1s;
+}
+
+.gb-banner:hover .gb-btn:first-child {
+    transform: translateY(2px);
+    box-shadow: 0px 0px 0 #000;
+    transition-delay: 0.25s;
+}
+
+.gb-banner:hover .gb-btn:last-child {
+    transform: translateY(2px);
+    box-shadow: 0px 0px 0 #000;
+    transition-delay: 0.4s;
+}
+
+/* --- Retro Checkpoint Banner --- */
+.retro-checkpoint {
+    display: flex;
+    flex-direction: column;
+    background: #2d2d2d;
+    border: 4px solid #000;
+    box-shadow:
+        inset 2px 2px 0px rgba(255,255,255,0.1),
+        inset -2px -2px 0px rgba(0,0,0,0.5),
+        8px 8px 0px #000;
+    margin-bottom: 20px;
+    text-decoration: none;
+    color: #e0e0e0;
+    font-family: 'VT323', monospace;
+    transition: transform 0.15s, box-shadow 0.15s;
+}
+
+.retro-checkpoint:hover {
+    transform: translate(-2px, -2px);
+    box-shadow:
+        inset 2px 2px 0px rgba(255,255,255,0.1),
+        inset -2px -2px 0px rgba(0,0,0,0.5),
+        10px 10px 0px #000;
+}
+
+.retro-checkpoint:active {
+    transform: translate(2px, 2px);
+    box-shadow:
+        inset 2px 2px 0px rgba(255,255,255,0.1),
+        inset -2px -2px 0px rgba(0,0,0,0.5),
+        6px 6px 0px #000;
+}
+
+.rc-header {
+    display: flex;
+    justify-content: space-between;
+    background: #4834d4; /* Nintendo Purple */
+    padding: 4px 10px;
+    border-bottom: 2px solid #000;
+    font-size: 1.2rem;
+    color: #fff;
+    text-shadow: 2px 2px 0 #000;
+}
+
+.rc-close-btn {
+    color: #c0c0c0;
+}
+
+.retro-checkpoint:hover .rc-close-btn {
+    color: #f1c40f; /* Gold accent on hover */
+}
+
+.rc-content {
+    display: flex;
+    align-items: center;
+    padding: 10px 15px;
+    gap: 15px;
+}
+
+.rc-icon {
+    width: 48px;
+    height: 48px;
+    background: #000;
+    border: 2px inset #555;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.rc-icon img {
+    width: 32px;
+    image-rendering: pixelated;
+}
+
+.rc-text {
+    flex: 1;
+}
+
+.rc-title {
+    font-size: 1.5rem;
+    color: #fff;
+    margin-bottom: 2px;
+}
+
+.rc-sub {
+    font-size: 1.1rem;
+    color: #f1c40f; /* Gold */
+}
+
+.rc-arrow {
+    font-size: 1.5rem;
+    color: #c0c0c0;
+    transition: color 0.2s, transform 0.2s;
+}
+
+.retro-checkpoint:hover .rc-arrow {
+    color: #f1c40f;
+    transform: translateX(3px);
+}
