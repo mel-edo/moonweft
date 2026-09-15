@@ -1,517 +1,432 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>the board ~ moonweft</title>
-        <meta name="description" content="moonweft's community board — links, guestbook, and more.">
-        <link rel="stylesheet" href="styles/community.css">
-        <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Nunito:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
-        <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
-        <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
-    </head>
-    <body>
 
-        <div class="board-frame">
-            <!-- cork texture grain -->
-            <div class="cork-grain" aria-hidden="true"></div>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>the board ~ moonweft</title>
+    <meta name="description" content="moonweft's community board — links, guestbook, and more.">
+    <link rel="stylesheet" href="styles/community.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;600&family=Nunito:wght@400;500;600&family=Lora:ital,wght@0,400;0,600;1,400&display=swap"
+        rel="stylesheet">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16.png">
+</head>
 
-            <!-- Title strip taped to the board -->
-            <header class="board-label">
-                <div class="tape tape-left"></div>
-                <div class="label-content">
-                    <h1>the board</h1>
-                    <span class="traveler-whisper">welcome, traveler</span>
+<body>
+
+    <div class="board-frame">
+        <!-- cork texture grain -->
+        <div class="cork-grain" aria-hidden="true"></div>
+
+        <!-- Title strip taped to the board -->
+        <header class="board-label">
+            <div class="tape tape-left"></div>
+            <div class="label-content">
+                <h1>the board</h1>
+                <span class="traveler-whisper">welcome, traveler</span>
+            </div>
+            <div class="tape tape-right"></div>
+        </header>
+
+        <!-- Nav — paper scrap -->
+        <nav class="nav-scrap">
+            <a href="index.html">[home]</a>
+            <a href="projects.html">[projects]</a>
+            <a href="media.html">[media]</a>
+            <span class="nav-here">[board]</span>
+            <a href="notes.html">[blog]</a>
+        </nav>
+
+        <!-- THE CORKBOARD -->
+        <main class="corkboard">
+            <!-- Dynamically rendered cozy threads overlay -->
+            <canvas id="thread-canvas" class="thread-canvas" aria-hidden="true"></canvas>
+
+            <!-- DOODLES scattered on the cork ✧ -->
+            <span class="doodle doodle-1" aria-hidden="true">★</span>
+            <span class="doodle doodle-2" aria-hidden="true">♡</span>
+            <span class="doodle doodle-3" aria-hidden="true">~</span>
+            <span class="doodle doodle-4" aria-hidden="true">✦</span>
+            <span class="doodle doodle-5" aria-hidden="true">✿</span>
+            <span class="doodle doodle-6" aria-hidden="true">↗</span>
+
+            <!-- POST-IT NOTES on the cork ✧ -->
+            <div class="postit postit-1" aria-hidden="true">
+                <span>trade buttons?</span>
+            </div>
+            <div class="postit postit-2" aria-hidden="true">
+                <span>touch grass</span>
+            </div>
+
+            <!-- POLAROID tucked on the board -->
+            <a href="media.html" class="polaroid" aria-label="open media">
+                <div class="polaroid-photo">
                 </div>
-                <div class="tape tape-right"></div>
-            </header>
+                <span class="polaroid-caption"> untitled</span>
+            </a>
 
-            <!-- Nav — paper scrap -->
-            <nav class="nav-scrap">
-                <a href="index.html">[home]</a>
-                <a href="projects.html">[projects]</a>
-                <a href="media.html">[media]</a>
-                <span class="nav-here">[board]</span>
-                <a href="notes.html">[blog]</a>
-            </nav>
+            <!-- GAMEBOY STATION -->
+            <div class="gbemu-scrap">
+                <span class="gbemu-scrap-title">play</span>
+                <span class="gbemu-scrap-title">gbemu!</span>
+                <span class="gbemu-scrap-sub">play some classics</span>
+            </div>
+            <a href="emulator.html" aria-label="play gameboy" class="gbemu-link">
+                <img src="assets/gameboy_icon.jpg" alt="play gbemu!" class="gbemu-icon">
+            </a>
 
-            <!-- THE CORKBOARD -->
-            <main class="corkboard">
-                <!-- Dynamically rendered cozy threads overlay -->
-                <canvas
-                    id="thread-canvas"
-                    class="thread-canvas"
-                    aria-hidden="true"
-                ></canvas>
+            <!-- EXTRA PIN IN EMPTY CORK SPACE -->
+            <div class="pin pin-extra" aria-hidden="true"></div>
 
-                <!-- DOODLES scattered on the cork ✧ -->
-                <span class="doodle doodle-1" aria-hidden="true">★</span>
-                <span class="doodle doodle-2" aria-hidden="true">♡</span>
-                <span class="doodle doodle-3" aria-hidden="true">~</span>
-                <span class="doodle doodle-4" aria-hidden="true">✦</span>
-                <span class="doodle doodle-5" aria-hidden="true">✿</span>
-                <span class="doodle doodle-6" aria-hidden="true">↗</span>
+            <!-- INTERNET CHECKPOINT -->
+            <div class="checkpoint-scrap">
+                <span class="checkpoint-scrap-title">
+                    internet
+                </span>
 
-                <!-- POST-IT NOTES on the cork ✧ -->
-                <div class="postit postit-1" aria-hidden="true">
-                    <span>trade buttons?</span>
-                </div>
-                <div class="postit postit-2" aria-hidden="true">
-                    <span>touch grass</span>
-                </div>
+                <span class="checkpoint-scrap-title">
+                    checkpoint
+                </span>
 
-                <!-- POLAROID tucked on the board ✧ -->
-                <a href="media.html" class="polaroid" aria-label="open media">
-                    <div class="polaroid-photo">
-                    </div>
-                    <span class="polaroid-caption">   untitled</span>
-                </a>
+                <span class="checkpoint-scrap-sub">
+                    take a little break
+                </span>
+            </div>
 
-                <!-- EXTRA PIN IN EMPTY CORK SPACE -->
-                <div
-                    class="pin pin-extra"
-                    aria-hidden="true"
-                ></div>
+            <a href="checkpoint.html" class="board-bonfire" aria-label="Visit the Internet Checkpoint">
+                <img src="assets/bonfire.png" alt="bonfire">
+            </a>
 
-                <!-- INTERNET CHECKPOINT -->
-                <div class="checkpoint-scrap">
-                    <span class="checkpoint-scrap-title">
-                        internet
-                    </span>
+            <!-- LEFT COLUMN -->
+            <div class="board-column board-column-left">
 
-                    <span class="checkpoint-scrap-title">
-                        checkpoint
-                    </span>
+                <!-- GUESTBOOK — Keqing (electro) -->
+                <section class="paper paper-1 tint-electro">
+                    <div class="washi washi-electro"></div>
+                    <div class="pin pin-electro"></div>
 
-                    <span class="checkpoint-scrap-sub">
-                        take a little break
-                    </span>
-                </div>
+                    <h2 class="paper-title">
+                        <img src="assets/keqing-icon.webp" alt="" class="char-icon">
+                        leave a note
+                    </h2>
 
-                <a
-                    href="checkpoint.html"
-                    class="board-bonfire"
-                    aria-label="Visit the Internet Checkpoint"
-                >
-                    <img
-                        src="assets/bonfire.png"
-                        alt="bonfire"
-                    >
-                </a>
+                    <div class="guestbook-wrap">
 
-                <!-- LEFT COLUMN -->
-                <div class="board-column board-column-left">
+                        <!-- Entry form -->
+                        <form class="gb-form" id="gb-form" novalidate>
 
-                    <!-- GUESTBOOK — Keqing (electro) -->
-                    <section class="paper paper-1 tint-electro">
-                        <div class="washi washi-electro"></div>
-                        <div class="pin pin-electro"></div>
+                            <!-- HONEYPOT — hidden from humans, bots fill it -->
+                            <input type="text" name="website_url" id="website_url" tabindex="-1" autocomplete="off"
+                                style="position:absolute;left:-9999px;opacity:0;height:0;">
 
-                        <h2 class="paper-title">
-                            <img src="assets/keqing-icon.webp" alt="" class="char-icon">
-                            leave a note ✉
-                        </h2>
-
-                        <div class="guestbook-wrap">
-
-                            <!-- Entry form -->
-                            <form class="gb-form" id="gb-form" novalidate>
-
-                                <!-- HONEYPOT — hidden from humans, bots fill it -->
-                                <input
-                                    type="text"
-                                    name="website_url"
-                                    id="website_url"
-                                    tabindex="-1"
-                                    autocomplete="off"
-                                    style="position:absolute;left:-9999px;opacity:0;height:0;"
-                                >
-
-                                <div class="gb-form-row">
-                                    <div class="gb-field">
-                                        <label for="gb-name">name *</label>
-                                        <input
-                                            type="text"
-                                            id="gb-name"
-                                            maxlength="32"
-                                            placeholder="your name"
-                                            required
-                                        >
-                                    </div>
-
-                                    <div class="gb-field">
-                                        <label for="gb-site">
-                                            site <span class="optional">(optional)</span>
-                                        </label>
-                                        <input
-                                            type="url"
-                                            id="gb-site"
-                                            placeholder="https://yoursite.com"
-                                        >
-                                    </div>
+                            <div class="gb-form-row">
+                                <div class="gb-field">
+                                    <label for="gb-name">name *</label>
+                                    <input type="text" id="gb-name" maxlength="32" placeholder="your name" required>
                                 </div>
 
                                 <div class="gb-field">
-                                    <label for="gb-message">
-                                        message *
-                                        <span class="optional">(max 280 chars)</span>
+                                    <label for="gb-site">
+                                        site <span class="optional">(optional)</span>
+                                    </label>
+                                    <input type="url" id="gb-site" placeholder="https://yoursite.com">
+                                </div>
+                            </div>
+
+                            <div class="gb-field">
+                                <label for="gb-message">
+                                    message *
+                                    <span class="optional">(max 280 chars)</span>
+                                </label>
+
+                                <textarea id="gb-message" maxlength="280" rows="3"
+                                    placeholder="say hello, drop a thought, sign the board." required></textarea>
+
+                                <div class="gb-char-count">
+                                    <span id="gb-chars">0</span>/280
+                                </div>
+                            </div>
+
+                            <!-- Color picker -->
+                            <div class="gb-color-row">
+                                <span class="gb-color-label">note color:</span>
+
+                                <div class="gb-color-options">
+                                    <label class="color-opt">
+                                        <input type="radio" name="gb-color" value="#c8a8ff" checked>
+                                        <span style="background:#c8a8ff"></span>
                                     </label>
 
-                                    <textarea
-                                        id="gb-message"
-                                        maxlength="280"
-                                        rows="3"
-                                        placeholder="say hello, drop a thought, sign the board."
-                                        required
-                                    ></textarea>
+                                    <label class="color-opt">
+                                        <input type="radio" name="gb-color" value="#ff9d5c">
+                                        <span style="background:#ff9d5c"></span>
+                                    </label>
 
-                                    <div class="gb-char-count">
-                                        <span id="gb-chars">0</span>/280
-                                    </div>
+                                    <label class="color-opt">
+                                        <input type="radio" name="gb-color" value="#a0d6eb">
+                                        <span style="background:#a0d6eb"></span>
+                                    </label>
+
+                                    <label class="color-opt">
+                                        <input type="radio" name="gb-color" value="#8fd96a">
+                                        <span style="background:#8fd96a"></span>
+                                    </label>
+
+                                    <label class="color-opt">
+                                        <input type="radio" name="gb-color" value="#f5e87a">
+                                        <span style="background:#f5e87a"></span>
+                                    </label>
                                 </div>
-
-                                <!-- Color picker -->
-                                <div class="gb-color-row">
-                                    <span class="gb-color-label">note color:</span>
-
-                                    <div class="gb-color-options">
-                                        <label class="color-opt">
-                                            <input
-                                                type="radio"
-                                                name="gb-color"
-                                                value="#c8a8ff"
-                                                checked
-                                            >
-                                            <span style="background:#c8a8ff"></span>
-                                        </label>
-
-                                        <label class="color-opt">
-                                            <input
-                                                type="radio"
-                                                name="gb-color"
-                                                value="#ff9d5c"
-                                            >
-                                            <span style="background:#ff9d5c"></span>
-                                        </label>
-
-                                        <label class="color-opt">
-                                            <input
-                                                type="radio"
-                                                name="gb-color"
-                                                value="#a0d6eb"
-                                            >
-                                            <span style="background:#a0d6eb"></span>
-                                        </label>
-
-                                        <label class="color-opt">
-                                            <input
-                                                type="radio"
-                                                name="gb-color"
-                                                value="#8fd96a"
-                                            >
-                                            <span style="background:#8fd96a"></span>
-                                        </label>
-
-                                        <label class="color-opt">
-                                            <input
-                                                type="radio"
-                                                name="gb-color"
-                                                value="#f5e87a"
-                                            >
-                                            <span style="background:#f5e87a"></span>
-                                        </label>
-                                    </div>
-                                </div>
-
-                                <button
-                                    type="submit"
-                                    class="gb-submit"
-                                    id="gb-submit"
-                                >
-                                    leave a note
-                                </button>
-
-                                <div class="gb-status" id="gb-status"></div>
-                            </form>
-
-                            <!-- Entries list -->
-                            <div class="gb-entries" id="gb-entries">
-                                <span class="al-placeholder">loading entries...</span>
                             </div>
 
-                            <!-- Pagination -->
-                            <div
-                                class="gb-pagination"
-                                id="gb-pagination"
-                            ></div>
+                            <button type="submit" class="gb-submit" id="gb-submit">
+                                leave a note
+                            </button>
 
-                        </div>
-                    </section>
+                            <div class="gb-status" id="gb-status"></div>
+                        </form>
 
-
-                    <!-- RECENTLY — Layla (cryo) -->
-                    <section class="paper paper-3 tint-cryo">
-                        <div class="washi washi-cryo"></div>
-                        <div class="pin pin-cryo"></div>
-
-                        <h2 class="paper-title">
-                            <img src="assets/layla-icon.webp" alt="" class="char-icon">
-                            recently ♡
-                        </h2>
-
-                        <p class="paper-sub">
-                            recently completed and rated milestones.
-                        </p>
-
-                        <!-- AniList user stats -->
-                        <div class="al-stats" id="al-stats">
-
-                            <div class="al-stat">
-                                <strong id="al-anime-count">—</strong>
-                                <span>anime</span>
-                            </div>
-
-                            <span class="al-dot">·</span>
-
-                            <div class="al-stat">
-                                <strong id="al-hours">—</strong>
-                                <span>hrs watched</span>
-                            </div>
-
-                            <span class="al-dot">·</span>
-
-                            <div class="al-stat">
-                                <strong id="al-manga-count">—</strong>
-                                <span>manga</span>
-                            </div>
-
-                            <span class="al-dot">·</span>
-
-                            <div class="al-stat">
-                                <strong id="al-chapters">—</strong>
-                                <span>chapters read</span>
-                            </div>
-
+                        <!-- Entries list -->
+                        <div class="gb-entries" id="gb-entries">
+                            <span class="al-placeholder">loading entries...</span>
                         </div>
 
-                        <div id="anilist-content" class="anilist-grid">
-                            <span class="al-placeholder">loading...</span>
-                        </div>
-                    </section>
+                        <!-- Pagination -->
+                        <div class="gb-pagination" id="gb-pagination"></div>
 
-                </div>
+                    </div>
+                </section>
 
 
-                <!-- RIGHT COLUMN -->
-                <div class="board-column board-column-right">
+                <!-- RECENTLY — Layla (cryo) -->
+                <section class="paper paper-3 tint-cryo">
+                    <div class="washi washi-cryo"></div>
+                    <div class="pin pin-cryo"></div>
 
-                    <!-- NEIGHBOURS — Yoimiya (pyro) -->
-                    <section class="paper paper-2 tint-pyro">
-                        <div class="washi washi-pyro"></div>
-                        <div class="pin pin-pyro"></div>
+                    <h2 class="paper-title">
+                        <img src="assets/layla-icon.webp" alt="" class="char-icon">
+                        recently
+                    </h2>
 
-                        <h2 class="paper-title">
-                            <img src="assets/yoimiya-icon.webp" alt="" class="char-icon">
-                            neighbours ✦
-                        </h2>
+                    <p class="paper-sub">
+                        recently completed and rated milestones.
+                    </p>
 
-                        <p class="paper-sub">
-                            sites i visit. link back if you'd like.
-                        </p>
+                    <!-- AniList user stats -->
+                    <div class="al-stats" id="al-stats">
 
-                        <div class="my-button-block">
-                            <span class="sub-label">my button, grab it!</span>
-
-                            <div class="button-row">
-                                <img
-                                    src="assets/moonweft_88x31.png"
-                                    alt="moonweft 88x31"
-                                    class="site-btn"
-                                >
-
-                                <textarea readonly class="btn-code"><a href="https://mel-edo.github.io/moonweft/"><img src="https://mel-edo.github.io/moonweft/assets/moonweft_88x31.png" alt="moonweft"></a></textarea>
-                            </div>
+                        <div class="al-stat">
+                            <strong id="al-anime-count">—</strong>
+                            <span>anime</span>
                         </div>
 
-                        <span class="sub-label">cool people</span>
+                        <span class="al-dot">·</span>
 
-                        <div class="button-grid">
-                            <a
-                                href="https://integral-space.vercel.app/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                title="integral-space"
-                            >
-                                <img
-                                    src="assets/placeholder.gif"
-                                    alt="integral-space"
-                                >
-                            </a>
-
-                            <a
-                                href="https://www.aketawi.space/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                title="aketawi"
-                            >
-                                <img
-                                    src="assets/aketawi.gif"
-                                    alt="aketawi"
-                                >
-                            </a>
+                        <div class="al-stat">
+                            <strong id="al-hours">—</strong>
+                            <span>hrs watched</span>
                         </div>
 
-                        <div style="margin-top: 24px;"></div>
+                        <span class="al-dot">·</span>
 
-                        <span class="sub-label">elsewhere ➹</span>
-
-                        <div class="ticket-grid">
-
-                            <a
-                                href="https://osu.ppy.sh/users/11462331"
-                                target="_blank"
-                                class="ticket ticket-osu"
-                                style="transform: rotate(-3deg);"
-                            >
-                                <span class="ticket-type">token</span>
-                                <span class="ticket-name">osu!</span>
-                            </a>
-
-                            <a
-                                href="https://steamcommunity.com/id/meledo/"
-                                target="_blank"
-                                class="ticket ticket-steam"
-                                style="transform: rotate(2deg) translateY(4px);"
-                            >
-                                <span class="ticket-type">pass</span>
-                                <span class="ticket-name">steam</span>
-                            </a>
-
-                            <a
-                                href="https://backloggd.com/u/Meledo/"
-                                target="_blank"
-                                class="ticket ticket-bkg"
-                                style="transform: rotate(-1deg) translateY(2px);"
-                            >
-                                <span class="ticket-type">log</span>
-                                <span class="ticket-name">backloggd</span>
-                            </a>
-
-                            <a
-                                href="https://anilist.co/user/meledo/"
-                                target="_blank"
-                                class="ticket ticket-anilist"
-                                style="transform: rotate(4deg);"
-                            >
-                                <span class="ticket-type">track</span>
-                                <span class="ticket-name">anilist</span>
-                            </a>
-
-                            <a
-                                href="https://retroachievements.org/user/meledo"
-                                target="_blank"
-                                class="ticket ticket-ra"
-                                style="transform: rotate(-2deg) translateY(6px);"
-                            >
-                                <span class="ticket-type">retro</span>
-                                <span class="ticket-name">rachv</span>
-                            </a>
-
-                        </div>
-                    </section>
-
-
-                    <!-- GAMES — Kirara (dendro) -->
-                    <section class="paper paper-4 tint-dendro">
-                        <div class="washi washi-dendro"></div>
-                        <div class="pin pin-dendro"></div>
-
-                        <h2 class="paper-title">
-                            <img src="assets/kirara-icon.webp" alt="" class="char-icon">
-                            games ※
-                        </h2>
-
-                        <p class="paper-sub">
-                            <strong
-                                id="ra-points"
-                                style="color: var(--ink);"
-                            >—</strong>
-                            pts · retro grinding and current obsessions.
-                        </p>
-
-                        <!-- RA Recently Played -->
-                        <span class="sub-label">
-                            recently on retroachievements
-                        </span>
-
-                        <div class="ra-grid" id="ra-content">
-                            <span class="al-placeholder">loading...</span>
+                        <div class="al-stat">
+                            <strong id="al-manga-count">—</strong>
+                            <span>manga</span>
                         </div>
 
-                        <!-- Divider -->
-                        <div class="games-divider"></div>
+                        <span class="al-dot">·</span>
 
-                        <!-- Hand-curated modern games -->
-                        <span class="sub-label">modern shelf</span>
-
-                        <div class="games-grid" id="games-content">
-                            <span class="al-placeholder">loading...</span>
+                        <div class="al-stat">
+                            <strong id="al-chapters">—</strong>
+                            <span>chapters read</span>
                         </div>
 
-                    </section>
+                    </div>
 
-                </div>
+                    <div id="anilist-content" class="anilist-grid">
+                        <span class="al-placeholder">loading...</span>
+                    </div>
+                </section>
 
-            </main>
+            </div>
 
-            <footer class="board-bottom">
-                <a href="index.html" class="footer-back">← back home</a>
-                
-                <div class="postit postit-3" aria-hidden="true">
-                    <span>ad astra abyssosque</span>
-                </div>
-                <div class="blinkie-wrapper">
-                    <!-- blinkie strip — long paper pinned at both ends -->
-                    <div class="blinkie-strip">
-                        <div class="strip-pin strip-pin-left"></div>
-                        <div class="strip-pin strip-pin-right"></div>
-                        <div class="blinkie-content-row">
-                            <div id="footer-crew-left" class="footer-crew-side"></div>
-                            
-                            <div class="footer-blinkies">
-                                <img src="assets/firefoxnow.gif" alt="firefox now">
-                                <img src="assets/pokemon.gif" alt="pokemon">
-                                <img src="assets/penguins.gif" alt="linux penguins">
-                                <img src="assets/archlinux.gif" alt="arch linux">
-                                <img src="assets/saynotoweb3.gif" alt="say no to web3">
-                                <img src="assets/neovim.gif" alt="neovim">
-                                <img src="assets/anythingbut.gif" alt="anything but chrome">
-                                <img src="assets/bsod.gif" alt="bsod">
-                                <img src="assets/mademyown.gif" alt="i made my own">
-                                <img src="assets/ublock-now.png" alt="ublock origin now">
-                                <img src="assets/vim.gif" alt="vim">
-                                <img src="assets/www2.gif" alt="www">
-                                <img src="assets/get.gif" alt="get">
-                                <img src="assets/emulate.gif" alt="emulate">
-                                <img src="assets/html_learn_it_today.gif" alt="html">
-                                <img src="assets/java.gif" alt="java">
-                                <img src="assets/GUTENBRG.gif" alt="gutenberg">
-                                <img src="assets/antinft.gif" alt="anti nft">
-                                <img src="assets/bestview.gif" alt="best view">
-                            </div>
 
-                            <div id="footer-crew-right" class="footer-crew-side"></div>
+            <!-- RIGHT COLUMN -->
+            <div class="board-column board-column-right">
+
+                <!-- NEIGHBOURS — Yoimiya (pyro) -->
+                <section class="paper paper-2 tint-pyro">
+                    <div class="washi washi-pyro"></div>
+                    <div class="pin pin-pyro"></div>
+
+                    <h2 class="paper-title">
+                        <img src="assets/yoimiya-icon.webp" alt="" class="char-icon">
+                        neighbours
+                    </h2>
+
+                    <p class="paper-sub">
+                        sites i visit. link back if you'd like.
+                    </p>
+
+                    <div class="my-button-block">
+                        <span class="sub-label">my button, grab it!</span>
+
+                        <div class="button-row">
+                            <img src="assets/moonweft_88x31.png" alt="moonweft 88x31" class="site-btn">
+
+                            <textarea readonly
+                                class="btn-code"><a href="https://mel-edo.github.io/moonweft/"><img src="https://mel-edo.github.io/moonweft/assets/moonweft_88x31.png" alt="moonweft"></a></textarea>
                         </div>
                     </div>
+
+                    <span class="sub-label">cool people</span>
+
+                    <div class="button-grid">
+                        <a href="https://integral-space.vercel.app/" target="_blank" rel="noopener noreferrer"
+                            title="integral-space">
+                            <img src="assets/placeholder.gif" alt="integral-space">
+                        </a>
+
+                        <a href="https://www.aketawi.space/" target="_blank" rel="noopener noreferrer" title="aketawi">
+                            <img src="assets/aketawi.gif" alt="aketawi">
+                        </a>
+                    </div>
+
+                    <div style="margin-top: 24px;"></div>
+
+                    <span class="sub-label">elsewhere</span>
+
+                    <div class="ticket-grid">
+
+                        <a href="https://osu.ppy.sh/users/11462331" target="_blank" class="ticket ticket-osu"
+                            style="transform: rotate(-3deg);">
+                            <span class="ticket-type">token</span>
+                            <span class="ticket-name">osu!</span>
+                        </a>
+
+                        <a href="https://steamcommunity.com/id/meledo/" target="_blank" class="ticket ticket-steam"
+                            style="transform: rotate(2deg) translateY(4px);">
+                            <span class="ticket-type">pass</span>
+                            <span class="ticket-name">steam</span>
+                        </a>
+
+                        <a href="https://backloggd.com/u/Meledo/" target="_blank" class="ticket ticket-bkg"
+                            style="transform: rotate(-1deg) translateY(2px);">
+                            <span class="ticket-type">log</span>
+                            <span class="ticket-name">backloggd</span>
+                        </a>
+
+                        <a href="https://anilist.co/user/meledo/" target="_blank" class="ticket ticket-anilist"
+                            style="transform: rotate(4deg);">
+                            <span class="ticket-type">track</span>
+                            <span class="ticket-name">anilist</span>
+                        </a>
+
+                        <a href="https://retroachievements.org/user/meledo" target="_blank" class="ticket ticket-ra"
+                            style="transform: rotate(-2deg) translateY(6px);">
+                            <span class="ticket-type">retro</span>
+                            <span class="ticket-name">rachv</span>
+                        </a>
+
+                    </div>
+                </section>
+
+
+                <!-- GAMES — Kirara (dendro) -->
+                <section class="paper paper-4 tint-dendro">
+                    <div class="washi washi-dendro"></div>
+                    <div class="pin pin-dendro"></div>
+
+                    <h2 class="paper-title">
+                        <img src="assets/kirara-icon.webp" alt="" class="char-icon">
+                        games
+                    </h2>
+
+                    <p class="paper-sub">
+                        <strong id="ra-points" style="color: var(--ink);">—</strong>
+                        pts · retro grinding and currently playing.
+                    </p>
+
+                    <!-- RA Recently Played -->
+                    <span class="sub-label">
+                        recently on retroachievements
+                    </span>
+
+                    <div class="ra-grid" id="ra-content">
+                        <span class="al-placeholder">loading...</span>
+                    </div>
+
+                    <!-- Divider -->
+                    <div class="games-divider"></div>
+
+                    <!-- Hand-curated modern games -->
+                    <span class="sub-label">modern shelf</span>
+
+                    <div class="games-grid" id="games-content">
+                        <span class="al-placeholder">loading...</span>
+                    </div>
+
+                </section>
+
+            </div>
+
+        </main>
+
+        <footer class="board-bottom">
+            <a href="index.html" class="footer-back">← back home</a>
+
+            <div class="postit postit-3" aria-hidden="true">
+                <span>ad astra abyssosque</span>
+            </div>
+            <div class="blinkie-wrapper">
+                <!-- blinkie strip — long paper pinned at both ends -->
+                <div class="blinkie-strip">
+                    <div class="strip-pin strip-pin-left"></div>
+                    <div class="strip-pin strip-pin-right"></div>
+                    <div class="blinkie-content-row">
+                        <div id="footer-crew-left" class="footer-crew-side"></div>
+
+                        <div class="footer-blinkies">
+                            <img src="assets/firefoxnow.gif" alt="firefox now">
+                            <img src="assets/pokemon.gif" alt="pokemon">
+                            <img src="assets/penguins.gif" alt="linux penguins">
+                            <img src="assets/archlinux.gif" alt="arch linux">
+                            <img src="assets/saynotoweb3.gif" alt="say no to web3">
+                            <img src="assets/neovim.gif" alt="neovim">
+                            <img src="assets/anythingbut.gif" alt="anything but chrome">
+                            <img src="assets/bsod.gif" alt="bsod">
+                            <img src="assets/mademyown.gif" alt="i made my own">
+                            <img src="assets/ublock-now.png" alt="ublock origin now">
+                            <img src="assets/vim.gif" alt="vim">
+                            <img src="assets/www2.gif" alt="www">
+                            <img src="assets/get.gif" alt="get">
+                            <img src="assets/emulate.gif" alt="emulate">
+                            <img src="assets/html_learn_it_today.gif" alt="html">
+                            <img src="assets/java.gif" alt="java">
+                            <img src="assets/GUTENBRG.gif" alt="gutenberg">
+                            <img src="assets/antinft.gif" alt="anti nft">
+                            <img src="assets/bestview.gif" alt="best view">
+                            <img src="assets/froggy.gif" alt="froggy">
+                            <img src="assets/gb.gif" alt="gameboy">
+                            <img src="assets/1css.gif" alt="css">
+                            <img src="assets/1html6.gif" alt="sane simple html">
+                            <img src="assets/nvidia.gif" alt="nvidia">
+                        </div>
+
+                        <div id="footer-crew-right" class="footer-crew-side"></div>
+                    </div>
                 </div>
-            </footer>
+            </div>
+        </footer>
 
-        </div>
+    </div>
 
-        <!-- ANILIST FETCH -->
-        <script>
-            const ANILIST_USER = 'meledo';
-            const QUERY = `
+    <!-- ANILIST FETCH -->
+    <script>
+        const ANILIST_USER = 'meledo';
+        const QUERY = `
             query ($name: String) {
                 User(name: $name) {
                     statistics {
@@ -527,11 +442,11 @@
                 }
             }`;
 
-            fetch('https://graphql.anilist.co', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ query: QUERY, variables: { name: ANILIST_USER } })
-            })
+        fetch('https://graphql.anilist.co', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ query: QUERY, variables: { name: ANILIST_USER } })
+        })
             .then(r => r.json())
             .then(data => {
                 // — stats row —
@@ -549,7 +464,7 @@
                 container.innerHTML = '';
                 const anime = data.data?.recent?.lists?.flatMap(l => l.entries) || [];
                 const manga = data.data?.recentManga?.lists?.flatMap(l => l.entries) || [];
-                
+
                 // Mix anime and manga sorted loosely by recent, then slice
                 // (Since we can't sort across types easily, just taking latest of both)
                 const entries = [...anime.slice(0, 4), ...manga.slice(0, 4)];
@@ -581,64 +496,64 @@
                 document.getElementById('anilist-content').innerHTML =
                     '<span class="al-placeholder">couldn\'t reach anilist</span>';
             });
-        </script>
+    </script>
 
-        <!-- FOOTER CREW PICKER -->
-        <script>
-            (function() {
-                const chars = ['keqing', 'yoimiya', 'layla', 'kirara'];
-                const leftContainer = document.getElementById('footer-crew-left');
-                const rightContainer = document.getElementById('footer-crew-right');
-                if (!leftContainer || !rightContainer) return;
+    <!-- FOOTER CREW PICKER -->
+    <script>
+        (function () {
+            const chars = ['keqing', 'yoimiya', 'layla', 'kirara'];
+            const leftContainer = document.getElementById('footer-crew-left');
+            const rightContainer = document.getElementById('footer-crew-right');
+            if (!leftContainer || !rightContainer) return;
 
-                // Pick 2 random unique characters
-                const shuffled = chars.sort(() => 0.5 - Math.random());
-                
-                const renderChibi = (char, invert) => {
-                    const variant = Math.floor(Math.random() * 2) + 1;
-                    const transform = invert ? 'transform: scaleX(-1);' : '';
-                    return `
+            // Pick 2 random unique characters
+            const shuffled = chars.sort(() => 0.5 - Math.random());
+
+            const renderChibi = (char, invert) => {
+                const variant = Math.floor(Math.random() * 2) + 1;
+                const transform = invert ? 'transform: scaleX(-1);' : '';
+                return `
                         <div class="crew-member">
                             <img src="assets/chibi-${char}-${variant}.webp" alt="${char} chibi" class="crew-chibi" style="${transform}">
                         </div>
                     `;
+            }
+
+            leftContainer.innerHTML = renderChibi(shuffled[0], true);
+            rightContainer.innerHTML = renderChibi(shuffled[1], false);
+        })();
+    </script>
+
+    <!-- GAMES DATA (RetroAchievements + Curated) -->
+    <script>
+        // ── RETROACHIEVEMENTS ──
+        fetch('https://moonweft-music.meledo.workers.dev/retro')
+            .then(r => {
+                if (!r.ok) throw new Error("Worker responded with " + r.status);
+                return r.json();
+            })
+            .then(data => {
+                document.getElementById('ra-points').textContent =
+                    Number(data.points || 0).toLocaleString();
+
+                const container = document.getElementById('ra-content');
+                container.innerHTML = '';
+
+                if (!data.recent || Object.keys(data.recent).length === 0) {
+                    container.innerHTML = '<span class="al-placeholder">nothing tracked recently</span>';
+                    return;
                 }
 
-                leftContainer.innerHTML = renderChibi(shuffled[0], true);
-                rightContainer.innerHTML = renderChibi(shuffled[1], false);
-            })();
-        </script>
+                // Handles both arrays and objects (if PHP maps it as an object dictionary)
+                const recentList = Array.isArray(data.recent) ? data.recent : Object.values(data.recent);
 
-        <!-- GAMES DATA (RetroAchievements + Curated) -->
-        <script>
-            // ── RETROACHIEVEMENTS ──
-            fetch('https://moonweft-music.meledo.workers.dev/retro')
-                .then(r => {
-                    if (!r.ok) throw new Error("Worker responded with " + r.status);
-                    return r.json();
-                })
-                .then(data => {
-                    document.getElementById('ra-points').textContent =
-                        Number(data.points || 0).toLocaleString();
-
-                    const container = document.getElementById('ra-content');
-                    container.innerHTML = '';
-
-                    if (!data.recent || Object.keys(data.recent).length === 0) {
-                        container.innerHTML = '<span class="al-placeholder">nothing tracked recently</span>';
-                        return;
-                    }
-
-                    // Handles both arrays and objects (if PHP maps it as an object dictionary)
-                    const recentList = Array.isArray(data.recent) ? data.recent : Object.values(data.recent);
-
-                    recentList.slice(0, 3).forEach(game => {
-                        const card = document.createElement('a');
-                        card.href = `https://retroachievements.org/game/${game.id}`;
-                        card.target = '_blank';
-                        card.rel = 'noopener noreferrer';
-                        card.className = 'ra-card';
-                        card.innerHTML = `
+                recentList.slice(0, 3).forEach(game => {
+                    const card = document.createElement('a');
+                    card.href = `https://retroachievements.org/game/${game.id}`;
+                    card.target = '_blank';
+                    card.rel = 'noopener noreferrer';
+                    card.className = 'ra-card';
+                    card.innerHTML = `
                             <img src="https://media.retroachievements.org${game.imageUrl}"
                                  alt="${game.title}" class="ra-cover">
                             <div class="ra-info">
@@ -646,374 +561,374 @@
                                 <div style="font-size: 0.55rem; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-top: -2px;">${game.console}</div>
                             </div>
                         `;
-                        container.appendChild(card);
-                    });
-                })
-                .catch((err) => {
-                    console.error("RetroAchievements Error:", err);
-                    document.getElementById('ra-content').innerHTML =
-                        '<span class="al-placeholder">couldn\'t reach retroachievements (check console)</span>';
+                    container.appendChild(card);
                 });
+            })
+            .catch((err) => {
+                console.error("RetroAchievements Error:", err);
+                document.getElementById('ra-content').innerHTML =
+                    '<span class="al-placeholder">couldn\'t reach retroachievements (check console)</span>';
+            });
 
-            // ── HAND-CURATED GAMES ──
-            fetch('data/games.json')
-                .then(r => r.json())
-                .then(data => {
-                    const container = document.getElementById('games-content');
-                    container.innerHTML = '';
+        // ── HAND-CURATED GAMES ──
+        fetch('data/games.json')
+            .then(r => r.json())
+            .then(data => {
+                const container = document.getElementById('games-content');
+                container.innerHTML = '';
 
-                    // Randomize games order
-                    data.sort(() => 0.5 - Math.random());
+                // Randomize games order
+                data.sort(() => 0.5 - Math.random());
 
-                    data.forEach(game => {
-                        const card = document.createElement('div');
-                        card.className = 'game-card';
-                        
-                        // Always auto-fetch via worker SteamGridDB proxy natively
-                        const coverSrc = 'https://moonweft-music.meledo.workers.dev/steamgrid?q=' + encodeURIComponent(game.title);
+                data.forEach(game => {
+                    const card = document.createElement('div');
+                    card.className = 'game-card';
 
-                        card.innerHTML = `
+                    // Always auto-fetch via worker SteamGridDB proxy natively
+                    const coverSrc = 'https://moonweft-music.meledo.workers.dev/steamgrid?q=' + encodeURIComponent(game.title);
+
+                    card.innerHTML = `
                             <img src="${coverSrc}" alt="${game.title}" class="game-cover">
                             <span class="game-badge badge-${game.status}">${game.status}</span>
                             <span class="game-title">${game.title}</span>
                         `;
-                        container.appendChild(card);
-                    });
-                })
-                .catch((err) => {
-                    console.error("Games json error:", err);
-                    document.getElementById('games-content').innerHTML =
-                        '<span class="al-placeholder">couldn\'t load games</span>';
+                    container.appendChild(card);
                 });
+            })
+            .catch((err) => {
+                console.error("Games json error:", err);
+                document.getElementById('games-content').innerHTML =
+                    '<span class="al-placeholder">couldn\'t load games</span>';
+            });
 
-            // DRAW COZY THREADS NATIVELY
+        // DRAW COZY THREADS NATIVELY
 
-            function updateThreads() {
-                const canvas = document.getElementById('thread-canvas');
-                const board = document.querySelector('.corkboard');
-
-                if (!canvas || !board) return;
-
-                const rect = board.getBoundingClientRect();
-
-                const dpr = window.devicePixelRatio || 1;
-
-                canvas.width = Math.round(board.offsetWidth * dpr);
-                canvas.height = Math.round(board.offsetHeight * dpr);
-
-                canvas.style.width = `${board.offsetWidth}px`;
-                canvas.style.height = `${board.offsetHeight}px`;
-
-                const ctx = canvas.getContext('2d');
-
-                if (!ctx) return;
-
-                ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-                ctx.clearRect(
-                    0,
-                    0,
-                    board.offsetWidth,
-                    board.offsetHeight
-                );
-
-
-                // ─────────────────────────────────
-                // FIND PINS
-                // ─────────────────────────────────
-
-                const pins = [
-                    document.querySelector('.pin-electro'),
-                    document.querySelector('.pin-pyro'),
-                    document.querySelector('.pin-cryo'),
-                    document.querySelector('.pin-dendro'),
-                    document.querySelector('.pin-extra')
-                ].filter(Boolean);
-
-                if (pins.length < 4) return;
-
-
-                // ─────────────────────────────────
-                // CONVERT PIN POSITIONS
-                // TO BOARD-LOCAL COORDINATES
-                // ─────────────────────────────────
-
-                const points = pins.map(pin => {
-                    const r = pin.getBoundingClientRect();
-
-                    return {
-                        x: (r.left - rect.left) + (r.width / 2),
-                        y: (r.top - rect.top) + (r.height / 2)
-                    };
-                });
-
-
-                // ─────────────────────────────────
-                // THREAD STYLE
-                // ─────────────────────────────────
-
-                ctx.lineWidth = 2;
-
-                ctx.strokeStyle = 'rgba(170, 75, 75, 0.48)';
-
-                ctx.lineCap = 'round';
-                ctx.lineJoin = 'round';
-
-                /*
-                * Very subtle shadow makes the thread feel
-                * like physical string sitting on cork.
-                */
-                ctx.shadowColor = 'rgba(60, 30, 20, 0.12)';
-                ctx.shadowBlur = 1;
-                ctx.shadowOffsetY = 1;
-
-
-                // ─────────────────────────────────
-                // CURVED THREAD
-                // ─────────────────────────────────
-
-                function drawThread(
-                    p1,
-                    p2,
-                    curveX = 0,
-                    curveY = 0,
-                    dashed = false
-                ) {
-                    const mx = ((p1.x + p2.x) / 2) + curveX;
-                    const my = ((p1.y + p2.y) / 2) + curveY;
-
-                    ctx.beginPath();
-                    ctx.moveTo(p1.x, p1.y);
-
-                    ctx.quadraticCurveTo(
-                        mx,
-                        my,
-                        p2.x,
-                        p2.y
-                    );
-
-                    ctx.setLineDash(
-                        dashed ? [7, 5] : []
-                    );
-
-                    /*
-                    * Dark physical thread.
-                    */
-                    ctx.strokeStyle = dashed
-                        ? 'rgba(130, 50, 50, 0.48)'
-                        : 'rgba(130, 50, 50, 0.72)';
-
-                    ctx.lineWidth = 2.4;
-                    ctx.stroke();
-
-
-                    /*
-                    * Small highlight makes it feel like
-                    * actual string rather than a CSS line.
-                    */
-                    ctx.beginPath();
-                    ctx.moveTo(p1.x, p1.y);
-
-                    ctx.quadraticCurveTo(
-                        mx,
-                        my,
-                        p2.x,
-                        p2.y
-                    );
-
-                    ctx.strokeStyle = dashed
-                        ? 'rgba(245, 190, 190, 0.28)'
-                        : 'rgba(245, 190, 190, 0.42)';
-
-                    ctx.lineWidth = 0.7;
-                    ctx.stroke();
-                }
-
-
-                // ─────────────────────────────────
-                // THREAD ROUTE
-                //
-                // 1 → 2 → 4 → 3
-                //
-                // This gives the board a more natural
-                // "string connecting pinned notes" look
-                // instead of a spider-web.
-                // ─────────────────────────────────
-
-                const [
-                    guestbook,
-                    neighbours,
-                    games,
-                    extra,
-                    recently
-                ] = points;
-
-
-                // Guestbook → Neighbours
-                drawThread(
-                    guestbook,
-                    neighbours,
-                    0,
-                    70
-                );
-
-
-                // Neighbours → Games
-                drawThread(
-                    neighbours,
-                    games,
-                    40,
-                    0
-                );
-
-
-                // Games → Extra pin
-                drawThread(
-                    games,
-                    extra,
-                    30,
-                    45
-                );
-
-
-                // Extra → Recently
-                drawThread(
-                    extra,
-                    recently,
-                    -35,
-                    20
-                );
-
-                // Recently → Guestbook
-                drawThread(
-                    recently,
-                    guestbook,
-                    -55,
-                    0
-                );
-
-                /*
-                * Tiny extra dashed connection gives it that
-                * hand-pinned scrapbook feel without creating
-                * a giant web.
-                */
-                drawThread(
-                    neighbours,
-                    recently,
-                    -25,
-                    35,
-                    true
-                );
-
-
-                /*
-                * Reset canvas state so later drawing isn't
-                * affected by the thread's shadow/dash state.
-                */
-                ctx.setLineDash([]);
-                ctx.shadowColor = 'transparent';
-                ctx.shadowBlur = 0;
-                ctx.shadowOffsetY = 0;
-            }
-            // ─────────────────────────────────────
-            // KEEP THREADS ATTACHED DURING
-            // DYNAMIC CONTENT / LAYOUT CHANGES
-            // ─────────────────────────────────────
-
-            let threadFrame = null;
-
-            function scheduleThreadUpdate() {
-                if (threadFrame !== null) {
-                    cancelAnimationFrame(threadFrame);
-                }
-
-                threadFrame = requestAnimationFrame(() => {
-                    threadFrame = null;
-                    updateThreads();
-                });
-            }
-
-
+        function updateThreads() {
+            const canvas = document.getElementById('thread-canvas');
             const board = document.querySelector('.corkboard');
 
-            if (board && 'ResizeObserver' in window) {
+            if (!canvas || !board) return;
 
-                const threadResizeObserver =
-                    new ResizeObserver(() => {
-                        scheduleThreadUpdate();
-                    });
+            const rect = board.getBoundingClientRect();
+
+            const dpr = window.devicePixelRatio || 1;
+
+            canvas.width = Math.round(board.offsetWidth * dpr);
+            canvas.height = Math.round(board.offsetHeight * dpr);
+
+            canvas.style.width = `${board.offsetWidth}px`;
+            canvas.style.height = `${board.offsetHeight}px`;
+
+            const ctx = canvas.getContext('2d');
+
+            if (!ctx) return;
+
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            ctx.clearRect(
+                0,
+                0,
+                board.offsetWidth,
+                board.offsetHeight
+            );
 
 
-                // Board itself
-                threadResizeObserver.observe(board);
+            // ─────────────────────────────────
+            // FIND PINS
+            // ─────────────────────────────────
+
+            const pins = [
+                document.querySelector('.pin-electro'),
+                document.querySelector('.pin-pyro'),
+                document.querySelector('.pin-cryo'),
+                document.querySelector('.pin-dendro'),
+                document.querySelector('.pin-extra')
+            ].filter(Boolean);
+
+            if (pins.length < 4) return;
 
 
-                // Both independent columns
-                document
-                    .querySelectorAll('.board-column')
-                    .forEach(column => {
-                        threadResizeObserver.observe(column);
-                    });
+            // ─────────────────────────────────
+            // CONVERT PIN POSITIONS
+            // TO BOARD-LOCAL COORDINATES
+            // ─────────────────────────────────
+
+            const points = pins.map(pin => {
+                const r = pin.getBoundingClientRect();
+
+                return {
+                    x: (r.left - rect.left) + (r.width / 2),
+                    y: (r.top - rect.top) + (r.height / 2)
+                };
+            });
 
 
-                // Every paper
-                document
-                    .querySelectorAll('.paper')
-                    .forEach(paper => {
-                        threadResizeObserver.observe(paper);
-                    });
+            // ─────────────────────────────────
+            // THREAD STYLE
+            // ─────────────────────────────────
+
+            ctx.lineWidth = 2;
+
+            ctx.strokeStyle = 'rgba(170, 75, 75, 0.48)';
+
+            ctx.lineCap = 'round';
+            ctx.lineJoin = 'round';
+
+            /*
+            * Very subtle shadow makes the thread feel
+            * like physical string sitting on cork.
+            */
+            ctx.shadowColor = 'rgba(60, 30, 20, 0.12)';
+            ctx.shadowBlur = 1;
+            ctx.shadowOffsetY = 1;
+
+
+            // ─────────────────────────────────
+            // CURVED THREAD
+            // ─────────────────────────────────
+
+            function drawThread(
+                p1,
+                p2,
+                curveX = 0,
+                curveY = 0,
+                dashed = false
+            ) {
+                const mx = ((p1.x + p2.x) / 2) + curveX;
+                const my = ((p1.y + p2.y) / 2) + curveY;
+
+                ctx.beginPath();
+                ctx.moveTo(p1.x, p1.y);
+
+                ctx.quadraticCurveTo(
+                    mx,
+                    my,
+                    p2.x,
+                    p2.y
+                );
+
+                ctx.setLineDash(
+                    dashed ? [7, 5] : []
+                );
+
+                /*
+                * Dark physical thread.
+                */
+                ctx.strokeStyle = dashed
+                    ? 'rgba(130, 50, 50, 0.48)'
+                    : 'rgba(130, 50, 50, 0.72)';
+
+                ctx.lineWidth = 2.4;
+                ctx.stroke();
+
+
+                /*
+                * Small highlight makes it feel like
+                * actual string rather than a CSS line.
+                */
+                ctx.beginPath();
+                ctx.moveTo(p1.x, p1.y);
+
+                ctx.quadraticCurveTo(
+                    mx,
+                    my,
+                    p2.x,
+                    p2.y
+                );
+
+                ctx.strokeStyle = dashed
+                    ? 'rgba(245, 190, 190, 0.28)'
+                    : 'rgba(245, 190, 190, 0.42)';
+
+                ctx.lineWidth = 0.7;
+                ctx.stroke();
             }
 
 
+            // ─────────────────────────────────
+            // THREAD ROUTE
+            //
+            // 1 → 2 → 4 → 3
+            //
+            // This gives the board a more natural
+            // "string connecting pinned notes" look
+            // instead of a spider-web.
+            // ─────────────────────────────────
+
+            const [
+                guestbook,
+                neighbours,
+                games,
+                extra,
+                recently
+            ] = points;
+
+
+            // Guestbook → Neighbours
+            drawThread(
+                guestbook,
+                neighbours,
+                0,
+                70
+            );
+
+
+            // Neighbours → Games
+            drawThread(
+                neighbours,
+                games,
+                40,
+                0
+            );
+
+
+            // Games → Extra pin
+            drawThread(
+                games,
+                extra,
+                30,
+                45
+            );
+
+
+            // Extra → Recently
+            drawThread(
+                extra,
+                recently,
+                -35,
+                20
+            );
+
+            // Recently → Guestbook
+            drawThread(
+                recently,
+                guestbook,
+                -55,
+                0
+            );
+
             /*
-            * Resize still matters because the pins move when
-            * the viewport changes even if the board's height
-            * happens not to change.
+            * Tiny extra dashed connection gives it that
+            * hand-pinned scrapbook feel without creating
+            * a giant web.
             */
-            window.addEventListener(
-                'resize',
-                scheduleThreadUpdate
+            drawThread(
+                neighbours,
+                recently,
+                -25,
+                35,
+                true
             );
 
 
             /*
-            * First draw after the initial layout.
+            * Reset canvas state so later drawing isn't
+            * affected by the thread's shadow/dash state.
             */
-            window.addEventListener('load', () => {
-                scheduleThreadUpdate();
+            ctx.setLineDash([]);
+            ctx.shadowColor = 'transparent';
+            ctx.shadowBlur = 0;
+            ctx.shadowOffsetY = 0;
+        }
+        // ─────────────────────────────────────
+        // KEEP THREADS ATTACHED DURING
+        // DYNAMIC CONTENT / LAYOUT CHANGES
+        // ─────────────────────────────────────
+
+        let threadFrame = null;
+
+        function scheduleThreadUpdate() {
+            if (threadFrame !== null) {
+                cancelAnimationFrame(threadFrame);
+            }
+
+            threadFrame = requestAnimationFrame(() => {
+                threadFrame = null;
+                updateThreads();
             });
+        }
 
 
-            /*
-            * Fonts can change text dimensions after initial
-            * layout. Give them a chance to settle.
-            */
-            if (document.fonts?.ready) {
-                document.fonts.ready.then(() => {
+        const board = document.querySelector('.corkboard');
+
+        if (board && 'ResizeObserver' in window) {
+
+            const threadResizeObserver =
+                new ResizeObserver(() => {
                     scheduleThreadUpdate();
                 });
-            }
-        </script>
-    
-        <script>
-            // ── GUESTBOOK ──
-            const GB_URL = 'https://moonweft-music.meledo.workers.dev/guestbook';
-            let gbPage = 1;
 
-            // Character counter
-            document.getElementById('gb-message').addEventListener('input', function() {
-                document.getElementById('gb-chars').textContent = this.value.length;
+
+            // Board itself
+            threadResizeObserver.observe(board);
+
+
+            // Both independent columns
+            document
+                .querySelectorAll('.board-column')
+                .forEach(column => {
+                    threadResizeObserver.observe(column);
+                });
+
+
+            // Every paper
+            document
+                .querySelectorAll('.paper')
+                .forEach(paper => {
+                    threadResizeObserver.observe(paper);
+                });
+        }
+
+
+        /*
+        * Resize still matters because the pins move when
+        * the viewport changes even if the board's height
+        * happens not to change.
+        */
+        window.addEventListener(
+            'resize',
+            scheduleThreadUpdate
+        );
+
+
+        /*
+        * First draw after the initial layout.
+        */
+        window.addEventListener('load', () => {
+            scheduleThreadUpdate();
+        });
+
+
+        /*
+        * Fonts can change text dimensions after initial
+        * layout. Give them a chance to settle.
+        */
+        if (document.fonts?.ready) {
+            document.fonts.ready.then(() => {
+                scheduleThreadUpdate();
             });
+        }
+    </script>
 
-            // Fetch and render entries
-            function loadGuestbook(page = 1) {
-                fetch(`${GB_URL}?page=${page}`)
-                    .then(r => r.json())
-                    .then(data => {
-                        gbPage = data.page;
-                        const container = document.getElementById('gb-entries');
-                        container.innerHTML = '';
+    <script>
+        // ── GUESTBOOK ──
+        const GB_URL = 'https://moonweft-music.meledo.workers.dev/guestbook';
+        let gbPage = 1;
 
-                        if (!data.entries || data.entries.length === 0) {
+        // Character counter
+        document.getElementById('gb-message').addEventListener('input', function () {
+            document.getElementById('gb-chars').textContent = this.value.length;
+        });
+
+        // Fetch and render entries
+        function loadGuestbook(page = 1) {
+            fetch(`${GB_URL}?page=${page}`)
+                .then(r => r.json())
+                .then(data => {
+                    gbPage = data.page;
+                    const container = document.getElementById('gb-entries');
+                    container.innerHTML = '';
+
+                    if (!data.entries || data.entries.length === 0) {
                         container.innerHTML =
                             '<span class="al-placeholder">no entries yet — be the first! ♡</span>';
                     } else {
@@ -1073,7 +988,7 @@
         }
 
         // Form submission
-        document.getElementById('gb-form').addEventListener('submit', async function(e) {
+        document.getElementById('gb-form').addEventListener('submit', async function (e) {
             e.preventDefault();
 
             const submit = document.getElementById('gb-submit');
@@ -1084,21 +999,21 @@
             status.className = 'gb-status';
 
             const color = document.querySelector('input[name="gb-color"]:checked')?.value
-                        || '#c8a8ff';
+                || '#c8a8ff';
 
             const payload = {
-                name:        document.getElementById('gb-name').value,
-                message:     document.getElementById('gb-message').value,
-                site:        document.getElementById('gb-site').value,
+                name: document.getElementById('gb-name').value,
+                message: document.getElementById('gb-message').value,
+                site: document.getElementById('gb-site').value,
                 color,
                 website_url: document.getElementById('website_url').value // honeypot
             };
 
             try {
-                const res  = await fetch(GB_URL, {
-                    method:  'POST',
+                const res = await fetch(GB_URL, {
+                    method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body:    JSON.stringify(payload)
+                    body: JSON.stringify(payload)
                 });
                 const data = await res.json();
 
@@ -1131,18 +1046,18 @@
             if (projectLinks.length > 0 && video && secretFrame) {
                 projectLinks.forEach(link => {
                     link.addEventListener('click', (e) => {
-                        e.preventDefault(); 
+                        e.preventDefault();
 
                         videoOverlay.style.display = 'block';
-                        videoOverlay.style.pointerEvents = 'auto'; 
+                        videoOverlay.style.pointerEvents = 'auto';
                         video.play();
 
-                        const swapTime = 800; 
+                        const swapTime = 800;
 
                         setTimeout(() => {
                             secretFrame.style.opacity = '1';
                         }, swapTime);
-                        
+
                         video.addEventListener('ended', () => {
                             sessionStorage.setItem('heistSuccess', 'true');
                             window.location.href = link.href;
@@ -1151,15 +1066,18 @@
                 });
             }
         });
-        </script>
+    </script>
 
-        <iframe id="secret-projects-frame" src="projects.html" style="opacity: 0; pointer-events: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; z-index: 2147483646;"></iframe>
+    <iframe id="secret-projects-frame" src="projects.html"
+        style="opacity: 0; pointer-events: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; z-index: 2147483646;"></iframe>
 
-        <div id="transition-overlay" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 2147483647; pointer-events: none;">
-            <video id="joker-transition" muted playsinline style="width: 100%; height: 100%; object-fit: cover;">
-                <source src="assets/joker.webm" type="video/webm">
-            </video>
-        </div>
+    <div id="transition-overlay"
+        style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: 2147483647; pointer-events: none;">
+        <video id="joker-transition" muted playsinline style="width: 100%; height: 100%; object-fit: cover;">
+            <source src="assets/joker.webm" type="video/webm">
+        </video>
+    </div>
 
-    </body>
+</body>
+
 </html>

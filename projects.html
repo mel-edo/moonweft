@@ -1,163 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Projects Archive</title>
-        <link rel="stylesheet" href="styles/projects.css">
-        <link rel="icon" type="image/png" href="assets/star.png">
-    </head>
 
-    <body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projects Archive</title>
+    <link rel="stylesheet" href="styles/projects.css">
+    <link rel="icon" type="image/png" href="assets/star.png">
+</head>
 
-        <div class="p5-bg-dots"></div>
+<body>
 
-        <img src="assets/star-banner.png" class="p5-deco star-pattern-1" alt="">
-        <img src="assets/star-banner.png" class="p5-deco star-pattern-2" alt="">
-        <img src="assets/star.png" class="p5-deco star-1" alt="">
-        <img src="assets/star.png" class="p5-deco star-2" alt="">
-        <img src="assets/star.png" class="p5-deco star-3" alt="">
-        <img src="assets/star.png" class="p5-deco star-4" alt="">
+    <div class="p5-bg-dots"></div>
 
-        <div class="noise-overlay"></div>
+    <img src="assets/star-banner.png" class="p5-deco star-pattern-1" alt="">
+    <img src="assets/star-banner.png" class="p5-deco star-pattern-2" alt="">
+    <img src="assets/star.png" class="p5-deco star-1" alt="">
+    <img src="assets/star.png" class="p5-deco star-2" alt="">
+    <img src="assets/star.png" class="p5-deco star-3" alt="">
+    <img src="assets/star.png" class="p5-deco star-4" alt="">
 
-        <div class="container">
+    <div class="noise-overlay"></div>
 
-            <header class="archive-header">
-                <div class="title-group">
-                    <div class="p5-box black-box">
-                        <span class="bg-layer"></span>
-                        <span class="project-text">PROJECTS</span>
-                    </div>
-                    <div class="p5-box white-box">
-                        <span class="bg-layer"></span>
-                        <img src="assets/p5-header.png" alt="ARCHIVE" class="archive-img">
-                    </div>
-                    <div class="p5-box date-box">
-                        <span class="bg-layer"></span>
-                        <span class="date-text" id="dynamic-date">--/--</span>
-                    </div>
+    <div class="container">
+
+        <header class="archive-header">
+            <div class="title-group">
+                <div class="p5-box black-box">
+                    <span class="bg-layer"></span>
+                    <span class="project-text">PROJECTS</span>
                 </div>
-            </header>
+                <div class="p5-box white-box">
+                    <span class="bg-layer"></span>
+                    <img src="assets/p5-header.png" alt="ARCHIVE" class="archive-img">
+                </div>
+                <div class="p5-box date-box">
+                    <span class="bg-layer"></span>
+                    <span class="date-text" id="dynamic-date">--/--</span>
+                </div>
+            </div>
+        </header>
 
-            <section class="project-stage" aria-label="Projects dossier">
+        <section class="project-stage" aria-label="Projects dossier">
 
-                <!-- ── Sidebar ── -->
-                <aside class="target-list" id="sidebar-container" aria-label="Project selector">
-                    </aside>
+            <!-- ── Sidebar ── -->
+            <aside class="target-list" id="sidebar-container" aria-label="Project selector">
+            </aside>
 
-                <section class="calling-card" aria-live="polite">
-                    <div class="cc-inner" id="panels-container">
-                        
-                        <article class="project-panel intro-panel active" data-project-panel="intro">
-                            <div class="cc-intro">
-                                <div class="p5-motif">
-                                    <img src="assets/take.png" alt="TAKE" class="motif-img motif-take">
-                                    <img src="assets/your.png" alt="YOUR" class="motif-img motif-your">
-                                    <img src="assets/time.png" alt="TIME" class="motif-img motif-time">
-                                </div>
+            <section class="calling-card" aria-live="polite">
+                <div class="cc-inner" id="panels-container">
+
+                    <article class="project-panel intro-panel active" data-project-panel="intro">
+                        <div class="cc-intro">
+                            <div class="p5-motif">
+                                <img src="assets/take.png" alt="TAKE" class="motif-img motif-take">
+                                <img src="assets/your.png" alt="YOUR" class="motif-img motif-your">
+                                <img src="assets/time.png" alt="TIME" class="motif-img motif-time">
                             </div>
-                        </article>
-
                         </div>
-                </section>
+                    </article>
 
-            </section><!-- /.project-stage -->
-        </div>
+                </div>
+            </section>
 
-        <script>
-            if (sessionStorage.getItem('heistSuccess') === 'true') {
-                document.body.classList.add('heist-success');
-                sessionStorage.removeItem('heistSuccess');
-            }
-            // 1. The Project Data
-            const projects = [
-                {
-                    id: "sift-video",
-                    rank: "I",
-                    tag: "TARGET I",
-                    title: "SIFT-VIDEO",
-                    category: ["RUST", "C++"],
-                    shortDesc: "Search inside any video using natural language.",
-                    longDesc: "<p>A multimodal video search engine built with a friend. Drop in a video and search for any moment using plain text.<br> It finds the exact timestamp by combining speech transcription (Whisper) and visual frame embeddings (MobileCLIP). Built across 4 Docker services: a C++ ingestion pipeline, Rust/Axum query API, and Qdrant as the vector database.</p>",
-                    image: "assets/sift.gif",
-                    repo: "https://github.com/sourav4243/sift-video"
-                },
-                {
-                    id: "gbemu",
-                    rank: "II",
-                    tag: "TARGET II",
-                    title: "GB EMULATOR",
-                    category: ["RUST"],
-                    shortDesc: "A cycle-accurate Game Boy emulator in Rust.",
-                    longDesc: "<p>A work-in-progress Game Boy emulator written in Rust. Implements the LR35902 CPU with cycle-accurate timing, a full memory bus, and display output. The goal is to also compile it to WebAssembly so it runs entirely in the browser with no installation. Low-level hardware emulation is one of those things that forces you to actually understand how computers work.</p>",
-                    image: "",
-                    repo: "https://github.com/mel-edo/gbemu-rust"
-                },
-                {
-                    id: "dsync",
-                    rank: "III",
-                    tag: "TARGET III",
-                    title: "DSYNC",
-                    category: ["RUST"],
-                    shortDesc: "Zero-config P2P file sync for your local network.",
-                    longDesc: "<p>A file sync daemon for LAN written in Rust. Peers discover each other via mDNS, authenticate using Ed25519 challenge-response, and establish an encrypted channel with X25519 + ChaCha20-Poly1305, all automatically, with no config files. File transfers use async I/O via Tokio, chunked streaming, LZ4 compression, and Blake3 for integrity checks. Wanted to build something that felt production-grade as a personal project.</p>",
-                    image: "",
-                    repo: "https://github.com/mel-edo/dsync"
-                },
-                {
-                    id: "patchwire",
-                    rank: "IV",
-                    tag: "TARGET IV",
-                    title: "PATCHWIRE",
-                    category: ["RUST", "GTK4"],
-                    shortDesc: "Route audio to multiple devices simultaneously on Linux.",
-                    longDesc: "<p>A PipeWire daemon that automatically links audio sinks so you can play sound through multiple devices at once, no manual rewiring required every time you reboot. Built in Rust with a GTK4 interface, it watches your audio graph and handles the routing invisibly in the background. I wrote this to scratch my own itch after getting tired of constantly dragging cables in Helvum just to use my headphones and speakers simultaneously.</p>",
-                    image: "assets/patchwire.png",
-                    repo: "https://github.com/mel-edo/patchwire"
-                },
-                {
-                    id: "kvmbook",
-                    rank: "V",
-                    tag: "TARGET V",
-                    title: "KVMBOOK",
-                    category: ["C", "ASM"],
-                    shortDesc: "A minimal x86 hypervisor with a companion book explaining every layer.",
-                    longDesc: "<p>A minimal x86 hypervisor built on Linux KVM in C, co-built with the same friend behind sift-video. Walks through everything from the first ioctl call to a booting kernel, with a companion book documenting every layer of the process. The kind of project where you come out the other side actually understanding what a hypervisor is doing beneath all the abstractions.</p>",
-                    image: "",
-                    repo: "https://github.com/mel-edo/kvmbook"
-                },
-                {
-                    id: "moonweft",
-                    rank: "VI",
-                    tag: "TARGET VI",
-                    title: "MOONWEFT",
-                    category: ["HTML", "CSS"],
-                    shortDesc: "This website you're currently on.",
-                    longDesc: "<p>A personal website built with HTML, CSS and vanilla JS. I finally got around to building a website and have been enjoying the process so far.</p>",
-                    image: "",
-                    repo: "https://github.com/mel-edo/moonweft"
-                },
-            ];
+        </section><!-- /.project-stage -->
+    </div>
 
-            // --- Pagination Configuration ---
-            const itemsPerPage = 3; // Change this depending on how many fit your screen
-            let currentPage = 1;
-            const totalPages = Math.ceil(projects.length / itemsPerPage);
+    <script>
+        if (sessionStorage.getItem('heistSuccess') === 'true') {
+            document.body.classList.add('heist-success');
+            sessionStorage.removeItem('heistSuccess');
+        }
+        // 1. The Project Data
+        const projects = [
+            {
+                id: "sift-video",
+                rank: "I",
+                tag: "TARGET I",
+                title: "SIFT-VIDEO",
+                category: ["RUST", "C++"],
+                shortDesc: "Search inside any video using natural language.",
+                longDesc: "<p>A multimodal video search engine built with a friend. Drop in a video and search for any moment using plain text.<br> It finds the exact timestamp by combining speech transcription (Whisper) and visual frame embeddings (MobileCLIP). Built across 4 Docker services: a C++ ingestion pipeline, Rust/Axum query API, and Qdrant as the vector database.</p>",
+                image: "assets/sift.gif",
+                repo: "https://github.com/sourav4243/sift-video"
+            },
+            {
+                id: "gbemu",
+                rank: "II",
+                tag: "TARGET II",
+                title: "GB EMULATOR",
+                category: ["RUST"],
+                shortDesc: "A Game Boy emulator in Rust for desktop and web.",
+                longDesc: "<p>A work-in-progress Game Boy emulator written in Rust. The project is split into a core emulation library, a native desktop frontend using SDL2, and WebAssembly bindings that allow it to run entirely in the browser. Low-level hardware emulation is an incredible way to truly understand how computers work.</p>",
+                image: "",
+                repo: "https://github.com/mel-edo/gbemu-rust",
+                live: "emulator.html"
+            },
+            {
+                id: "warpgate",
+                rank: "III",
+                tag: "TARGET III",
+                title: "WARPGATE",
+                category: ["RUST", "JAVA"],
+                shortDesc: "Ephemeral multi-region cloud VPN orchestrator.",
+                longDesc: "<p>WarpGate provisions a temporary, self-destructing secure VPN gateway on AWS, configures a WireGuard tunnel automatically, validates connectivity, and tears down the infrastructure when the Time-to-Live (TTL) expires.</p>",
+                image: "",
+                repo: "https://github.com/raunak0000/warpgate"
+            },
+            {
+                id: "dsync",
+                rank: "IV",
+                tag: "TARGET IV",
+                title: "DSYNC",
+                category: ["RUST"],
+                shortDesc: "Zero-config P2P file sync for your local network.",
+                longDesc: "<p>A file sync daemon for LAN written in Rust. Peers discover each other via mDNS, authenticate using Ed25519 challenge-response, and establish an encrypted channel with X25519 + ChaCha20-Poly1305, all automatically, with no config files. File transfers use async I/O via Tokio, chunked streaming, LZ4 compression, and Blake3 for integrity checks. Wanted to build something that felt production-grade as a personal project.</p>",
+                image: "",
+                repo: "https://github.com/mel-edo/dsync"
+            },
+            {
+                id: "patchwire",
+                rank: "V",
+                tag: "TARGET V",
+                title: "PATCHWIRE",
+                category: ["RUST", "GTK4"],
+                shortDesc: "Route audio to multiple devices simultaneously.",
+                longDesc: "<p>A PipeWire daemon that automatically links audio sinks so you can play sound through multiple devices at once, no manual rewiring required every time you reboot. Built in Rust with a GTK4 interface, it watches your audio graph and handles the routing invisibly in the background. I wrote this to scratch my own itch after getting tired of constantly dragging cables in Helvum just to use my headphones and speakers simultaneously.</p>",
+                image: "assets/patchwire.png",
+                repo: "https://github.com/mel-edo/patchwire"
+            },
+            {
+                id: "moonweft",
+                rank: "VI",
+                tag: "TARGET VI",
+                title: "MOONWEFT",
+                category: ["HTML", "CSS"],
+                shortDesc: "This website you're currently on.",
+                longDesc: "<p>A personal website built with HTML, CSS and vanilla JS. I finally got around to building a website and have been enjoying the process so far.</p>",
+                image: "",
+                repo: "https://github.com/mel-edo/moonweft"
+            },
+        ];
 
-            const sidebarContainer = document.getElementById('sidebar-container');
-            const panelsContainer = document.getElementById('panels-container');
+        // --- Pagination Configuration ---
+        const itemsPerPage = 3; // Change this depending on how many fit your screen
+        let currentPage = 1;
+        const totalPages = Math.ceil(projects.length / itemsPerPage);
 
-            // Generate ALL the project panels right away (hidden by default)
-            projects.forEach(proj => {
-                // (Keep your exact panelHTML generation code here!)
-                const badgesHTML = proj.category.map(cat => `
+        const sidebarContainer = document.getElementById('sidebar-container');
+        const panelsContainer = document.getElementById('panels-container');
+
+        // Generate ALL the project panels right away (hidden by default)
+        projects.forEach(proj => {
+            // (Keep your exact panelHTML generation code here!)
+            const badgesHTML = proj.category.map(cat => `
                     <div class="cc-num-box">
                         <span class="cc-num-text">${cat}</span>
                     </div>
                 `).join('');
 
-                const panelHTML = `
+            const panelHTML = `
                     <article class="project-panel" id="project-${proj.id}" data-project-panel="${proj.id}">
                         <header class="cc-title-block">
                             <div class="cc-tag-box">
@@ -168,7 +170,14 @@
                                 <span class="cc-heading-bg"></span>
                                 <span class="cc-heading-text">${proj.title}</span>
                             </div>
-                            <div class="cc-badges-container">${badgesHTML}</div>
+                            <div class="cc-badges-container">
+                                ${badgesHTML}
+                                ${proj.live ? `
+                                <a href="${proj.live}" class="cc-live-badge">
+                                    <span class="cc-live-text">LIVE DEMO ↗</span>
+                                </a>
+                                ` : ''}
+                            </div>
                         </header>
                         <div class="cc-content-flow">
                             <div class="cc-body">${proj.longDesc}</div>
@@ -179,21 +188,21 @@
                         </div>
                     </article>
                 `;
-                panelsContainer.insertAdjacentHTML('beforeend', panelHTML);
-            });
+            panelsContainer.insertAdjacentHTML('beforeend', panelHTML);
+        });
 
-            // Function to render the sidebar cards for the current page
-            function renderSidebar() {
-                sidebarContainer.innerHTML = ''; // Clear current sidebar
-                
-                const startIndex = (currentPage - 1) * itemsPerPage;
-                const endIndex = startIndex + itemsPerPage;
-                const currentProjects = projects.slice(startIndex, endIndex);
+        // Function to render the sidebar cards for the current page
+        function renderSidebar() {
+            sidebarContainer.innerHTML = ''; // Clear current sidebar
 
-                // Inject the cards
-                currentProjects.forEach((proj, index) => {
-                    const delay = index * 0.08;
-                    const cardHTML = `
+            const startIndex = (currentPage - 1) * itemsPerPage;
+            const endIndex = startIndex + itemsPerPage;
+            const currentProjects = projects.slice(startIndex, endIndex);
+
+            // Inject the cards
+            currentProjects.forEach((proj, index) => {
+                const delay = index * 0.08;
+                const cardHTML = `
                         <div class="target-card" data-project="${proj.id}" role="button" tabindex="0" style="animation-delay: ${delay}s;">
                             <div class="rank">${proj.rank}</div>
                             <div class="content-wrapper">
@@ -207,87 +216,88 @@
                             </div>
                         </div>
                     `;
-                    sidebarContainer.insertAdjacentHTML('beforeend', cardHTML);
-                });
+                sidebarContainer.insertAdjacentHTML('beforeend', cardHTML);
+            });
 
-                // Add the Pagination Controls at the bottom of the list
-                if (totalPages > 1) {
-                    const controlsHTML = `
+            // Add the Pagination Controls at the bottom of the list
+            if (totalPages > 1) {
+                const controlsHTML = `
                         <div class="p5-page-controls">
                             <button class="p5-page-btn" id="btn-prev" ${currentPage === 1 ? 'disabled' : ''}>▲</button>
                             <span class="p5-page-info">${currentPage} / ${totalPages}</span>
                             <button class="p5-page-btn" id="btn-next" ${currentPage === totalPages ? 'disabled' : ''}>▼</button>
                         </div>
                     `;
-                    sidebarContainer.insertAdjacentHTML('beforeend', controlsHTML);
+                sidebarContainer.insertAdjacentHTML('beforeend', controlsHTML);
 
-                    // Attach event listeners to the new buttons
-                    document.getElementById('btn-prev')?.addEventListener('click', () => {
-                        if (currentPage > 1) { document.body.classList.remove('heist-success'); currentPage--; renderSidebar(); }
-                    });
-                    document.getElementById('btn-next')?.addEventListener('click', () => {
-                        if (currentPage < totalPages) { document.body.classList.remove('heist-success'); currentPage++; renderSidebar(); }
-                    });
-                }
-                // INJECT THE RETURN BUTTON AT THE VERY END OF THE SIDEBAR
-                const returnBtnHTML = `
+                // Attach event listeners to the new buttons
+                document.getElementById('btn-prev')?.addEventListener('click', () => {
+                    if (currentPage > 1) { document.body.classList.remove('heist-success'); currentPage--; renderSidebar(); }
+                });
+                document.getElementById('btn-next')?.addEventListener('click', () => {
+                    if (currentPage < totalPages) { document.body.classList.remove('heist-success'); currentPage++; renderSidebar(); }
+                });
+            }
+            // INJECT THE RETURN BUTTON AT THE VERY END OF THE SIDEBAR
+            const returnBtnHTML = `
                     <a href="index.html" class="escape-btn sidebar-return">RETURN</a>
                 `;
-                sidebarContainer.insertAdjacentHTML('beforeend', returnBtnHTML);
+            sidebarContainer.insertAdjacentHTML('beforeend', returnBtnHTML);
 
-                // Re-attach click listeners to the newly rendered cards
-                document.querySelectorAll('.target-card[data-project]').forEach(card => {
-                    card.addEventListener('click', () => selectProject(card.dataset.project));
-                });
-            }
-
-            // Initial render
-            renderSidebar();
-
-            // 3. Keep your existing interaction logic!
-            function showNeutralState() {
-                document.querySelectorAll('.target-card[data-project]').forEach(c => {
-                    c.classList.remove('active');
-                    c.setAttribute('aria-pressed', 'false');
-                });
-                document.querySelectorAll('.project-panel[data-project-panel]').forEach(p => {
-                    p.classList.toggle('active', p.dataset.projectPanel === 'intro');
-                });
-            }
-
-            function selectProject(key) {
-                document.querySelectorAll('.target-card[data-project]').forEach(c => {
-                    const on = c.dataset.project === key;
-                    c.classList.toggle('active', on);
-                    c.setAttribute('aria-pressed', String(on));
-                });
-                document.querySelectorAll('.project-panel[data-project-panel]').forEach(p => {
-                    p.classList.toggle('active', p.dataset.projectPanel === key);
-                });
-            }
-
-            // Attach listeners to newly created cards
+            // Re-attach click listeners to the newly rendered cards
             document.querySelectorAll('.target-card[data-project]').forEach(card => {
                 card.addEventListener('click', () => selectProject(card.dataset.project));
-                card.addEventListener('keydown', e => {
-                    if (e.key === 'Enter' || e.key === ' ') {
-                        e.preventDefault();
-                        selectProject(card.dataset.project);
-                    }
-                });
             });
+        }
 
-            document.addEventListener('keydown', e => { if (e.key === 'Escape') showNeutralState(); });
-            document.addEventListener('click', e => {
-                if (!document.querySelector('.project-stage').contains(e.target)) showNeutralState();
+        // Initial render
+        renderSidebar();
+
+        // 3. Keep your existing interaction logic!
+        function showNeutralState() {
+            document.querySelectorAll('.target-card[data-project]').forEach(c => {
+                c.classList.remove('active');
+                c.setAttribute('aria-pressed', 'false');
             });
+            document.querySelectorAll('.project-panel[data-project-panel]').forEach(p => {
+                p.classList.toggle('active', p.dataset.projectPanel === 'intro');
+            });
+        }
 
-            // Date
-            const el = document.getElementById('dynamic-date');
-            const t  = new Date();
-            el.textContent = `${String(t.getMonth()+1).padStart(2,'0')}/${String(t.getDate()).padStart(2,'0')}`;
-        </script>
-        
+        function selectProject(key) {
+            document.querySelectorAll('.target-card[data-project]').forEach(c => {
+                const on = c.dataset.project === key;
+                c.classList.toggle('active', on);
+                c.setAttribute('aria-pressed', String(on));
+            });
+            document.querySelectorAll('.project-panel[data-project-panel]').forEach(p => {
+                p.classList.toggle('active', p.dataset.projectPanel === key);
+            });
+        }
 
-    </body>
+        // Attach listeners to newly created cards
+        document.querySelectorAll('.target-card[data-project]').forEach(card => {
+            card.addEventListener('click', () => selectProject(card.dataset.project));
+            card.addEventListener('keydown', e => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    selectProject(card.dataset.project);
+                }
+            });
+        });
+
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') showNeutralState(); });
+        document.addEventListener('click', e => {
+            if (!document.querySelector('.project-stage').contains(e.target)) showNeutralState();
+        });
+
+        // Date
+        const el = document.getElementById('dynamic-date');
+        const t = new Date();
+        el.textContent = `${String(t.getMonth() + 1).padStart(2, '0')}/${String(t.getDate()).padStart(2, '0')}`;
+    </script>
+
+
+</body>
+
 </html>

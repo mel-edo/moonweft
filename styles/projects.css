@@ -644,6 +644,57 @@ body.heist-success .project-panel {
     color: var(--p5-white);
 }
 
+/* ── Live Demo Badge ── */
+.cc-live-badge {
+    position: relative;
+    z-index: 5;
+    padding: 4px 12px;
+    background-color: var(--p5-white);
+    border: 2px solid var(--p5-black);
+    box-shadow: 4px 4px 0px var(--p5-black);
+    transform: skewX(-8deg) rotate(-2deg);
+    transition: transform 0.15s ease-out, background-color 0.15s, border-color 0.15s;
+    text-decoration: none;
+    pointer-events: auto;
+    display: inline-block;
+}
+
+.cc-live-badge .cc-live-text {
+    font-size: 0.9rem; 
+    font-weight: 900;
+    letter-spacing: 2px; 
+    text-transform: uppercase;
+    transition: color 0.15s;
+    color: var(--p5-black);
+}
+
+.cc-title-block:hover .cc-live-badge {
+    transform: skewX(-8deg) rotate(-2deg) translate(-2px, -2px);
+    background-color: var(--p5-black);
+    border-color: var(--p5-white);
+    box-shadow: 6px 6px 0px var(--p5-red);
+}
+
+.cc-title-block:hover .cc-live-badge .cc-live-text {
+    color: var(--p5-white);
+}
+
+.cc-live-badge:hover {
+    transform: skewX(-8deg) rotate(-2deg) translate(-2px, -2px) !important;
+    background-color: var(--p5-red) !important;
+    border-color: var(--p5-black) !important;
+    box-shadow: 6px 6px 0px var(--p5-black) !important;
+}
+
+.cc-live-badge:hover .cc-live-text {
+    color: var(--p5-white) !important;
+}
+
+.cc-live-badge:active {
+    transform: skewX(-8deg) rotate(-2deg) translate(2px, 2px);
+    box-shadow: 2px 2px 0px var(--p5-black);
+}
+
 /* Un-skew wrapper so all child content reads straight */
 .cc-inner {
     position: relative;

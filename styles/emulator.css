@@ -1,11 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 
 :root {
-    --bg-color: #fce8cd;
-    --gb-shell: #e0e0e0;
-    --gb-bezel: #2b2b2b;
-    --gb-screen-bg: #8bac0f;
-    --gb-accent: #d91c1c;
+    --bg-color: #e5d9f2;
+    --gb-shell: #68217a;
+    --gb-bezel: #222;
+    --gb-screen-bg: #333;
+    --gb-accent: #222;
     --pixel-border: 4px solid #000;
     --font-pixel: 'VT323', monospace;
 }
@@ -85,7 +85,9 @@ body.gb-theme {
     text-align: center;
     text-transform: uppercase;
     width: 250px;
-    box-shadow: inset 0px 5px 10px rgba(255, 255, 255, 0.2);
+    box-shadow:
+        inset 0px 5px 10px rgba(255, 255, 255, 0.2),
+        15px 15px 0px #000;
     transition: background-color 0.1s;
 }
 
@@ -103,7 +105,11 @@ body.gb-theme {
     height: 840px;
     border-radius: 10px 10px 80px 10px;
     border: var(--pixel-border);
-    box-shadow: 15px 15px 0px #000, inset -20px -20px 0px rgba(0, 0, 0, 0.15);
+    box-shadow:
+        15px 15px 0px #000,
+        inset -20px -20px 0px rgba(0, 0, 0, 0.15),
+        inset 10px 10px 20px rgba(255, 255, 255, 0.3);
+    /* glossy edge reflection */
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -127,7 +133,7 @@ body.gb-theme {
 .bezel {
     background-color: var(--gb-bezel);
     width: 400px;
-    height: 350px;
+    height: 400px;
     margin-top: 60px;
     border-radius: 10px 10px 50px 10px;
     border: var(--pixel-border);
@@ -139,19 +145,28 @@ body.gb-theme {
 
 .battery-light {
     position: absolute;
-    left: 15px;
-    top: 135px;
-    width: 12px;
-    height: 12px;
-    background-color: var(--gb-accent);
-    border: 2px solid #000;
+    left: 3px;
+    top: 132px;
+    width: 8px;
+    height: 8px;
+    background-color: #ff3b30;
     border-radius: 50%;
+    box-shadow: 0 0 4px #ff3b30;
+}
+
+.battery-waves {
+    position: absolute;
+    left: 17px;
+    top: 128px;
+    color: #a0a0a0;
+    font-size: 0.9rem;
+    font-weight: bold;
 }
 
 .battery-text {
     position: absolute;
-    left: 12px;
-    top: 153px;
+    left: 2px;
+    top: 155px;
     color: #a0a0a0;
     font-size: 0.9rem;
     letter-spacing: 1px;
@@ -172,12 +187,49 @@ body.gb-theme {
 }
 
 .gb-logo {
-    color: #311c6d;
-    font-size: 2.2rem;
-    margin-top: 10px;
-    text-align: left;
-    width: 380px;
+    position: absolute;
+    bottom: 18px;
+    font-size: 1.8rem;
+    text-align: center;
+    width: 100%;
     letter-spacing: 2px;
+}
+
+.gb-font {
+    font-family: 'Arial Black', Impact, sans-serif;
+    font-style: italic;
+    font-weight: 900;
+    color: #e0e0e0;
+    /* Light silver/grey */
+}
+
+.gbc-text {
+    font-family: sans-serif;
+    font-style: italic;
+    font-weight: 800;
+    font-size: 1.8rem;
+    letter-spacing: 0;
+    margin-left: 2px;
+}
+
+.c-c {
+    color: #e80033;
+}
+
+.c-o1 {
+    color: #f89d00;
+}
+
+.c-l {
+    color: #92c900;
+}
+
+.c-o2 {
+    color: #008db6;
+}
+
+.c-r {
+    color: #9e59d9;
 }
 
 .controls-area {
@@ -193,11 +245,12 @@ body.gb-theme {
     top: 30px;
     width: 120px;
     height: 120px;
+    filter: drop-shadow(4px 4px 0px #000);
 }
 
 .dpad-cross {
     position: absolute;
-    background-color: #000;
+    background-color: var(--gb-accent);
 }
 
 .dpad-v {
@@ -248,7 +301,7 @@ body.gb-theme {
     top: 70px;
     width: 130px;
     height: 60px;
-    transform: rotate(-25deg);
+    transform: rotate(-10deg);
 }
 
 .action-btn {
@@ -265,10 +318,10 @@ body.gb-theme {
 }
 
 .action-btn span {
-    color: #000;
+    color: #e5d9f2;
     font-size: 2rem;
     font-weight: bold;
-    transform: rotate(25deg);
+    transform: rotate(10deg);
 }
 
 .btn-b {
@@ -283,11 +336,11 @@ body.gb-theme {
 
 .system-buttons {
     position: absolute;
-    bottom: 20px;
-    left: 140px;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
     display: flex;
     gap: 30px;
-    transform: rotate(-25deg);
 }
 
 .sys-btn-wrapper {
@@ -300,30 +353,32 @@ body.gb-theme {
 .sys-btn {
     width: 60px;
     height: 16px;
-    background-color: #000;
+    background-color: var(--gb-accent);
     border-radius: 20px;
+    box-shadow: 4px 4px 0px #000;
 }
 
 .sys-label {
     margin-top: 5px;
-    color: var(--gb-accent);
+    color: #e5d9f2;
     font-size: 1.5rem;
+    font-weight: bold;
 }
 
 .speaker {
     position: absolute;
-    bottom: -30px;
-    right: 25px;
-    display: flex;
-    gap: 12px;
-    transform: rotate(-25deg);
+    bottom: -20px;
+    right: 40px;
+    width: 75px;
+    height: 75px;
+    background-image: radial-gradient(circle, #000 3px, transparent 4px);
+    background-size: 15px 15px;
+    background-position: center;
+    border-radius: 50%;
 }
 
-.grill {
-    width: 6px;
-    height: 70px;
-    background-color: #000;
-    border-radius: 4px;
+.speaker .grill {
+    display: none;
 }
 
 .layout-container {
@@ -352,6 +407,7 @@ body.gb-theme {
 
 .emulator-note {
     background-color: var(--gb-shell);
+    color: #e5d9f2;
     border: var(--pixel-border);
     box-shadow: 10px 10px 0px #000;
     padding: 30px;
@@ -362,9 +418,13 @@ body.gb-theme {
 
 .emulator-note h2 {
     margin-top: 0;
-    color: var(--gb-accent);
     font-size: 2.2rem;
     text-transform: uppercase;
+}
+
+.note-mw {
+    color: #e5d9f2;
+    /* Lavender */
 }
 
 .emulator-note ul {
