@@ -14,6 +14,9 @@ ctx.fillRect(0, 0, canvas.width, canvas.height)
 
 let anim_frame = 0
 let fast_forward = false
+let current_gb = null
+let save_timer = 0
+const SAVE_INTERVAL_MS = 3000
 
 let audioCtx = null;
 let audioStartTime = 0;
@@ -25,13 +28,69 @@ function initAudio() {
     }
 }
 
+// --- Save helpers ---
+
+function saveKey(title) {
+    return `gbsave:${title}`;
+}
+
+function loadSave(gb) {
+    if (!gb.has_battery()) return;
+    const key = saveKey(gb.get_title());
+    const b64 = localStorage.getItem(key);
+    if (!b64) return;
+    try {
+        const binary = atob(b64);
+        const bytes = new Uint8Array(binary.length);
+        for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+        gb.load_save_data(bytes);
+        console.log(`[save] Loaded save for "${gb.get_title()}" (${bytes.length} bytes)`);
+    } catch (e) {
+        console.warn("[save] Failed to load save:", e);
+    }
+}
+
+function flushSave(gb) {
+    if (!gb || !gb.has_battery() || !gb.is_battery_dirty()) return;
+    try {
+        const data = gb.get_save_data();
+        let binary = "";
+        for (let i = 0; i < data.length; i++) binary += String.fromCharCode(data[i]);
+        const b64 = btoa(binary);
+        const key = saveKey(gb.get_title());
+        localStorage.setItem(key, b64);
+        gb.clean_battery();
+        console.log(`[save] Flushed save for "${gb.get_title()}" (${data.length} bytes)`);
+    } catch (e) {
+        console.warn("[save] Failed to flush save:", e);
+    }
+}
+
+// Final save on page close
+window.addEventListener("beforeunload", () => {
+    if (current_gb) flushSave(current_gb);
+});
+
+// Also expose a manual save for the built-in ROM buttons
+export function loadRomFromUrl(gb, url) {
+    return fetch(url)
+        .then(r => r.arrayBuffer())
+        .then(buf => {
+            const rom = new Uint8Array(buf);
+            gb.load_rom(rom);
+            loadSave(gb);
+            current_gb = gb;
+        });
+}
+
 async function run() {
     await init()
     let gb = new wasm.GB()
 
     document.getElementById("fileinput").addEventListener("change", function (e) {
-        // stop prev game from rendering, if one exists
         if (anim_frame != 0) {
+            // Flush save for the previous game before switching
+            if (current_gb) flushSave(current_gb);
             window.cancelAnimationFrame(anim_frame)
         }
 
@@ -45,16 +104,52 @@ async function run() {
         fr.onload = function () {
             let buffer = fr.result
             const rom = new Uint8Array(buffer)
+            gb = new wasm.GB()
             gb.load_rom(rom)
+            loadSave(gb)
+            current_gb = gb
+
             let title = gb.get_title()
             document.title = title
 
+            save_timer = 0
             initAudio()
             mainloop(gb)
         }
 
         fr.readAsArrayBuffer(file)
     }, false)
+
+    // Built-in ROM buttons
+    document.querySelectorAll(".rom-btn").forEach(btn => {
+        btn.addEventListener("click", function () {
+            const romUrl = this.dataset.rom;
+            if (!romUrl) return;
+
+            if (anim_frame != 0) {
+                if (current_gb) flushSave(current_gb);
+                window.cancelAnimationFrame(anim_frame);
+            }
+
+            fetch(romUrl)
+                .then(r => r.arrayBuffer())
+                .then(buf => {
+                    const rom = new Uint8Array(buf);
+                    gb = new wasm.GB();
+                    gb.load_rom(rom);
+                    loadSave(gb);
+                    current_gb = gb;
+
+                    let title = gb.get_title();
+                    document.title = title;
+
+                    save_timer = 0;
+                    initAudio();
+                    mainloop(gb);
+                })
+                .catch(err => console.error("Failed to load ROM:", err));
+        });
+    });
 
     document.addEventListener("keydown", function (e) {
         if (e.key === "Shift") { fast_forward = true; return; }
@@ -68,7 +163,7 @@ async function run() {
 }
 
 function mainloop(gb) {
-    let ticks = fast_forward ? 4 : 1;
+    const ticks = fast_forward ? 4 : 1;
     for (let t = 0; t < ticks; t++) {
         while (true) {
             let draw_time = gb.tick()
@@ -107,6 +202,13 @@ function mainloop(gb) {
                 break;
             }
         }
+    }
+
+    // Periodic save flush every SAVE_INTERVAL_MS
+    save_timer += 16; // approximate ms per rAF
+    if (save_timer >= SAVE_INTERVAL_MS) {
+        save_timer = 0;
+        flushSave(gb);
     }
 
     // If audio is too far ahead (e.g. > 50ms), wait before scheduling the next frame

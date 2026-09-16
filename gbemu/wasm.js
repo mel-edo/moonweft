@@ -76,6 +76,11 @@ function getArrayF32FromWasm0(ptr, len) {
     return getFloat32ArrayMemory0().subarray(ptr / 4, ptr / 4 + len);
 }
 
+function getArrayU8FromWasm0(ptr, len) {
+    ptr = ptr >>> 0;
+    return getUint8ArrayMemory0().subarray(ptr / 1, ptr / 1 + len);
+}
+
 function getClampedArrayU8FromWasm0(ptr, len) {
     ptr = ptr >>> 0;
     return getUint8ClampedArrayMemory0().subarray(ptr / 1, ptr / 1 + len);
@@ -222,11 +227,41 @@ export class GB {
         wasm.gb_draw_screen(this.__wbg_ptr);
     }
     /**
+     * @returns {boolean}
+     */
+    has_battery() {
+        const ret = wasm.gb_has_battery(this.__wbg_ptr);
+        return ret !== 0;
+    }
+    /**
      * @param {KeyboardEvent} event
      * @param {boolean} pressed
      */
     press_button(event, pressed) {
         wasm.gb_press_button(this.__wbg_ptr, event, pressed);
+    }
+    clean_battery() {
+        wasm.gb_clean_battery(this.__wbg_ptr);
+    }
+    /**
+     * @returns {Uint8Array}
+     */
+    get_save_data() {
+        const ret = wasm.gb_get_save_data(this.__wbg_ptr);
+        return ret;
+    }
+    /**
+     * @param {Uint8Array} data
+     */
+    load_save_data(data) {
+        wasm.gb_load_save_data(this.__wbg_ptr, data);
+    }
+    /**
+     * @returns {boolean}
+     */
+    is_battery_dirty() {
+        const ret = wasm.gb_is_battery_dirty(this.__wbg_ptr);
+        return ret !== 0;
     }
     /**
      * @returns {Float32Array}
@@ -389,6 +424,10 @@ function __wbg_get_imports() {
         const ret = new Float32Array(arg0);
         return ret;
     };
+    imports.wbg.__wbg_new_6421f6084cc5bc5a = function(arg0) {
+        const ret = new Uint8Array(arg0);
+        return ret;
+    };
     imports.wbg.__wbg_new_no_args_cb138f77cf6151ee = function(arg0, arg1) {
         const ret = new Function(getStringFromWasm0(arg0, arg1));
         return ret;
@@ -423,6 +462,11 @@ function __wbg_get_imports() {
     imports.wbg.__wbg_static_accessor_WINDOW_a8924b26aa92d024 = function() {
         const ret = typeof window === 'undefined' ? null : window;
         return isLikeNone(ret) ? 0 : addToExternrefTable0(ret);
+    };
+    imports.wbg.__wbindgen_cast_cb9088102bce6b30 = function(arg0, arg1) {
+        // Cast intrinsic for `Ref(Slice(U8)) -> NamedExternref("Uint8Array")`.
+        const ret = getArrayU8FromWasm0(arg0, arg1);
+        return ret;
     };
     imports.wbg.__wbindgen_cast_cd07b1914aa3d62c = function(arg0, arg1) {
         // Cast intrinsic for `Ref(Slice(F32)) -> NamedExternref("Float32Array")`.
