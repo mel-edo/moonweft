@@ -827,7 +827,26 @@ h1 {
 
 @media (max-width: 600px) {
     h1 { font-size: 2rem; }
-    .schematic-container { border-left: none; margin-left: 0; }
+    .schematic-container {
+        border-left: none;
+        margin: 0 auto;
+        padding: 16px 12px;
+        width: 100%;
+        overflow-x: hidden;
+    }
+    .cable-line {
+        display: none;
+    }
+    .blueprint-header {
+        flex-wrap: wrap;
+        gap: 12px;
+        margin-bottom: 25px;
+        padding-bottom: 12px;
+    }
+    .spec-box.right {
+        text-align: left;
+    }
     .amp-controls { display: none; }
-    .amp-head-nav { justify-content: center; }
+    .amp-head-nav { justify-content: center; flex-wrap: wrap; }
+    .pedal-box { width: 100%; padding: 15px; }
 }

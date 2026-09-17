@@ -191,6 +191,9 @@
             panelsContainer.insertAdjacentHTML('beforeend', panelHTML);
         });
 
+        let isChangingPage = false;
+        let selectedProjectId = null;
+
         // Function to render the sidebar cards for the current page
         function renderSidebar() {
             sidebarContainer.innerHTML = ''; // Clear current sidebar
@@ -200,10 +203,10 @@
             const currentProjects = projects.slice(startIndex, endIndex);
 
             // Inject the cards
-            currentProjects.forEach((proj, index) => {
-                const delay = index * 0.08;
+            currentProjects.forEach((proj) => {
+                const isActive = proj.id === selectedProjectId;
                 const cardHTML = `
-                        <div class="target-card" data-project="${proj.id}" role="button" tabindex="0" style="animation-delay: ${delay}s;">
+                        <div class="target-card ${isActive ? 'active' : ''}" data-project="${proj.id}" role="button" tabindex="0" ${isActive ? 'aria-pressed="true"' : 'aria-pressed="false"'}>
                             <div class="rank">${proj.rank}</div>
                             <div class="content-wrapper">
                                 <div class="main-info">
@@ -232,10 +235,10 @@
 
                 // Attach event listeners to the new buttons
                 document.getElementById('btn-prev')?.addEventListener('click', () => {
-                    if (currentPage > 1) { document.body.classList.remove('heist-success'); currentPage--; renderSidebar(); }
+                    changePage(currentPage - 1);
                 });
                 document.getElementById('btn-next')?.addEventListener('click', () => {
-                    if (currentPage < totalPages) { document.body.classList.remove('heist-success'); currentPage++; renderSidebar(); }
+                    changePage(currentPage + 1);
                 });
             }
             // INJECT THE RETURN BUTTON AT THE VERY END OF THE SIDEBAR
@@ -244,17 +247,50 @@
                 `;
             sidebarContainer.insertAdjacentHTML('beforeend', returnBtnHTML);
 
-            // Re-attach click listeners to the newly rendered cards
-            document.querySelectorAll('.target-card[data-project]').forEach(card => {
+            // Re-attach click and keyboard listeners to the newly rendered cards
+            sidebarContainer.querySelectorAll('.target-card[data-project]').forEach(card => {
                 card.addEventListener('click', () => selectProject(card.dataset.project));
+                card.addEventListener('keydown', e => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                        e.preventDefault();
+                        selectProject(card.dataset.project);
+                    }
+                });
             });
+        }
+
+        function changePage(targetPage) {
+            if (isChangingPage || targetPage < 1 || targetPage > totalPages || targetPage === currentPage) return;
+            isChangingPage = true;
+
+            // DO NOT remove currently displayed project from view - keep it there!
+
+            // Old cards fade to the left, new cards emerge from a bubble
+            const existingCards = sidebarContainer.querySelectorAll('.target-card');
+            if (existingCards.length > 0) {
+                existingCards.forEach(card => {
+                    card.classList.add('fade-left-out');
+                });
+                setTimeout(() => {
+                    document.body.classList.remove('heist-success');
+                    currentPage = targetPage;
+                    renderSidebar();
+                    isChangingPage = false;
+                }, 220);
+            } else {
+                document.body.classList.remove('heist-success');
+                currentPage = targetPage;
+                renderSidebar();
+                isChangingPage = false;
+            }
         }
 
         // Initial render
         renderSidebar();
 
-        // 3. Keep your existing interaction logic!
+        // 3. Interaction logic
         function showNeutralState() {
+            selectedProjectId = null;
             document.querySelectorAll('.target-card[data-project]').forEach(c => {
                 c.classList.remove('active');
                 c.setAttribute('aria-pressed', 'false');
@@ -265,6 +301,7 @@
         }
 
         function selectProject(key) {
+            selectedProjectId = key;
             document.querySelectorAll('.target-card[data-project]').forEach(c => {
                 const on = c.dataset.project === key;
                 c.classList.toggle('active', on);
@@ -273,23 +310,30 @@
             document.querySelectorAll('.project-panel[data-project-panel]').forEach(p => {
                 p.classList.toggle('active', p.dataset.projectPanel === key);
             });
-        }
 
-        // Attach listeners to newly created cards
-        document.querySelectorAll('.target-card[data-project]').forEach(card => {
-            card.addEventListener('click', () => selectProject(card.dataset.project));
-            card.addEventListener('keydown', e => {
-                if (e.key === 'Enter' || e.key === ' ') {
-                    e.preventDefault();
-                    selectProject(card.dataset.project);
+            // Smooth scroll into view on mobile screens
+            if (window.innerWidth <= 900) {
+                const callingCard = document.querySelector('.calling-card');
+                if (callingCard) {
+                    callingCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
-            });
-        });
+            }
+        }
 
         document.addEventListener('keydown', e => { if (e.key === 'Escape') showNeutralState(); });
         document.addEventListener('click', e => {
             if (!document.querySelector('.project-stage').contains(e.target)) showNeutralState();
         });
+
+        // Progressive header background fade-in once heavy 25MB webp asset loads
+        const bgImg = new Image();
+        bgImg.src = 'assets/star-pattern-moving.webp';
+        const headerEl = document.querySelector('.archive-header');
+        if (bgImg.complete) {
+            headerEl?.classList.add('bg-loaded');
+        } else {
+            bgImg.onload = () => headerEl?.classList.add('bg-loaded');
+        }
 
         // Date
         const el = document.getElementById('dynamic-date');

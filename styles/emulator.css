@@ -521,3 +521,81 @@ body.gb-theme {
 .rom-author a:hover {
     text-decoration: underline;
 }
+
+/* ─── RESPONSIVE ─────────────────────────────────────────────── */
+
+@media (max-width: 1080px) {
+    .layout-container {
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px 10px;
+        align-items: center;
+    }
+
+    .return-btn {
+        position: static;
+        transform: none;
+        writing-mode: horizontal-tb;
+        padding: 8px 26px;
+        font-size: 1.3rem;
+        box-shadow: 4px 4px 0px #000;
+        margin-bottom: 10px;
+        align-self: center;
+    }
+
+    .return-btn:hover {
+        transform: translate(2px, 2px);
+        box-shadow: 2px 2px 0px #000;
+    }
+
+    .side-panel {
+        width: 100%;
+        max-width: 480px;
+    }
+
+    .emulator-note {
+        width: 100%;
+        max-width: 480px;
+    }
+}
+
+@media (max-width: 520px) {
+    body.gb-theme {
+        padding: 15px 0;
+        overflow-x: hidden;
+    }
+
+    .layout-container {
+        padding: 10px 5px;
+        gap: 15px;
+    }
+
+    .center-panel {
+        transform: scale(0.72);
+        transform-origin: top center;
+        margin-bottom: -230px;
+    }
+
+    .side-panel {
+        width: 92vw;
+        max-width: 360px;
+    }
+
+    .emulator-note {
+        width: 100%;
+        padding: 16px;
+        font-size: 1rem;
+    }
+
+    .emulator-note h2 {
+        font-size: 1.6rem;
+    }
+}
+
+@media (max-width: 375px) {
+    .center-panel {
+        transform: scale(0.64);
+        transform-origin: top center;
+        margin-bottom: -300px;
+    }
+}
