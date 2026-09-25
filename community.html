@@ -603,6 +603,7 @@
         // DRAW COZY THREADS NATIVELY
 
         function updateThreads() {
+            if (window.innerWidth <= 750) return;
             const canvas = document.getElementById('thread-canvas');
             const board = document.querySelector('.corkboard');
 
@@ -1047,6 +1048,10 @@
                     link.addEventListener('click', (e) => {
                         e.preventDefault();
 
+                        if (!secretFrame.getAttribute('src')) {
+                            secretFrame.src = 'projects.html';
+                        }
+
                         videoOverlay.style.display = 'block';
                         videoOverlay.style.pointerEvents = 'auto';
                         video.play();
@@ -1067,7 +1072,7 @@
         });
     </script>
 
-    <iframe id="secret-projects-frame" src="projects.html"
+    <iframe id="secret-projects-frame" src=""
         style="opacity: 0; pointer-events: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; border: none; z-index: 2147483646;"></iframe>
 
     <div id="transition-overlay"

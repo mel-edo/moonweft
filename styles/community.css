@@ -386,7 +386,7 @@ body {
 .postit-3 {
     background: var(--postit-pink);
     color: #5a1838;
-    bottom: -10%;
+    bottom: -30%;
     right: 12%;
     transform: rotate(2.5deg);
     font-style: italic;
@@ -1933,6 +1933,13 @@ body {
             repeat(auto-fill, minmax(90px, 1fr));
     }
 
+    html,
+    body {
+        background-attachment: scroll !important;
+    }
+
+    #thread-canvas,
+    .thread-canvas,
     .string-svg,
     .doodle,
     .postit,
@@ -1944,6 +1951,11 @@ body {
     .pin-extra,
     .blinkie-wrapper {
         display: none !important;
+    }
+
+    .paper {
+        content-visibility: auto;
+        contain-intrinsic-size: 500px;
     }
 
     .board-bottom {

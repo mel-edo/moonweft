@@ -27,44 +27,58 @@
         </div>
 
         <div class="screen-center" id="main-content">
-            <div class="checkpoint-card">
-                <div class="cp-header">
-                    <div class="cp-title-box">
-                        <h1>CHECKPOINT</h1>
-                    </div>
-                    <div class="cp-date" id="latest-date">-- --- ----</div>
-                </div>
-
-                <div class="cp-content-grid">
-                    <div class="cp-visual-container">
-                        <img src="assets/2-cats-around-a-fireplace.gif" alt="rest area" class="cp-image">
+            <div class="checkpoint-card-wrapper">
+                <div class="checkpoint-card">
+                    <div class="cp-header">
+                        <div class="cp-title-box">
+                            <h1>CHECKPOINT</h1>
+                        </div>
+                        <div class="cp-date" id="latest-date">-- --- ----</div>
                     </div>
 
-                    <div class="cp-info-panel">
-                        <div class="cp-music-box">
-                            <div class="music-label">NOW PLAYING:</div>
-                            <div class="music-track">
-                                <marquee scrollamounts="4" id="latest-song-title">Loading...</marquee>
+                    <div class="cp-content-grid">
+                        <div class="cp-visual-container">
+                            <img src="assets/2-cats-around-a-fireplace.gif" alt="rest area" class="cp-image">
+                        </div>
+
+                        <div class="cp-info-panel">
+                            <div class="cp-music-box">
+                                <div class="music-label">NOW PLAYING:</div>
+                                <div class="music-track">
+                                    <marquee scrollamounts="4" id="latest-song-title">Loading...</marquee>
+                                </div>
+                                <audio id="main-audio">
+                                    <source id="audio-source" src="" type="audio/mpeg">
+                                </audio>
                             </div>
-                            <audio id="main-audio" loop>
-                                <source id="audio-source" src="" type="audio/mpeg">
-                            </audio>
-                        </div>
 
-                        <div class="cp-text-box">
-                            <p>You have been surfing for a while.</p>
-                            <p>Rest here for a moment and enjoy some music.</p>
-                            <p class="signature">- moonweft</p>
+                            <div class="cp-text-box">
+                                <p>You have been surfing for a while.</p>
+                                <p>Rest here for a moment and enjoy some music.</p>
+                                <p class="signature">- moonweft</p>
+                            </div>
                         </div>
+                    </div>
+
+                    <div class="cp-actions">
+                        <a href="index.html" class="retro-btn">
+                            <span class="btn-icon">◄ </span>RETURN
+                        </a>
                     </div>
                 </div>
 
-                <div class="cp-actions">
-                    <a href="index.html" class="retro-btn">
-                        <span class="btn-icon">◄ </span>RETURN
-                    </a>
+                <div class="facts-card" id="facts-card">
+                    <div class="facts-header">
+                        <span class="facts-tag">TRACK TRIVIA</span>
+                        <span class="facts-song-name" id="facts-song-name">--</span>
+                        <button class="facts-close-btn" id="facts-close-btn" title="Hide Trivia">&times;</button>
+                    </div>
+                    <div class="facts-body">
+                        <ul class="facts-list" id="facts-list">
+                            <li>Resting by the fire...</li>
+                        </ul>
+                    </div>
                 </div>
-                
             </div>
 
             <div class="bottom-section">
@@ -85,12 +99,10 @@
                         <p>I was inspired to make this checkpoint thing by an instagram page called <a target="_blank" href="https://www.instagram.com/intercheckpoint/">@intercheckpoint</a>.</p>
                         <p>Go ahead and check them out!</p>
                         <p>I'll update this and add more music whenever I feel like it.</p>
-                        <p style="margin-top: 15px; color: #888; ">> Feel free to stay as long as you need.</p>
+                        <p style="margin-top: 10px; color: #888;">&gt; Feel free to stay as long as you need.</p>
                     </div>
                 </div>
-
             </div>
-
         </div>
 
         <script>
@@ -100,14 +112,66 @@
             const audioPlayer = document.getElementById('main-audio');
 
             let allCheckpoints = [];
+            let currentTrackIndex = 0;
             let currentPage = 1;
             let itemsPerPage = 4;
+            let triviaTimer = null;
+            const triviaSlideDelay = 1500; // 1.5s after audio starts playing
 
             audioPlayer.volume = 0.4;
 
-            function loadCheckpoint(item) {
+            function showTrivia() {
+                const factsCard = document.getElementById('facts-card');
+                if (factsCard) {
+                    factsCard.classList.add('is-open');
+                }
+            }
+
+            function hideTrivia() {
+                const factsCard = document.getElementById('facts-card');
+                if (factsCard) {
+                    factsCard.classList.remove('is-open');
+                }
+            }
+
+            function updateTriviaContent(item) {
+                const factsTitle = document.getElementById('facts-song-name');
+                const factsList = document.getElementById('facts-list');
+                if (factsTitle) factsTitle.textContent = item.songTitle;
+                if (factsList) {
+                    factsList.innerHTML = '';
+                    const facts = item.facts && item.facts.length > 0 ? item.facts : (item.lore ? [item.lore] : ["Rest here for a moment and enjoy some music."]);
+                    facts.forEach(fact => {
+                        const li = document.createElement('li');
+                        li.textContent = fact;
+                        factsList.appendChild(li);
+                    });
+                }
+            }
+
+            function loadCheckpoint(item, index) {
+                if (typeof index === 'number') currentTrackIndex = index;
                 document.getElementById('latest-date').textContent = item.date;
                 document.getElementById('latest-song-title').textContent = `♫ ${item.songTitle} ♫`;
+
+                if (triviaTimer) {
+                    clearTimeout(triviaTimer);
+                    triviaTimer = null;
+                }
+
+                const factsCard = document.getElementById('facts-card');
+                const isTriviaOpen = factsCard && factsCard.classList.contains('is-open');
+
+                if (isTriviaOpen) {
+                    // Slide in immediately
+                    hideTrivia();
+                    // While tucked behind the card, update content
+                    setTimeout(() => {
+                        updateTriviaContent(item);
+                    }, 350);
+                } else {
+                    updateTriviaContent(item);
+                }
 
                 const currentSrc = document.getElementById('audio-source').src;
 
@@ -116,9 +180,50 @@
                     audioPlayer.load();
                     if (mainContent.style.opacity === '1') {
                         audioPlayer.play().catch(e => console.log("Playback interrupted", e));
+                        scheduleTriviaSlideOut();
                     }
                 }
             }
+
+            function scheduleTriviaSlideOut() {
+                if (triviaTimer) {
+                    clearTimeout(triviaTimer);
+                }
+                triviaTimer = setTimeout(() => {
+                    showTrivia();
+                }, triviaSlideDelay);
+            }
+
+            audioPlayer.addEventListener('play', () => {
+                if (mainContent.style.opacity === '1') {
+                    scheduleTriviaSlideOut();
+                }
+            });
+
+            audioPlayer.addEventListener('playing', () => {
+                if (mainContent.style.opacity === '1') {
+                    scheduleTriviaSlideOut();
+                }
+            });
+
+            const factsCloseBtn = document.getElementById('facts-close-btn');
+            if (factsCloseBtn) {
+                factsCloseBtn.addEventListener('click', (e) => {
+                    e.stopPropagation();
+                    hideTrivia();
+                    if (triviaTimer) {
+                        clearTimeout(triviaTimer);
+                        triviaTimer = null;
+                    }
+                });
+            }
+
+            audioPlayer.addEventListener('ended', () => {
+                if (allCheckpoints.length > 0) {
+                    currentTrackIndex = (currentTrackIndex + 1) % allCheckpoints.length;
+                    loadCheckpoint(allCheckpoints[currentTrackIndex], currentTrackIndex);
+                }
+            });
 
             function renderHistory() {
                 const historyList = document.getElementById('history-list');
@@ -128,11 +233,12 @@
                 const endIndex = startIndex + itemsPerPage;
                 const pageData = allCheckpoints.slice(startIndex, endIndex);
                 
-                pageData.forEach(item => {
+                pageData.forEach((item, idx) => {
+                    const globalIndex = startIndex + idx;
                     const row = document.createElement('div');
                     row.className = 'save-file';
                     row.addEventListener('click', () => {
-                        loadCheckpoint(item);
+                        loadCheckpoint(item, globalIndex);
                     });
                     row.innerHTML = `
                         <div class="save-row-top">
@@ -157,7 +263,7 @@
                     if (!data || data.length === 0) return;
 
                     allCheckpoints = data;
-                    loadCheckpoint(allCheckpoints[0]);
+                    loadCheckpoint(allCheckpoints[0], 0);
                     renderHistory();
                 })
                 .catch(err => console.error("Error loading checkpoints:", err));
@@ -183,6 +289,7 @@
                 mainContent.style.opacity = '1';
 
                 audioPlayer.play().catch(e => console.log("Audio play blocked:", e));
+                scheduleTriviaSlideOut();
                 setTimeout(() => {
                     startScreen.style.display = 'none';
                 }, 1000);

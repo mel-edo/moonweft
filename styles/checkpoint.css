@@ -11,15 +11,19 @@
 body {
     margin: 0;
     padding: 0;
-    background-color: #050510;
+    background-color: #000;
     background-image: 
-        linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
-    background-size: 40px 40px;
+        radial-gradient(white, rgba(255,255,255,.2) 2px, transparent 40px),
+        radial-gradient(white, rgba(255,255,255,.15) 1px, transparent 30px),
+        radial-gradient(white, rgba(255,255,255,.1) 2px, transparent 20px);
+    background-size: 550px 550px, 350px 350px, 250px 250px;
+    background-position: 0 0, 40px 60px, 130px 270px;
     font-family: 'VT323', monospace;
     color: var(--text-white);
-    height: 100vh;
+    min-height: 100vh;
+    height: auto;
     overflow-x: hidden;
+    overflow-y: auto;
 }
 
 .screen-center {
@@ -34,8 +38,19 @@ body {
     transition: opacity 1.5s ease;
 }
 
-.checkpoint-card {
+.checkpoint-card-wrapper {
+    position: relative;
     width: 700px;
+    max-width: 100%;
+    box-sizing: border-box;
+    z-index: 10;
+    margin: 0 auto;
+}
+
+.checkpoint-card {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
     background: #2d2d2d;
     border: 4px solid #000;
     box-shadow:
@@ -44,7 +59,7 @@ body {
         10px 10px 0px #000;
     padding: 6px;
     position: relative;
-    z-index: 2;
+    z-index: 5;
 }
 
 .cp-header {
@@ -259,17 +274,131 @@ body {
     display: flex;
     gap: 20px;
     width: 700px;
-    max-width: 90%;
+    max-width: 100%;
+    box-sizing: border-box;
     margin-top: 20px;
+    align-items: stretch;
+}
+
+.facts-card {
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 290px;
+    z-index: 3;
+    background: #2d2d2d;
+    border: 4px solid #000;
+    box-shadow:
+        inset 2px 2px 0px rgba(255, 255, 255, 0.1),
+        inset -2px -2px 0px rgba(0, 0, 0, 0.5),
+        6px 6px 0px #000;
+    padding: 6px;
+    font-family: 'VT323', monospace;
+    box-sizing: border-box;
+    transform: translateX(0);
+    opacity: 0;
+    pointer-events: none;
+    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
+}
+
+.facts-card.is-open {
+    transform: translateX(calc(100% + 18px));
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.facts-header {
+    background: var(--nintendo-purple);
+    color: #fff;
+    padding: 4px 8px;
+    border: 2px solid #000;
+    margin-bottom: 6px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 4px;
+}
+
+.facts-close-btn {
+    background: #000;
+    color: #fff;
+    border: 1px solid #555;
+    font-family: monospace;
+    font-size: 1.1rem;
+    cursor: pointer;
+    line-height: 1;
+    padding: 0 4px;
+    margin-left: auto;
+    transition: background 0.15s ease;
+}
+
+.facts-close-btn:hover {
+    background: #b91c1c;
+    color: #fff;
+}
+
+.facts-tag {
+    font-size: 1.1rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    color: #fff;
+    text-shadow: 2px 2px 0px #000;
+}
+
+.facts-song-name {
+    background: #000;
+    color: var(--accent-gold);
+    padding: 2px 6px;
+    border: 1px solid #555;
+    font-size: 0.95rem;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.facts-body {
+    background: rgba(0, 0, 0, 0.6);
+    border: 2px solid #fff;
+    padding: 8px 10px;
+    box-shadow: inset 0 0 10px #000;
+}
+
+.facts-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.facts-list li {
+    font-size: 1.05rem;
+    line-height: 1.3;
+    color: #eee;
+    display: flex;
     align-items: flex-start;
+    gap: 6px;
+}
+
+.facts-list li::before {
+    content: "►";
+    color: var(--gameboy-screen);
+    font-size: 0.8rem;
+    margin-top: 2px;
+    flex-shrink: 0;
 }
 
 .info-card {
     flex: 1;
+    width: auto;
     background: #1a1a2e;
     border: 2px solid var(--nintendo-purple);
     padding: 10px;
-    box-shadow: 6px 6px 0px #000;
+    box-shadow: 5px 5px 0px #000;
+    box-sizing: border-box;
 }
 
 .info-header {
@@ -308,8 +437,6 @@ body {
     cursor: pointer;
     padding: 0 10px;
     font-size: 1.2rem;
-    /* margin-left: 5px;
-    margin-right: 5px; */
     border: 2px solid #fff;
     box-shadow: 5px 5px 0px #000;
 }
@@ -322,7 +449,7 @@ body {
 
 .page-btn:disabled {
     opacity: 0.3;
-    cursor: default
+    cursor: default;
 }
 
 #page-indicator {
@@ -331,7 +458,7 @@ body {
 }
 
 .history-card {
-    flex: 1.5;
+    flex: 1.2;
     min-height: 250px;
     display: flex;
     flex-direction: column;
@@ -340,6 +467,7 @@ body {
     border: 4px solid #000;
     box-shadow: 5px 5px 0px #000;
     padding: 10px;
+    box-sizing: border-box;
 }
 
 .history-header {
@@ -380,12 +508,37 @@ body {
 
 .save-id { color: var(--nintendo-purple); font-weight: bold; }
 .save-date { color: #666; }
-.save-song {color: var(--accent-gold); font-size: 0.9rem; }
+.save-song { color: var(--accent-gold); font-size: 0.9rem; }
+
+@media (max-width: 1100px) {
+    .facts-card {
+        position: relative;
+        top: auto;
+        right: auto;
+        width: 100%;
+        max-height: 0;
+        opacity: 0;
+        overflow: hidden;
+        margin-top: 0;
+        transform: translateY(-8px);
+        transition: max-height 0.4s ease, opacity 0.3s ease, margin-top 0.4s ease, transform 0.4s ease;
+        pointer-events: none;
+    }
+
+    .facts-card.is-open {
+        max-height: 500px;
+        opacity: 1;
+        margin-top: 15px;
+        transform: translateY(0);
+        pointer-events: auto;
+    }
+}
 
 @media (max-width: 750px) {
-    .bottom-section { flex-direction: column; width: 90%; }
-    .history-card, .info-card { width: 100%; }
-    .checkpoint-card { width: 90%; height: auto; }
+    .bottom-section { flex-direction: column; width: 92%; }
+    .history-card, .info-card, .facts-card { width: 100%; box-sizing: border-box; }
+    .checkpoint-card-wrapper { width: 92%; }
+    .checkpoint-card { width: 100%; height: auto; }
     .cp-content-grid { grid-template-columns: 1fr; }
     .cp-visual-container { height: 200px; }
     .screen-center { height: auto; padding: 20px 0; }

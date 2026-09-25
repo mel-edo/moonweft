@@ -1,4 +1,8 @@
-* { user-select: none; -webkit-user-select: none; }
+*, *::before, *::after {
+    box-sizing: border-box;
+    user-select: none;
+    -webkit-user-select: none;
+}
 :root {
     --bg-blue: #181926;
     --line-blue: #364a8b;
@@ -9,12 +13,17 @@
     --text-main: #cad3f5;
 }
 
+html, body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
 body {
     background-color: var(--bg-blue);
     color: var(--text-main);
     font-family: 'JetBrains Mono', monospace;
     margin: 0;
-    overflow-x: hidden;
     min-height: 100vh;
 }
 
@@ -832,6 +841,7 @@ h1 {
         margin: 0 auto;
         padding: 16px 12px;
         width: 100%;
+        max-width: 100vw;
         overflow-x: hidden;
     }
     .cable-line {
@@ -847,6 +857,36 @@ h1 {
         text-align: left;
     }
     .amp-controls { display: none; }
-    .amp-head-nav { justify-content: center; flex-wrap: wrap; }
+    .amp-head-nav {
+        height: auto;
+        min-height: 80px;
+        padding: 12px 10px;
+        margin: 0 auto 30px auto;
+        justify-content: center;
+        flex-wrap: wrap;
+        max-width: 100%;
+    }
+    .patch-bay {
+        gap: 8px;
+        max-width: 100%;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    .patch-cable-visual {
+        width: 40px;
+    }
+    .jack-label {
+        font-size: 0.55rem;
+    }
     .pedal-box { width: 100%; padding: 15px; }
+    .monitor-screen { max-width: 100%; }
+    .markdown-body {
+        max-width: 100%;
+        overflow-wrap: break-word;
+        word-wrap: break-word;
+    }
+    .markdown-body pre {
+        max-width: 100%;
+        overflow-x: auto;
+    }
 }

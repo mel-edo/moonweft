@@ -22,6 +22,15 @@ def main():
     print("----New Checkpoint Entry----")
     song_title = input("Song Title - Artist: ").strip()
     song_url = input("Song URL: ").strip()
+    
+    facts = []
+    print("Enter Fun Facts (press Enter on empty line to finish):")
+    while True:
+        fact = input("  • ").strip()
+        if not fact:
+            break
+        facts.append(fact)
+
     data = load_data()
 
     new_id = "01"
@@ -38,7 +47,8 @@ def main():
         "id": new_id,
         "date": today,
         "songTitle": song_title,
-        "songFile": song_url
+        "songFile": song_url,
+        "facts": facts
     }
 
     data.insert(0, new_entry)

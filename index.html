@@ -236,9 +236,16 @@
                 <div class="card visitor-panel">
                     <div class="visitor-header">[visitor counter]</div>
                     <div class="visitor-visual">
-                        <div class="visitor-counter"><img
-                                src="https://count.getloli.com/get/@moonweft-demo?theme=nixietube-1&padding=4&darkmode=0"
-                                alt="visitor count"></div>
+                        <div class="visitor-counter" id="visitor-counter-container">
+                            <div class="nixie-display" title="visitor counter">
+                                <span class="nixie-tube">-</span>
+                                <span class="nixie-tube">-</span>
+                                <span class="nixie-tube">-</span>
+                                <span class="nixie-tube">-</span>
+                                <span class="nixie-tube">-</span>
+                            </div>
+                            <div class="unique-visitors-row">unique visitors: <span class="unique-visitors-val">-</span></div>
+                        </div>
                     </div>
                 </div>
 
@@ -598,6 +605,40 @@
                 });
             }
         });
+
+        // ── UNIQUE VISITOR COUNTER ──
+        (function () {
+            const container = document.getElementById('visitor-counter-container');
+            if (!container) return;
+
+            let token = localStorage.getItem('mw_visitor_token');
+            if (!token) {
+                token = 'mw_' + Math.random().toString(36).substring(2, 11) + Date.now().toString(36);
+                localStorage.setItem('mw_visitor_token', token);
+            }
+
+            const counterUrl = `https://moonweft-music.meledo.workers.dev/counter?token=${encodeURIComponent(token)}`;
+
+            fetch(counterUrl)
+                .then(r => {
+                    if (!r.ok) throw new Error('Worker responded with ' + r.status);
+                    return r.json();
+                })
+                .then(data => {
+                    const views = data.views ?? data.count ?? data.unique ?? 0;
+                    const unique = data.unique ?? data.count ?? 0;
+                    const viewsStr = String(views).padStart(5, '0');
+                    container.innerHTML = `
+                        <div class="nixie-display" title="${views} total views · ${unique} unique visitors">
+                            ${viewsStr.split('').map(digit => `<span class="nixie-tube">${digit}</span>`).join('')}
+                        </div>
+                        <div class="unique-visitors-row">unique visitors: <span class="unique-visitors-val">${unique}</span></div>
+                    `;
+                })
+                .catch(err => {
+                    console.warn("Counter error:", err);
+                });
+        })();
     </script>
 </body>
 

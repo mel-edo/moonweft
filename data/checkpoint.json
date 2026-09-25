@@ -3,60 +3,110 @@
         "id": "10",
         "date": "15 SEP 2026",
         "songTitle": "Can you feel the sunshine? - Sonic R",
-        "songFile": "https://files.catbox.moe/qnb8t1.m4a"
+        "songFile": "https://files.catbox.moe/qnb8t1.m4a",
+        "facts": [
+            "Producer Yuji Naka wanted Sonic R to stand out against Daytona USA and Mario Kart, taking a massive gamble on full vocal 90s Eurodance pop—unheard of for racing games in 1997.",
+            "Winning a race with Sonic unlocked the Tails Doll, birthing one of the internet's earliest and most infamous gaming creepypastas: 'The Tails Doll Curse'.",
+            "The game features dynamic weather where it can pour rain during the race while the lyrics ironically blast: 'Can you feel the sunshine?'."
+        ]
     },
     {
         "id": "09",
         "date": "14 AUG 2026",
         "songTitle": "Say My Name - Yu-Peng Chen",
-        "songFile": "https://files.catbox.moe/wf1on0.mp3"
+        "songFile": "https://files.catbox.moe/wf1on0.mp3",
+        "facts": [
+            "Yu-Peng Chen secretly planted musical leitmotifs of Scaramouche across three different region soundtracks (Mondstadt, Inazuma, Sumeru) years before this boss battle theme was released.",
+            "The track blends operatic choir, ancient Latin and Japanese chanting, and heavy distorted electric guitars to symbolize a mortal becoming a synthetic deity.",
+            "Multiple vocal passes at different pitches were layered to simulate an entire cathedral choir singing simultaneously."
+        ]
     },
     {
         "id": "08",
         "date": "09 FEB 2026",
         "songTitle": "Littleroot Town - Pokemon Ruby/Sapphire/Emerald",
-        "songFile": "https://files.catbox.moe/i6inr5.m4a"
+        "songFile": "https://files.catbox.moe/i6inr5.m4a",
+        "facts": [
+            "Composer Go Ichinose wrote the acoustic guitar intro because the Game Boy Advance sound chip finally had enough polyphonic channels to strum acoustic chords instead of just 8-bit square waves.",
+            "Despite the internet's legendary '7.8/10 Too Much Water' review meme, music critics universally praise Hoenn for having the warmest and most joyful brass instrumentation in Pokémon history.",
+            "Littleroot Town is one of the only starter towns in the series where your character physically moves in via a moving truck surrounded by cardboard boxes."
+        ]
     },
     {
         "id": "07",
         "date": "16 JAN 2026",
         "songTitle": "Moog City - C418",
-        "songFile": "https://files.catbox.moe/fpo1x2.m4a"
+        "songFile": "https://files.catbox.moe/fpo1x2.m4a",
+        "facts": [
+            "Named after the iconic synthesizer maker Moog (pronounced 'mohg', like 'vogue'), whose analog synth filters gave the song its warm, buzzing harmonics.",
+            "Minecraft creator Notch reached out to C418 on an indie game development forum after hearing his experimental music online. Neither of them expected it to become the best-selling game of all time.",
+            "The music in Minecraft is programmed never to loop; instead, tracks trigger randomly during dawn, dusk, or when emerging from dark caves into the open sky."
+        ]
     },
     {
         "id": "06",
         "date": "01 JAN 2026",
         "songTitle": "Lake theme - Pokemon Diamond & Pearl",
-        "songFile": "https://files.catbox.moe/esvlaw.m4a"
+        "songFile": "https://files.catbox.moe/esvlaw.m4a",
+        "facts": [
+            "Composed in a gentle 6/8 meter specifically designed to mimic the gentle rippling of wind across undisturbed lake water.",
+            "Sinnoh's three lake guardians (Mesprit, Uxie, and Azelf) represent the three core pillars of human consciousness: Emotion, Knowledge, and Willpower.",
+            "The theme sounds subtly different depending on whether you visit during the day or at night, reflecting Diamond & Pearl's real-time clock system."
+        ]
     },
     {
         "id": "05",
         "date": "26 DEC 2025",
         "songTitle": "Frappe Snowland - Mario Kart 64",
-        "songFile": "https://files.catbox.moe/szkzub.m4a"
+        "songFile": "https://files.catbox.moe/szkzub.m4a",
+        "facts": [
+            "Musically identical to the Sherbet Land theme, but the cozy night snowfall and giant Mario snow sculptures made Frappe Snowland a seasonal Christmas staple for 90s kids.",
+            "The giant Yoshi snow sculpture in the background is completely hollow—speedrunners discovered a glitch where you could drive straight through it to skip nearly the entire track.",
+            "The gentle vibraphone bells had to be compressed into tiny samples to fit within the game's strict 12-megabyte Nintendo 64 cartridge limit."
+        ]
     },
     {
         "id": "04",
         "date": "17 DEC 2025",
         "songTitle": "Coconut Mall - Mario Kart Wii",
-        "songFile": "https://files.catbox.moe/dnvcgt.m4a"
+        "songFile": "https://files.catbox.moe/dnvcgt.m4a",
+        "facts": [
+            "The viral 'You just got Coconut Mauled!' prank meme took over YouTube and TikTok in 2021, becoming the internet's favorite modern alternative to the Rickroll.",
+            "The cars parked in the final plaza were driven by random Miis pulled directly from your Nintendo Wii console's internal memory.",
+            "The track's opening three piano notes are so recognizable that competitive Mario Kart players can identify the course in less than 0.3 seconds."
+        ]
     },
     {
         "id": "03",
         "date": "14 DEC 2025",
         "songTitle": "Living Mice - C418",
-        "songFile": "https://files.catbox.moe/lyce6h.m4a"
+        "songFile": "https://files.catbox.moe/lyce6h.m4a",
+        "facts": [
+            "C418 deliberately gave Minecraft tracks quirky, unpretentious titles like 'Living Mice', 'Subwoofer Lullaby', and 'Cat' so the album wouldn't feel overly serious or pretentious.",
+            "The tape hiss, subtle room reverb, and mechanical damper noise were left in the final mix on purpose to make the piano feel like you discovered it in an old abandoned attic.",
+            "It features a solo upright felt-dampened piano, giving it an intimate, warm tone that contrasts with modern crisp digital synths."
+        ]
     },
     {
         "id": "02",
         "date": "13 DEC 2025",
         "songTitle": "Dire Dire Docks - Super Mario 64",
-        "songFile": "https://files.catbox.moe/lk2n8u.m4a"
+        "songFile": "https://files.catbox.moe/lk2n8u.m4a",
+        "facts": [
+            "A pioneer of interactive dynamic video game audio: standing on the docks plays only soft electric piano and synth strings. The instant Mario plunges into the water, bass and drums seamlessly fade in.",
+            "Written in 3/4 waltz time signature, intentionally creating the gentle rising and falling rhythm of sea swells.",
+            "Legendary Nintendo composer Koji Kondo revealed in an interview that Dire Dire Docks was one of his personal favorite compositions of his entire career."
+        ]
     },
     {
         "id": "01",
         "date": "12 DEC 2025",
         "songTitle": "Last Train - Sega Genesis",
-        "songFile": "https://files.catbox.moe/7bumgb.m4a"
+        "songFile": "https://files.catbox.moe/7bumgb.m4a",
+        "facts": [
+            "Crafted with the legendary Yamaha YM2612 FM synthesis sound chip, beloved for its crunchy basslines, punchy slap bass, and gritty 90s character.",
+            "Because the Genesis had no CD audio, composers had to write custom Motorola 68000 assembly audio drivers to squeeze complex funk grooves out of 6 FM channels.",
+            "Decades after its release, this song found a huge resurgence in the vaporwave and synthwave communities as a soundtrack for late-night city walks and rainy train rides."
+        ]
     }
 ]

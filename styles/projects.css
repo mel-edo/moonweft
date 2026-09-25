@@ -1,4 +1,8 @@
-* { user-select: none; -webkit-user-select: none; }
+*, *::before, *::after {
+    box-sizing: border-box;
+    user-select: none;
+    -webkit-user-select: none;
+}
 /* persona 5 theme */
 
 @font-face {
@@ -14,12 +18,17 @@
     --font-p5: 'Optima Nova', sans-serif;
 }
 
+html, body {
+    width: 100%;
+    max-width: 100%;
+    overflow-x: hidden;
+}
+
 body {
     background-color: var(--p5-red);
     margin: 0;
     font-family: var(--font-p5);
     color: var(--p5-black);
-    overflow-x: hidden;
     min-height: 100vh;
 }
 
@@ -335,6 +344,8 @@ body.heist-success .project-panel {
     background: transparent;
     z-index: 1;
     transition: color 0.3s, border-color 0.3s;
+    flex-shrink: 0;
+    white-space: nowrap;
 }
 
 .category::before {
@@ -403,9 +414,10 @@ body.heist-success .project-panel {
 
 .p5-page-info {
     font-family: 'Times New Roman', serif;
-    font-weight: bold;
+    font-weight: 900;
     font-size: 1.2rem;
-    color: var(--p5-red);
+    color: var(--p5-white);
+    text-shadow: 2px 2px 0px var(--p5-black);
     letter-spacing: 2px;
 }
 
@@ -533,14 +545,22 @@ body.heist-success .project-panel {
 .cc-title-block {
     position: relative;
     display: flex;
+    flex-direction: column;
     align-items: flex-start;
-    flex-wrap: wrap; /* Allows wrapping if screen gets too small */
-    gap: 0;
+    gap: 14px;
     cursor: default;
     transition: transform 0.15s ease-out;
     width: fit-content;
     max-width: 100%;
-    margin-bottom: 30px;
+    margin-bottom: 26px;
+}
+
+.cc-title-main {
+    position: relative;
+    display: inline-flex;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    max-width: 100%;
 }
 
 /* Base Shadow Layer Rules */
@@ -639,12 +659,13 @@ body.heist-success .project-panel {
 }
 
 .cc-badges-container {
-    position: absolute;
-    right: -20px;
-    bottom: -15px;
+    position: relative;
     display: flex;
+    flex-wrap: wrap;
+    align-items: center;
     gap: 10px;
     z-index: 5;
+    margin-top: 2px;
 }
 
 .cc-actions {
@@ -971,68 +992,106 @@ body.heist-success .project-panel {
 }
 
 @media (max-width: 600px) {
+    .container {
+        padding: 16px 10px;
+        width: 100%;
+        max-width: 100vw;
+        overflow-x: hidden;
+    }
+
+    .p5-deco {
+        display: none;
+    }
+
+    .project-stage {
+        gap: 24px;
+        width: 100%;
+        max-width: 100%;
+    }
+
+    .target-list {
+        top: 0;
+        gap: 12px;
+        width: 100%;
+        max-width: 100%;
+    }
+
     .archive-header {
-        margin-bottom: 30px;
-        transform: skewX(-4deg) rotate(-1deg);
+        margin-bottom: 24px;
+        transform: skewX(-3deg) rotate(-1deg);
         border-width: 3px;
         box-shadow: 4px 4px 0px var(--p5-black);
+        max-width: 100%;
     }
 
     .title-group {
-        padding: 10px 12px;
+        padding: 8px 10px;
         flex-wrap: wrap;
         row-gap: 6px;
         justify-content: center;
     }
 
     .p5-box {
-        padding: 5px 12px;
-        transform: skewX(-6deg);
+        padding: 5px 10px;
+        transform: skewX(-4deg);
     }
 
     .black-box {
-        margin-right: -8px;
+        margin-right: -6px;
     }
 
     .project-text {
-        font-size: 1.5rem;
+        font-size: 1.4rem;
     }
 
     .white-box {
-        padding-left: 16px;
+        padding-left: 12px;
     }
 
     .archive-img {
-        height: 28px;
+        height: 24px;
     }
 
     .date-box {
         margin-left: 4px;
-        padding: 4px 8px;
-        transform: skewX(-6deg) translateY(0) rotate(0deg);
+        padding: 4px 6px;
+        transform: skewX(-4deg) translateY(0) rotate(0deg);
     }
 
     .date-text {
-        font-size: 0.9rem;
+        font-size: 0.85rem;
         letter-spacing: 1px;
     }
 
     .target-card {
-        --p5-card-skew: -3deg;
+        --p5-card-skew: -2deg;
         min-height: 85px;
+        width: 100%;
+        max-width: 100%;
+        box-shadow: 5px 5px 0px var(--p5-red);
     }
 
     .rank {
-        width: 50px;
-        font-size: 1.35rem;
+        width: 48px;
+        font-size: 1.25rem;
+    }
+
+    .content-wrapper {
+        padding: 12px 14px;
+        min-width: 0;
     }
 
     .main-info {
-        padding: 8px 10px;
+        padding: 6px 8px;
+    }
+
+    .details {
+        min-width: 0;
     }
 
     .details h2 {
-        font-size: 1.15rem;
+        font-size: 1.1rem;
+        word-break: break-word;
     }
 
     .details p {
@@ -1049,23 +1108,93 @@ body.heist-success .project-panel {
         padding: 3px 6px;
     }
 
+    .calling-card {
+        width: 100%;
+        max-width: 100%;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .calling-card::after {
+        width: 180px;
+        height: 180px;
+        right: -10px;
+        bottom: -10px;
+    }
+
+    .cc-inner {
+        padding: 20px 16px;
+    }
+
     .cc-title-block {
         flex-direction: column;
         align-items: flex-start;
+        gap: 10px;
+        max-width: 100%;
+        margin-bottom: 20px;
+    }
+
+    .cc-title-main {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
         gap: 6px;
+        max-width: 100%;
+    }
+
+    .cc-tag-box {
+        margin-right: 0;
+        margin-bottom: 2px;
+        padding: 5px 14px;
+    }
+
+    .cc-tag-text {
+        font-size: 0.72rem;
+    }
+
+    .cc-heading-box {
+        padding: 6px 16px;
+        max-width: 100%;
     }
 
     .cc-heading-text {
-        font-size: 1.4rem;
+        font-size: 1.35rem;
+        word-break: break-word;
+        line-height: 1.15;
+    }
+
+    .cc-badges-container {
+        gap: 8px;
+        margin-top: 0;
+        max-width: 100%;
+    }
+
+    .cc-num-box {
+        padding: 3px 10px;
+    }
+
+    .cc-num-text {
+        font-size: 0.8rem;
+        letter-spacing: 1.5px;
+    }
+
+    .cc-live-badge {
+        padding: 3px 10px;
+    }
+
+    .cc-live-badge .cc-live-text {
+        font-size: 0.8rem;
+        letter-spacing: 1.5px;
     }
 
     .cc-body {
         font-size: 0.9rem;
+        word-break: break-word;
     }
 
     .sidebar-return {
-        padding: 8px 30px;
-        font-size: 1.1rem;
+        padding: 8px 24px;
+        font-size: 1rem;
     }
 }
 

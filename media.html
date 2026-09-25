@@ -25,11 +25,7 @@
 
     <!-- Page Title Banner -->
     <header class="page-header">
-        <div class="banner-badge">
-            <span class="gold-ring-icon">●</span> ARCHIVE
-        </div>
         <h1>MEDIA GALLERY</h1>
-        <p class="subtitle">[ SELECT A DATE TO JUMP ]</p>
     </header>
 
     <!-- Main Container: Sidebar + Stream -->
@@ -238,11 +234,11 @@
                             const date = new Date(img.date).toLocaleDateString('en-US', {
                                 month: 'short', day: 'numeric', year: 'numeric'
                             });
+                            const thumbSrc = img.thumb || img.url;
                             return `
                                 <div class="photo-card win-box-card" data-full="${img.url}" data-date="${date}" data-id="${img.id}">
-                                    <div class="card-tag">★</div>
                                     <div class="img-wrapper">
-                                        <img src="${img.url}" alt="${img.alt}">
+                                        <img src="${thumbSrc}" loading="lazy" decoding="async" alt="${img.alt}">
                                     </div>
                                     <div class="photo-info">
                                         <span class="photo-label">${date}</span>
@@ -272,34 +268,192 @@
 
             function initLightbox() {
                 const lightbox = document.getElementById('sg-lightbox');
+                const lightboxContent = document.querySelector('.sg-lightbox-content');
                 const lightboxImg = document.getElementById('sg-lightbox-img');
                 const lightboxCaption = document.getElementById('sg-lightbox-caption');
                 const lightboxTitle = document.getElementById('lightbox-title-text');
                 const closeBtn = document.querySelector('.sg-close-btn');
+                const imgFrame = document.querySelector('.lightbox-img-frame');
 
-                galleryStream.addEventListener('click', (e) => {
-                    const card = e.target.closest('.photo-card');
+                let currentCard = null;
+                let currentNaturalW = 0;
+                let currentNaturalH = 0;
+
+                function computeFittedSize(nw, nh) {
+                    const isMobile = window.innerWidth <= 600;
+                    const maxW = isMobile ? Math.floor(window.innerWidth * 0.92) : Math.min(Math.floor(window.innerWidth * 0.88), 1150);
+                    const maxH = isMobile ? Math.floor(window.innerHeight * 0.62) : Math.floor(window.innerHeight * 0.68);
+                    const aspect = (nw && nh) ? (nw / nh) : (4 / 3);
+
+                    let targetW = maxW;
+                    let targetH = targetW / aspect;
+                    if (targetH > maxH) {
+                        targetH = maxH;
+                        targetW = targetH * aspect;
+                    }
+                    const minW = isMobile ? Math.min(260, Math.floor(window.innerWidth * 0.92)) : 340;
+                    targetW = Math.max(Math.round(targetW), minW);
+                    targetH = Math.round(targetH);
+
+                    return {
+                        width: targetW,
+                        height: targetH
+                    };
+                }
+
+                function updateFrameDimensions(nw, nh) {
+                    if (!imgFrame) return;
+                    currentNaturalW = nw;
+                    currentNaturalH = nh;
+                    const { width, height } = computeFittedSize(nw, nh);
+                    if (lightboxContent) {
+                        lightboxContent.style.width = `${width}px`;
+                    }
+                    imgFrame.style.height = `${height}px`;
+                }
+
+                function openPhoto(card) {
                     if (!card) return;
+                    currentCard = card;
                     const img = card.querySelector('img');
                     const date = card.dataset.date;
                     const id = card.dataset.id;
-                    if (img) {
-                        lightboxImg.src = img.src;
-                        lightboxImg.alt = img.alt || 'Expanded View';
-                        lightboxCaption.innerHTML = `<span class="caption-date">${date}</span> <span class="caption-id">// ${id}</span>`;
-                        lightboxTitle.innerText = `${id}.webp`;
-                        lightbox.classList.add('active');
-                        document.body.classList.add('modal-open');
+                    const fullSrc = card.dataset.full || (img ? img.src : '');
+                    if (!img || !fullSrc) return;
+
+                    const nw = img.naturalWidth || 800;
+                    const nh = img.naturalHeight || 600;
+                    const isAlreadyOpen = lightbox.classList.contains('active');
+
+                    if (!isAlreadyOpen) {
+                        // Opening fresh from gallery: snap frame immediately to target dimensions without morphing from previous photo
+                        if (lightboxContent) lightboxContent.style.transition = 'none';
+                        imgFrame.style.transition = 'none';
+                        updateFrameDimensions(nw, nh);
+                        void imgFrame.offsetHeight; // Force layout
+                        requestAnimationFrame(() => {
+                            if (lightboxContent) lightboxContent.style.transition = '';
+                            imgFrame.style.transition = '';
+                        });
+                    } else {
+                        // Already open (navigating between photos with arrows):
+                        updateFrameDimensions(nw, nh);
                     }
+
+                    // Always ensure opacity starts at 0 so it never pops in abruptly
+                    lightboxImg.style.opacity = '0';
+
+                    // Update captions and title
+                    lightboxCaption.innerHTML = `<span class="caption-date">${date}</span> <span class="caption-id">// ${id}</span>`;
+                    lightboxTitle.innerText = `${id}.webp`;
+                    lightbox.classList.add('active');
+                    document.body.classList.add('modal-open');
+
+                    const triggerFadeIn = () => {
+                        requestAnimationFrame(() => {
+                            lightboxImg.style.opacity = '1';
+                        });
+                    };
+
+                    // Set thumbnail source
+                    lightboxImg.alt = img.alt || 'Expanded View';
+                    lightboxImg.src = img.src;
+
+                    // Fade in smoothly only after decoding finishes (ensures zero popping)
+                    if (lightboxImg.decode) {
+                        lightboxImg.decode().catch(() => {}).then(triggerFadeIn);
+                    } else if (lightboxImg.complete) {
+                        triggerFadeIn();
+                    } else {
+                        lightboxImg.onload = triggerFadeIn;
+                    }
+
+                    // Preload full resolution image
+                    if (fullSrc !== img.src) {
+                        const fullImage = new Image();
+                        fullImage.src = fullSrc;
+                        fullImage.onload = () => {
+                            if (lightbox.classList.contains('active') && lightboxTitle.innerText === `${id}.webp`) {
+                                // Only update frame if aspect ratio actually differs by > 2%
+                                const thumbAspect = nw / nh;
+                                const fullAspect = (fullImage.naturalWidth && fullImage.naturalHeight)
+                                    ? (fullImage.naturalWidth / fullImage.naturalHeight)
+                                    : thumbAspect;
+                                if (Math.abs(thumbAspect - fullAspect) > 0.02) {
+                                    updateFrameDimensions(fullImage.naturalWidth, fullImage.naturalHeight);
+                                }
+                                // Decode full image before swap to prevent any flash or pop
+                                if (fullImage.decode) {
+                                    fullImage.decode().catch(() => {}).then(() => {
+                                        if (lightbox.classList.contains('active') && lightboxTitle.innerText === `${id}.webp`) {
+                                            lightboxImg.src = fullSrc;
+                                        }
+                                    });
+                                } else {
+                                    lightboxImg.src = fullSrc;
+                                }
+                            }
+                        };
+                    }
+                }
+
+                galleryStream.addEventListener('click', (e) => {
+                    const card = e.target.closest('.photo-card');
+                    if (card) openPhoto(card);
                 });
 
                 const closeAction = () => {
                     lightbox.classList.remove('active');
                     document.body.classList.remove('modal-open');
+                    lightboxImg.style.opacity = '0';
+                    setTimeout(() => {
+                        if (!lightbox.classList.contains('active')) {
+                            lightboxImg.src = '';
+                            currentCard = null;
+                            if (lightboxContent) {
+                                lightboxContent.style.transition = 'none';
+                                lightboxContent.style.width = '';
+                            }
+                            if (imgFrame) {
+                                imgFrame.style.transition = 'none';
+                                imgFrame.style.width = '';
+                                imgFrame.style.height = '';
+                            }
+                        }
+                    }, 250);
                 };
+
                 closeBtn.addEventListener('click', closeAction);
                 lightbox.addEventListener('click', (e) => { if (e.target === lightbox) closeAction(); });
-                document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAction(); });
+                
+                document.addEventListener('keydown', (e) => {
+                    if (!lightbox.classList.contains('active')) return;
+                    if (e.key === 'Escape') {
+                        closeAction();
+                    } else if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+                        if (currentCard) {
+                            const allCards = Array.from(document.querySelectorAll('.photo-card'));
+                            const idx = allCards.indexOf(currentCard);
+                            if (idx >= 0 && idx < allCards.length - 1) {
+                                openPhoto(allCards[idx + 1]);
+                            }
+                        }
+                    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+                        if (currentCard) {
+                            const allCards = Array.from(document.querySelectorAll('.photo-card'));
+                            const idx = allCards.indexOf(currentCard);
+                            if (idx > 0) {
+                                openPhoto(allCards[idx - 1]);
+                            }
+                        }
+                    }
+                });
+
+                window.addEventListener('resize', () => {
+                    if (lightbox.classList.contains('active') && currentNaturalW && currentNaturalH) {
+                        updateFrameDimensions(currentNaturalW, currentNaturalH);
+                    }
+                });
             }
 
             // ScrollSpy: expands whichever year's section is currently in view, collapses the rest

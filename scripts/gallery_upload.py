@@ -153,6 +153,29 @@ def convert_to_webp(source, destination, quality):
         )
 
 
+def make_thumbnail(source, destination, max_width=480, quality=75):
+    destination.parent.mkdir(
+        parents=True,
+        exist_ok=True,
+    )
+
+    with Image.open(source) as image:
+        if image.mode not in ("RGB", "RGBA"):
+            image = image.convert("RGB")
+
+        w, h = image.size
+        if w > max_width:
+            new_h = int(h * (max_width / w))
+            image = image.resize((max_width, new_h), Image.Resampling.LANCZOS)
+
+        image.save(
+            destination,
+            "WEBP",
+            quality=quality,
+            method=6,
+        )
+
+
 def main():
     parser = argparse.ArgumentParser(
         description="Process Moonweft gallery photos."
@@ -248,6 +271,18 @@ def main():
             f"{source.stem}.webp"
         )
 
+        thumb_destination = (
+            output_dir
+            / year
+            / month
+            / f"{source.stem}_thumb.webp"
+        )
+
+        relative_thumb = (
+            f"assets/media/{year}/{month}/"
+            f"{source.stem}_thumb.webp"
+        )
+
         print(
             f"✓ {source.name}"
             f" → {photo_date.isoformat()}"
@@ -261,9 +296,16 @@ def main():
                 args.quality,
             )
 
+        if not thumb_destination.exists():
+            make_thumbnail(
+                source,
+                thumb_destination,
+            )
+
         gallery.append({
             "id": source.stem,
             "url": relative_url,
+            "thumb": relative_thumb,
             "alt": f"Photo taken on "
                    f"{photo_date.strftime('%B %-d, %Y')}",
             "date": photo_date.isoformat(),

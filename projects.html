@@ -162,13 +162,15 @@
             const panelHTML = `
                     <article class="project-panel" id="project-${proj.id}" data-project-panel="${proj.id}">
                         <header class="cc-title-block">
-                            <div class="cc-tag-box">
-                                <span class="cc-tag-bg"></span>
-                                <span class="cc-tag-text">${proj.tag}</span>
-                            </div>
-                            <div class="cc-heading-box">
-                                <span class="cc-heading-bg"></span>
-                                <span class="cc-heading-text">${proj.title}</span>
+                            <div class="cc-title-main">
+                                <div class="cc-tag-box">
+                                    <span class="cc-tag-bg"></span>
+                                    <span class="cc-tag-text">${proj.tag}</span>
+                                </div>
+                                <div class="cc-heading-box">
+                                    <span class="cc-heading-bg"></span>
+                                    <span class="cc-heading-text">${proj.title}</span>
+                                </div>
                             </div>
                             <div class="cc-badges-container">
                                 ${badgesHTML}
