@@ -45,7 +45,18 @@
                             <div class="cp-music-box">
                                 <div class="music-label">NOW PLAYING:</div>
                                 <div class="music-track">
-                                    <marquee scrollamounts="4" id="latest-song-title">Loading...</marquee>
+                                    <marquee scrollamount="4" id="latest-song-title">Loading...</marquee>
+                                </div>
+                                <div class="cp-music-controls">
+                                    <button type="button" class="m-btn" id="btn-prev" title="Previous Track">
+                                        <span class="m-icon">◄◄</span> PREV
+                                    </button>
+                                    <button type="button" class="m-btn m-btn-play" id="btn-play" title="Play / Pause">
+                                        <span class="m-icon" id="play-icon">❚❚</span> <span id="play-label">PAUSE</span>
+                                    </button>
+                                    <button type="button" class="m-btn" id="btn-next" title="Next Track">
+                                        NEXT <span class="m-icon">►►</span>
+                                    </button>
                                 </div>
                                 <audio id="main-audio">
                                     <source id="audio-source" src="" type="audio/mpeg">
@@ -71,7 +82,6 @@
                     <div class="facts-header">
                         <span class="facts-tag">TRACK TRIVIA</span>
                         <span class="facts-song-name" id="facts-song-name">--</span>
-                        <button class="facts-close-btn" id="facts-close-btn" title="Hide Trivia">&times;</button>
                     </div>
                     <div class="facts-body">
                         <ul class="facts-list" id="facts-list">
@@ -116,21 +126,95 @@
             let currentPage = 1;
             let itemsPerPage = 4;
             let triviaTimer = null;
+            let triviaAnimTimer = null;
             const triviaSlideDelay = 1500; // 1.5s after audio starts playing
 
             audioPlayer.volume = 0.4;
 
+            function syncCardHeight() {
+                const cpCard = document.querySelector('.checkpoint-card');
+                const factsCard = document.getElementById('facts-card');
+                if (cpCard && factsCard) {
+                    const cpHeight = cpCard.offsetHeight;
+                    factsCard.style.setProperty('--cp-card-height', `${cpHeight}px`);
+                    return cpHeight;
+                }
+                return 440;
+            }
+
             function showTrivia() {
                 const factsCard = document.getElementById('facts-card');
-                if (factsCard) {
+                if (!factsCard) return;
+                if (factsCard.classList.contains('is-open')) return;
+
+                if (triviaAnimTimer) {
+                    clearTimeout(triviaAnimTimer);
+                    triviaAnimTimer = null;
+                }
+
+                const isDesktop = window.innerWidth > 1100;
+                const cpHeight = syncCardHeight();
+
+                if (isDesktop) {
+                    // Step 1: Slide out horizontally, strictly confined to checkpoint card height
+                    factsCard.classList.remove('is-expanded');
+                    factsCard.classList.add('is-open');
+
+                    // Step 2: Once horizontal motion completes, expand vertically if content is taller
+                    triviaAnimTimer = setTimeout(() => {
+                        if (!factsCard.classList.contains('is-open')) return;
+                        const fullHeight = factsCard.scrollHeight;
+                        if (fullHeight > cpHeight + 4) {
+                            factsCard.style.setProperty('--facts-expanded-height', `${fullHeight + 4}px`);
+                            factsCard.classList.add('is-expanded');
+                        }
+                    }, 420);
+                } else {
                     factsCard.classList.add('is-open');
                 }
             }
 
-            function hideTrivia() {
+            function hideTrivia(onHidden) {
                 const factsCard = document.getElementById('facts-card');
-                if (factsCard) {
+                if (!factsCard) {
+                    if (onHidden) onHidden();
+                    return;
+                }
+
+                if (triviaAnimTimer) {
+                    clearTimeout(triviaAnimTimer);
+                    triviaAnimTimer = null;
+                }
+
+                const isDesktop = window.innerWidth > 1100;
+                const isOpen = factsCard.classList.contains('is-open');
+
+                if (!isOpen) {
+                    factsCard.classList.remove('is-expanded');
+                    if (onHidden) onHidden();
+                    return;
+                }
+
+                if (isDesktop && factsCard.classList.contains('is-expanded')) {
+                    // Step 1: Shrink vertically back within the confines of the checkpoint card
+                    factsCard.classList.remove('is-expanded');
+
+                    // Step 2: Once vertical shrinking completes, slide horizontally behind card
+                    triviaAnimTimer = setTimeout(() => {
+                        factsCard.classList.remove('is-open');
+                        triviaAnimTimer = setTimeout(() => {
+                            if (onHidden) onHidden();
+                        }, 380);
+                    }, 280);
+                } else {
+                    // Not expanded or on mobile: slide / close directly
+                    factsCard.classList.remove('is-expanded');
                     factsCard.classList.remove('is-open');
+                    if (onHidden) {
+                        triviaAnimTimer = setTimeout(() => {
+                            onHidden();
+                        }, 380);
+                    }
                 }
             }
 
@@ -141,9 +225,16 @@
                 if (factsList) {
                     factsList.innerHTML = '';
                     const facts = item.facts && item.facts.length > 0 ? item.facts : (item.lore ? [item.lore] : ["Rest here for a moment and enjoy some music."]);
-                    facts.forEach(fact => {
+                    facts.forEach((fact, idx) => {
                         const li = document.createElement('li');
-                        li.textContent = fact;
+                        li.className = 'fact-item';
+                        const num = String(idx + 1).padStart(2, '0');
+                        li.innerHTML = `
+                            <div class="fact-meta">
+                                <span class="fact-num">FACT // ${num}</span>
+                            </div>
+                            <div class="fact-text">${fact}</div>
+                        `;
                         factsList.appendChild(li);
                     });
                 }
@@ -154,6 +245,15 @@
                 document.getElementById('latest-date').textContent = item.date;
                 document.getElementById('latest-song-title').textContent = `♫ ${item.songTitle} ♫`;
 
+                // Automatically keep history card page in sync with currently playing checkpoint
+                if (allCheckpoints.length > 0) {
+                    const targetPage = Math.floor(currentTrackIndex / itemsPerPage) + 1;
+                    if (currentPage !== targetPage) {
+                        currentPage = targetPage;
+                    }
+                    renderHistory();
+                }
+
                 if (triviaTimer) {
                     clearTimeout(triviaTimer);
                     triviaTimer = null;
@@ -163,14 +263,20 @@
                 const isTriviaOpen = factsCard && factsCard.classList.contains('is-open');
 
                 if (isTriviaOpen) {
-                    // Slide in immediately
-                    hideTrivia();
-                    // While tucked behind the card, update content
-                    setTimeout(() => {
+                    // Slide in with smooth shrink-first choreography, then update content while hidden and slide out
+                    hideTrivia(() => {
                         updateTriviaContent(item);
-                    }, 350);
+                        syncCardHeight();
+                        if (mainContent.style.opacity === '1') {
+                            scheduleTriviaSlideOut(500);
+                        }
+                    });
                 } else {
                     updateTriviaContent(item);
+                    syncCardHeight();
+                    if (mainContent.style.opacity === '1') {
+                        scheduleTriviaSlideOut(triviaSlideDelay);
+                    }
                 }
 
                 const currentSrc = document.getElementById('audio-source').src;
@@ -180,43 +286,88 @@
                     audioPlayer.load();
                     if (mainContent.style.opacity === '1') {
                         audioPlayer.play().catch(e => console.log("Playback interrupted", e));
-                        scheduleTriviaSlideOut();
+                    }
+                } else {
+                    if (mainContent.style.opacity === '1') {
+                        audioPlayer.currentTime = 0;
+                        audioPlayer.play().catch(e => console.log("Playback interrupted", e));
                     }
                 }
             }
 
-            function scheduleTriviaSlideOut() {
+            const btnPrev = document.getElementById('btn-prev');
+            const btnPlay = document.getElementById('btn-play');
+            const btnNext = document.getElementById('btn-next');
+            const playIcon = document.getElementById('play-icon');
+            const playLabel = document.getElementById('play-label');
+            const marqueeTitle = document.getElementById('latest-song-title');
+
+            function updatePlayButtonState() {
+                if (audioPlayer.paused) {
+                    if (playIcon) playIcon.textContent = '►';
+                    if (playLabel) playLabel.textContent = 'PLAY';
+                    if (btnPlay) btnPlay.classList.add('is-paused');
+                    if (marqueeTitle && marqueeTitle.stop) marqueeTitle.stop();
+                } else {
+                    if (playIcon) playIcon.textContent = '❚❚';
+                    if (playLabel) playLabel.textContent = 'PAUSE';
+                    if (btnPlay) btnPlay.classList.remove('is-paused');
+                    if (marqueeTitle && marqueeTitle.start) marqueeTitle.start();
+                }
+            }
+
+            if (btnPlay) {
+                btnPlay.addEventListener('click', () => {
+                    if (audioPlayer.paused) {
+                        audioPlayer.play().catch(e => console.log("Audio play blocked:", e));
+                    } else {
+                        audioPlayer.pause();
+                    }
+                });
+            }
+
+            if (btnPrev) {
+                btnPrev.addEventListener('click', () => {
+                    if (allCheckpoints.length === 0) return;
+                    currentTrackIndex = (currentTrackIndex - 1 + allCheckpoints.length) % allCheckpoints.length;
+                    loadCheckpoint(allCheckpoints[currentTrackIndex], currentTrackIndex);
+                });
+            }
+
+            if (btnNext) {
+                btnNext.addEventListener('click', () => {
+                    if (allCheckpoints.length === 0) return;
+                    currentTrackIndex = (currentTrackIndex + 1) % allCheckpoints.length;
+                    loadCheckpoint(allCheckpoints[currentTrackIndex], currentTrackIndex);
+                });
+            }
+
+            function scheduleTriviaSlideOut(delay = triviaSlideDelay) {
+                const factsCard = document.getElementById('facts-card');
+                if (factsCard && factsCard.classList.contains('is-open')) {
+                    return;
+                }
                 if (triviaTimer) {
                     clearTimeout(triviaTimer);
                 }
                 triviaTimer = setTimeout(() => {
                     showTrivia();
-                }, triviaSlideDelay);
+                }, delay);
             }
 
             audioPlayer.addEventListener('play', () => {
-                if (mainContent.style.opacity === '1') {
-                    scheduleTriviaSlideOut();
-                }
+                updatePlayButtonState();
+            });
+
+            audioPlayer.addEventListener('pause', () => {
+                updatePlayButtonState();
             });
 
             audioPlayer.addEventListener('playing', () => {
-                if (mainContent.style.opacity === '1') {
-                    scheduleTriviaSlideOut();
-                }
+                updatePlayButtonState();
             });
 
-            const factsCloseBtn = document.getElementById('facts-close-btn');
-            if (factsCloseBtn) {
-                factsCloseBtn.addEventListener('click', (e) => {
-                    e.stopPropagation();
-                    hideTrivia();
-                    if (triviaTimer) {
-                        clearTimeout(triviaTimer);
-                        triviaTimer = null;
-                    }
-                });
-            }
+            window.addEventListener('resize', syncCardHeight);
 
             audioPlayer.addEventListener('ended', () => {
                 if (allCheckpoints.length > 0) {
@@ -227,6 +378,7 @@
 
             function renderHistory() {
                 const historyList = document.getElementById('history-list');
+                if (!historyList) return;
                 historyList.innerHTML = "";
 
                 const startIndex = (currentPage - 1) * itemsPerPage;
@@ -236,7 +388,7 @@
                 pageData.forEach((item, idx) => {
                     const globalIndex = startIndex + idx;
                     const row = document.createElement('div');
-                    row.className = 'save-file';
+                    row.className = 'save-file' + (globalIndex === currentTrackIndex ? ' active-track' : '');
                     row.addEventListener('click', () => {
                         loadCheckpoint(item, globalIndex);
                     });
@@ -284,6 +436,7 @@
 
             
             startBtn.addEventListener('click', () => {
+                syncCardHeight();
                 startScreen.style.opacity = '0';
                 startScreen.style.pointerEvents = 'none';
                 mainContent.style.opacity = '1';

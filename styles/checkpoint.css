@@ -137,8 +137,66 @@ body {
     color: #00ff00;
     padding: 4px;
     font-family: monospace;
-    margin-bottom: 8px;
+    margin-bottom: 6px;
     border: 2px inset #888;
+}
+
+.cp-music-controls {
+    display: flex;
+    gap: 6px;
+}
+
+.m-btn {
+    flex: 1;
+    background: #d4d0c8;
+    color: #000;
+    font-family: 'VT323', monospace;
+    font-size: 1.15rem;
+    font-weight: bold;
+    border-top: 2px solid #fff;
+    border-left: 2px solid #fff;
+    border-right: 2px solid #404040;
+    border-bottom: 2px solid #404040;
+    padding: 2px 4px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 4px;
+    cursor: pointer;
+    box-shadow: 1px 1px 0px #000;
+    user-select: none;
+    transition: background 0.1s;
+    outline: none;
+}
+
+.m-btn:hover {
+    background: #eae6de;
+}
+
+.m-btn:active {
+    border-top: 2px solid #404040;
+    border-left: 2px solid #404040;
+    border-right: 2px solid #fff;
+    border-bottom: 2px solid #fff;
+    background: #b5b1a8;
+    transform: translate(1px, 1px);
+    box-shadow: none;
+}
+
+.m-btn.is-paused {
+    background: #c8c0a0;
+    border-top-color: #f0e8c8;
+    border-left-color: #f0e8c8;
+}
+
+.m-icon {
+    font-size: 0.85rem;
+    line-height: 1;
+}
+
+#play-icon {
+    position: relative;
+    top: 2px;
 }
 
 .retro-audio {
@@ -277,7 +335,7 @@ body {
     max-width: 100%;
     box-sizing: border-box;
     margin-top: 20px;
-    align-items: stretch;
+    align-items: flex-start;
 }
 
 .facts-card {
@@ -298,7 +356,11 @@ body {
     transform: translateX(0);
     opacity: 0;
     pointer-events: none;
-    transition: transform 0.45s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.35s ease;
+    overflow: hidden;
+    max-height: var(--cp-card-height, 440px);
+    transition: transform 0.42s cubic-bezier(0.16, 1, 0.3, 1),
+                opacity 0.35s ease,
+                max-height 0.32s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
 .facts-card.is-open {
@@ -307,61 +369,52 @@ body {
     pointer-events: auto;
 }
 
+.facts-card.is-expanded {
+    max-height: var(--facts-expanded-height, 650px);
+}
+
 .facts-header {
     background: var(--nintendo-purple);
     color: #fff;
-    padding: 4px 8px;
+    padding: 6px 8px;
     border: 2px solid #000;
     margin-bottom: 6px;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
+    flex-direction: column;
     gap: 4px;
-}
-
-.facts-close-btn {
-    background: #000;
-    color: #fff;
-    border: 1px solid #555;
-    font-family: monospace;
-    font-size: 1.1rem;
-    cursor: pointer;
-    line-height: 1;
-    padding: 0 4px;
-    margin-left: auto;
-    transition: background 0.15s ease;
-}
-
-.facts-close-btn:hover {
-    background: #b91c1c;
-    color: #fff;
+    box-sizing: border-box;
 }
 
 .facts-tag {
-    font-size: 1.1rem;
+    font-size: 1.15rem;
     font-weight: bold;
-    letter-spacing: 1px;
+    letter-spacing: 2px;
     color: #fff;
     text-shadow: 2px 2px 0px #000;
+    line-height: 1.1;
 }
 
 .facts-song-name {
+    align-self: flex-start;
+    width: fit-content;
+    max-width: 100%;
     background: #000;
     color: var(--accent-gold);
-    padding: 2px 6px;
+    padding: 3px 8px;
     border: 1px solid #555;
     font-size: 0.95rem;
-    max-width: 100%;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    box-sizing: border-box;
+    line-height: 1.2;
+    display: inline-block;
 }
 
 .facts-body {
-    background: rgba(0, 0, 0, 0.6);
+    background: rgba(0, 0, 0, 0.7);
     border: 2px solid #fff;
-    padding: 8px 10px;
+    padding: 8px;
     box-shadow: inset 0 0 10px #000;
 }
 
@@ -374,21 +427,44 @@ body {
     gap: 8px;
 }
 
-.facts-list li {
-    font-size: 1.05rem;
-    line-height: 1.3;
-    color: #eee;
+.fact-item {
+    background: rgba(18, 18, 24, 0.85);
+    border: 1px solid #3d3d4d;
+    border-left: 3px solid var(--accent-gold);
+    padding: 7px 9px;
+    box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.6);
     display: flex;
-    align-items: flex-start;
-    gap: 6px;
+    flex-direction: column;
+    gap: 3px;
+    transition: background 0.15s, border-color 0.15s;
 }
 
-.facts-list li::before {
-    content: "►";
-    color: var(--gameboy-screen);
-    font-size: 0.8rem;
-    margin-top: 2px;
-    flex-shrink: 0;
+.fact-item:hover {
+    border-color: #555;
+    border-left-color: var(--gameboy-screen);
+    background: rgba(26, 26, 36, 0.95);
+}
+
+.fact-meta {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    line-height: 1;
+}
+
+.fact-num {
+    color: var(--accent-gold);
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    font-weight: bold;
+}
+
+.fact-text {
+    color: #f0f0f0;
+    font-size: 1.15rem;
+    line-height: 1.45;
+    letter-spacing: 0.3px;
+    word-break: break-word;
 }
 
 .info-card {
@@ -399,6 +475,8 @@ body {
     padding: 10px;
     box-shadow: 5px 5px 0px #000;
     box-sizing: border-box;
+    align-self: flex-start;
+    height: fit-content;
 }
 
 .info-header {
@@ -415,6 +493,10 @@ body {
     line-height: 1.4;
     margin-bottom: 10px;
     color: #ccc;
+}
+
+.info-content p:last-child {
+    margin-bottom: 0;
 }
 
 .info-content a {
@@ -500,6 +582,12 @@ body {
     cursor: pointer;
 }
 
+.save-file.active-track {
+    background: #252538;
+    border-color: var(--accent-gold);
+    box-shadow: inset 3px 0 0 var(--accent-gold);
+}
+
 .save-row-top {
     display: flex;
     justify-content: space-between;
@@ -526,7 +614,7 @@ body {
     }
 
     .facts-card.is-open {
-        max-height: 500px;
+        max-height: 800px;
         opacity: 1;
         margin-top: 15px;
         transform: translateY(0);
