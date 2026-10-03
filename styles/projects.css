@@ -71,10 +71,10 @@ body {
 }
 
 .container {
-    max-width: 1200px;
+    max-width: 1240px;
     width: 100%;
     margin: 0 auto;
-    padding: 40px 20px;
+    padding: 24px 20px 30px;
     position: relative;
     z-index: 2;
 }
@@ -82,7 +82,7 @@ body {
 /* ─── ARCHIVE HEADER ─────────────────────────────────────────── */
 
 .archive-header {
-    margin-bottom: 80px;
+    margin-bottom: 58px;
     display: flex;
     justify-content: center;
     position: relative;
@@ -204,19 +204,19 @@ body {
     display: grid;
     grid-template-columns: minmax(350px, 420px) minmax(0, 1fr);
     gap: 45px;
-    align-items: start;
+    align-items: stretch;
     width: 100%;
 }
 
 .target-list {
-    position: relative;
+    position: sticky;
+    top: 24px;
     z-index: 2;
     display: flex;
     flex-direction: column;
     gap: 18px;
     padding: 0;
     width: 100%;
-    top: 40px;
 }
 
 .target-card {
@@ -231,7 +231,7 @@ body {
     transform: skewX(var(--p5-card-skew));
     transition: transform 0.28s cubic-bezier(0.25, 0.8, 0.25, 1), border-color 0.28s ease, box-shadow 0.28s ease;
     outline: none;
-    min-height: 118px;
+    min-height: 124px;
     flex-shrink: 0;
     transform-origin: 50% 50%;
 }
@@ -262,14 +262,14 @@ body.heist-success .project-panel {
 }
 
 .rank {
-    width: 75px; /* Increased from 58px to fit 'III' comfortably */
+    width: 78px; /* Increased to fit roman numerals comfortably */
     flex-shrink: 0; /* Prevents the rank box from being squished */
     background: var(--p5-red);
     color: var(--p5-black);
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.9rem;
+    font-size: 2.1rem;
     font-weight: 900;
     font-family: 'Optima Nova', serif;
     transform: skewX(0deg);
@@ -311,8 +311,8 @@ body.heist-success .project-panel {
     z-index: -1;
 }
 
-.details h2 { margin: 0; font-size: 1.45rem; font-weight: 900; text-transform: uppercase; letter-spacing: 1.2px; white-space: normal; }
-.details p  { margin: 5px 0 0; font-weight: bold; font-size: 0.95rem; white-space: normal; }
+.details h2 { margin: 0; font-size: 1.55rem; font-weight: 900; text-transform: uppercase; letter-spacing: 1.2px; white-space: normal; }
+.details p  { margin: 5px 0 0; font-weight: bold; font-size: 1.02rem; white-space: normal; }
 
 .target-card:hover .details,
 .target-card.active .details { border-color: var(--p5-white); box-shadow: 5px 5px 0px var(--p5-black); }
@@ -493,7 +493,7 @@ body.heist-success .project-panel {
  * bg-layers slide, and the whole block scales.
  */
 
-/* ── Allow the card to stretch naturally ── */
+/* ── Calling Card Frame ── */
 .calling-card {
     position: relative;
     z-index: 3;
@@ -511,8 +511,11 @@ body.heist-success .project-panel {
     box-shadow: 8px 8px 0px var(--p5-black); 
     transform: skewX(-2deg);
     transition: border-color 0.3s ease, box-shadow 0.3s ease;
-    height: fit-content; 
-    min-height: 480px; 
+    height: 100%; 
+    min-height: 580px; 
+    max-height: 620px;
+    display: flex;
+    flex-direction: column;
 }
 
 .calling-card::after {
@@ -532,14 +535,6 @@ body.heist-success .project-panel {
     transform: rotate(-15deg);
 }
 
-.cc-inner {
-    position: relative;
-    z-index: 1;
-    transform: skewX(2deg); /* Un-skew the content */
-    padding: 40px 38px 45px;
-    display: flex;
-    flex-direction: column;
-}
 
 /* ── The Classic Staggered Title Block ── */
 .cc-title-block {
@@ -552,7 +547,8 @@ body.heist-success .project-panel {
     transition: transform 0.15s ease-out;
     width: fit-content;
     max-width: 100%;
-    margin-bottom: 26px;
+    margin-bottom: 20px;
+    flex-shrink: 0;
 }
 
 .cc-title-main {
@@ -616,7 +612,7 @@ body.heist-success .project-panel {
 .cc-heading-box::before { background: var(--p5-black); clip-path: polygon(5% 0, 100% 0, 95% 100%, 0% 95%); }
 .cc-heading-bg { background: var(--p5-white); clip-path: polygon(0 0, 100% 5%, 98% 100%, 5% 95%); }
 .cc-heading-text {
-    font-size: clamp(2rem, 3.5vw, 3rem); font-weight: 900; color: var(--p5-white);
+    font-size: clamp(2.5rem, 4vw, 3.2rem); font-weight: 900; color: var(--p5-white);
     text-transform: uppercase; letter-spacing: 1px; transform: rotate(-1deg);
     line-height: 1.1; transition: color 0.1s; word-wrap: break-word;
 }
@@ -655,7 +651,37 @@ body.heist-success .project-panel {
 .cc-content-flow {
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 18px;
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 18px;
+    padding-bottom: 28px;
+    padding-left: 4px;
+    margin-right: -10px;
+    min-height: 0;
+    overscroll-behavior: contain;
+    /* Custom Persona 5 styled scrollbar */
+    scrollbar-width: thin;
+    scrollbar-color: var(--p5-red) rgba(0, 0, 0, 0.6);
+}
+
+.cc-content-flow::-webkit-scrollbar {
+    width: 6px;
+}
+
+.cc-content-flow::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.45);
+    border-left: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.cc-content-flow::-webkit-scrollbar-thumb {
+    background: var(--p5-red);
+    box-shadow: inset 0 0 2px rgba(0,0,0,0.5);
+}
+
+.cc-content-flow::-webkit-scrollbar-thumb:hover {
+    background: var(--p5-white);
 }
 
 .cc-badges-container {
@@ -776,20 +802,20 @@ body.heist-success .project-panel {
     position: relative;
     z-index: 1;
     transform: skewX(2deg);
-    padding: 40px 38px 38px;
-    min-height: 480px;
+    padding: 36px 36px 30px;
+    height: 100%;
+    flex: 1;
     display: flex;
     flex-direction: column;
-    gap: 28px;
+    min-height: 0;
 }
 
 /* ── Body text ── */
 .cc-body {
-    max-width: 58ch;
-    line-height: 1.7;
-    font-size: 1rem;
-    color: rgba(240,240,240,0.85);
-    padding-left: 4px;
+    max-width: 66ch;
+    line-height: 1.75;
+    font-size: 1.12rem;
+    color: rgba(240,240,240,0.9);
     border-left: 4px solid var(--p5-red);
     padding-left: 16px;
     transition: border-color 0.3s ease, color 0.3s ease;
@@ -802,12 +828,15 @@ body.heist-success .project-panel {
 
 .cc-image {
     max-width: 100%;
+    max-height: 290px;
+    object-fit: contain;
     height: auto;
-    margin-top: 20px;
+    margin-top: 8px;
     border: 3px solid var(--p5-white);
     box-shadow: 6px 6px 0px var(--p5-black);
     transform: skewX(-2deg);
     display: block;
+    align-self: flex-start;
 }
 
 /* Allow paragraphs inside cc-body to space out nicely */
@@ -887,6 +916,9 @@ body.heist-success .project-panel {
     z-index: 1;
     display: none;
     flex-direction: column;
+    height: 100%;
+    flex: 1;
+    min-height: 0;
     gap: 0;
     animation: panelReveal 220ms ease-out;
 }
@@ -898,7 +930,9 @@ body.heist-success .project-panel {
     display: flex;
     flex-direction: column;
     justify-content: center;
-    min-height: 380px;
+    align-items: center;
+    height: 100%;
+    flex: 1;
     animation: none;
 }
 
@@ -970,7 +1004,7 @@ body.heist-success .project-panel {
 /* ─── RESPONSIVE ─────────────────────────────────────────────── */
 
 @media (max-width: 900px) {
-    .project-stage { grid-template-columns: 1fr; }
+    .project-stage { grid-template-columns: 1fr; align-items: start; }
     .target-list   { position: static; max-width: 100%; }
     .container     { padding: 20px 10px; overflow-x: hidden; }
     .project-text  { font-size: 2rem; }
@@ -982,9 +1016,20 @@ body.heist-success .project-panel {
 
     .details h2, .details p { white-space: normal; }
 
-    .calling-card  { transform: none; min-height: 340px; }
+    .calling-card  { 
+        transform: none; 
+        min-height: 340px; 
+        height: auto; 
+        max-height: none; 
+    }
     .calling-card:hover { transform: none; }
-    .cc-inner      { padding: 28px 20px; }
+    .cc-inner      { padding: 28px 20px; height: auto; }
+    .project-panel { height: auto; }
+    .cc-content-flow { 
+        overflow-y: visible; 
+        padding-right: 0; 
+        margin-right: 0; 
+    }
 
     .cc-heading-text { font-size: 1.8rem; }
 

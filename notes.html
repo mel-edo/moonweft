@@ -168,7 +168,7 @@
 
             function renderBank(bank) {
                 const container = document.getElementById('notes-list');
-                container.innerHTML = '<div class="cable-line"></div>';
+                container.innerHTML = '';
 
                 const start = (bank - 1) * NOTES_PER_BANK;
                 const end = start + NOTES_PER_BANK;

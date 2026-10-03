@@ -264,6 +264,50 @@
 
                 initLightbox();
                 initScrollSpy();
+                initPhotoPreloader();
+            }
+
+            // High-resolution image preloading cache
+            const fullImageCache = new Map();
+
+            function preloadFullImage(fullUrl) {
+                if (!fullUrl) return null;
+                if (fullImageCache.has(fullUrl)) return fullImageCache.get(fullUrl);
+                const img = new Image();
+                img.src = fullUrl;
+                fullImageCache.set(fullUrl, img);
+                return img;
+            }
+
+            function initPhotoPreloader() {
+                // Preload on mouse hover or touchstart
+                galleryStream.addEventListener('pointerover', (e) => {
+                    const card = e.target.closest('.photo-card');
+                    if (card && card.dataset.full) {
+                        preloadFullImage(card.dataset.full);
+                    }
+                }, { passive: true });
+
+                // Preload photos in viewport during idle moments
+                if ('IntersectionObserver' in window) {
+                    const observer = new IntersectionObserver((entries) => {
+                        entries.forEach(entry => {
+                            if (entry.isIntersecting) {
+                                const card = entry.target;
+                                if (card.dataset.full) {
+                                    if ('requestIdleCallback' in window) {
+                                        requestIdleCallback(() => preloadFullImage(card.dataset.full), { timeout: 2000 });
+                                    } else {
+                                        setTimeout(() => preloadFullImage(card.dataset.full), 300);
+                                    }
+                                }
+                                observer.unobserve(card);
+                            }
+                        });
+                    }, { rootMargin: '300px' });
+
+                    document.querySelectorAll('.photo-card').forEach(card => observer.observe(card));
+                }
             }
 
             function initLightbox() {
@@ -321,23 +365,37 @@
                     const fullSrc = card.dataset.full || (img ? img.src : '');
                     if (!img || !fullSrc) return;
 
+                    // Immediately preload adjacent photos for instant keyboard navigation
+                    const allCards = Array.from(document.querySelectorAll('.photo-card'));
+                    const cardIdx = allCards.indexOf(card);
+                    if (cardIdx >= 0) {
+                        if (cardIdx > 0) preloadFullImage(allCards[cardIdx - 1].dataset.full);
+                        if (cardIdx < allCards.length - 1) preloadFullImage(allCards[cardIdx + 1].dataset.full);
+                    }
+
                     const nw = img.naturalWidth || 800;
                     const nh = img.naturalHeight || 600;
                     const isAlreadyOpen = lightbox.classList.contains('active');
 
+                    // Check if high-res image is already downloaded and cached
+                    const cachedFull = fullImageCache.get(fullSrc);
+                    const isHighResReady = cachedFull && cachedFull.complete && cachedFull.naturalWidth > 0;
+                    const targetW = isHighResReady ? cachedFull.naturalWidth : nw;
+                    const targetH = isHighResReady ? cachedFull.naturalHeight : nh;
+
                     if (!isAlreadyOpen) {
-                        // Opening fresh from gallery: snap frame immediately to target dimensions without morphing from previous photo
+                        // Opening fresh from gallery: snap frame immediately to target dimensions without morphing
                         if (lightboxContent) lightboxContent.style.transition = 'none';
                         imgFrame.style.transition = 'none';
-                        updateFrameDimensions(nw, nh);
+                        updateFrameDimensions(targetW, targetH);
                         void imgFrame.offsetHeight; // Force layout
                         requestAnimationFrame(() => {
                             if (lightboxContent) lightboxContent.style.transition = '';
                             imgFrame.style.transition = '';
                         });
                     } else {
-                        // Already open (navigating between photos with arrows):
-                        updateFrameDimensions(nw, nh);
+                        // Navigating between photos with arrows:
+                        updateFrameDimensions(targetW, targetH);
                     }
 
                     // Always ensure opacity starts at 0 so it never pops in abruptly
@@ -355,34 +413,38 @@
                         });
                     };
 
-                    // Set thumbnail source
                     lightboxImg.alt = img.alt || 'Expanded View';
-                    lightboxImg.src = img.src;
 
-                    // Fade in smoothly only after decoding finishes (ensures zero popping)
-                    if (lightboxImg.decode) {
-                        lightboxImg.decode().catch(() => {}).then(triggerFadeIn);
-                    } else if (lightboxImg.complete) {
-                        triggerFadeIn();
+                    if (isHighResReady) {
+                        // Zero delay: high-res is already preloaded! Render directly
+                        lightboxImg.src = fullSrc;
+                        if (lightboxImg.decode) {
+                            lightboxImg.decode().catch(() => {}).then(triggerFadeIn);
+                        } else {
+                            triggerFadeIn();
+                        }
                     } else {
-                        lightboxImg.onload = triggerFadeIn;
-                    }
+                        // Show thumbnail immediately while high-res finishes
+                        lightboxImg.src = img.src;
+                        if (lightboxImg.decode) {
+                            lightboxImg.decode().catch(() => {}).then(triggerFadeIn);
+                        } else if (lightboxImg.complete) {
+                            triggerFadeIn();
+                        } else {
+                            lightboxImg.onload = triggerFadeIn;
+                        }
 
-                    // Preload full resolution image
-                    if (fullSrc !== img.src) {
-                        const fullImage = new Image();
-                        fullImage.src = fullSrc;
-                        fullImage.onload = () => {
+                        // Preload and swap to high-res seamlessly as soon as available
+                        const fullImage = preloadFullImage(fullSrc);
+                        const onFullLoaded = () => {
                             if (lightbox.classList.contains('active') && lightboxTitle.innerText === `${id}.webp`) {
-                                // Only update frame if aspect ratio actually differs by > 2%
+                                const fullW = fullImage.naturalWidth || nw;
+                                const fullH = fullImage.naturalHeight || nh;
                                 const thumbAspect = nw / nh;
-                                const fullAspect = (fullImage.naturalWidth && fullImage.naturalHeight)
-                                    ? (fullImage.naturalWidth / fullImage.naturalHeight)
-                                    : thumbAspect;
+                                const fullAspect = fullW / fullH;
                                 if (Math.abs(thumbAspect - fullAspect) > 0.02) {
-                                    updateFrameDimensions(fullImage.naturalWidth, fullImage.naturalHeight);
+                                    updateFrameDimensions(fullW, fullH);
                                 }
-                                // Decode full image before swap to prevent any flash or pop
                                 if (fullImage.decode) {
                                     fullImage.decode().catch(() => {}).then(() => {
                                         if (lightbox.classList.contains('active') && lightboxTitle.innerText === `${id}.webp`) {
@@ -394,6 +456,12 @@
                                 }
                             }
                         };
+
+                        if (fullImage.complete) {
+                            onFullLoaded();
+                        } else {
+                            fullImage.addEventListener('load', onFullLoaded, { once: true });
+                        }
                     }
                 }
 

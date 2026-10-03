@@ -290,6 +290,12 @@
         // Initial render
         renderSidebar();
 
+        const urlParams = new URLSearchParams(window.location.search);
+        const initProj = urlParams.get('project');
+        if (initProj) {
+            selectProject(initProj);
+        }
+
         // 3. Interaction logic
         function showNeutralState() {
             selectedProjectId = null;
@@ -310,7 +316,12 @@
                 c.setAttribute('aria-pressed', String(on));
             });
             document.querySelectorAll('.project-panel[data-project-panel]').forEach(p => {
-                p.classList.toggle('active', p.dataset.projectPanel === key);
+                const isActive = p.dataset.projectPanel === key;
+                p.classList.toggle('active', isActive);
+                if (isActive) {
+                    const flow = p.querySelector('.cc-content-flow');
+                    if (flow) flow.scrollTop = 0;
+                }
             });
 
             // Smooth scroll into view on mobile screens
@@ -323,9 +334,6 @@
         }
 
         document.addEventListener('keydown', e => { if (e.key === 'Escape') showNeutralState(); });
-        document.addEventListener('click', e => {
-            if (!document.querySelector('.project-stage').contains(e.target)) showNeutralState();
-        });
 
         // Progressive header background fade-in once heavy 25MB webp asset loads
         const bgImg = new Image();
