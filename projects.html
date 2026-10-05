@@ -90,7 +90,7 @@
                 tag: "TARGET II",
                 title: "GB EMULATOR",
                 category: ["RUST"],
-                shortDesc: "A Game Boy emulator in Rust for desktop and web.",
+                shortDesc: "A Game Boy emulator in Rust for desktop & web.",
                 longDesc: "<p>A work-in-progress Game Boy emulator written in Rust. The project is split into a core emulation library, a native desktop frontend using SDL2, and WebAssembly bindings that allow it to run entirely in the browser. Low-level hardware emulation is an incredible way to truly understand how computers work.</p>",
                 image: "",
                 repo: "https://github.com/mel-edo/gbemu-rust",
@@ -228,9 +228,14 @@
             if (totalPages > 1) {
                 const controlsHTML = `
                         <div class="p5-page-controls">
-                            <button class="p5-page-btn" id="btn-prev" ${currentPage === 1 ? 'disabled' : ''}>▲</button>
-                            <span class="p5-page-info">${currentPage} / ${totalPages}</span>
-                            <button class="p5-page-btn" id="btn-next" ${currentPage === totalPages ? 'disabled' : ''}>▼</button>
+                            <button class="p5-page-btn" id="btn-prev" ${currentPage === 1 ? 'disabled' : ''} aria-label="Previous page">▲</button>
+                            <div class="p5-page-info" aria-label="Page ${currentPage} of ${totalPages}">
+                                <span class="p5-page-prefix">PAGE</span>
+                                <span class="p5-page-num current">${currentPage}</span>
+                                <span class="p5-page-slash">/</span>
+                                <span class="p5-page-num total">${totalPages}</span>
+                            </div>
+                            <button class="p5-page-btn" id="btn-next" ${currentPage === totalPages ? 'disabled' : ''} aria-label="Next page">▼</button>
                         </div>
                     `;
                 sidebarContainer.insertAdjacentHTML('beforeend', controlsHTML);

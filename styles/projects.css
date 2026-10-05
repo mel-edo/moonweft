@@ -413,12 +413,73 @@ body.heist-success .project-panel {
 }
 
 .p5-page-info {
-    font-family: 'Times New Roman', serif;
-    font-weight: 900;
-    font-size: 1.2rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    background: var(--p5-black);
     color: var(--p5-white);
-    text-shadow: 2px 2px 0px var(--p5-black);
+    border: 3px solid var(--p5-white);
+    padding: 6px 18px;
+    font-family: 'Optima Nova', sans-serif;
+    font-weight: 900;
+    font-size: 1.15rem;
+    transform: skewX(-10deg);
+    box-shadow: 4px 4px 0px var(--p5-black);
+    letter-spacing: 1px;
+    cursor: default;
+    transition: transform 0.18s cubic-bezier(0.34, 1.56, 0.64, 1),
+                box-shadow 0.18s ease,
+                border-color 0.18s ease;
+}
+
+.p5-page-info:hover {
+    transform: skewX(-10deg) translate(-2px, -2px);
+    box-shadow: 6px 6px 0px var(--p5-red);
+}
+
+.p5-page-prefix {
+    font-size: 0.72rem;
     letter-spacing: 2px;
+    font-weight: 900;
+    background: var(--p5-red);
+    color: var(--p5-white);
+    padding: 2px 7px;
+    line-height: 1.2;
+    box-shadow: 2px 2px 0px var(--p5-black);
+    transition: background-color 0.18s ease, color 0.18s ease;
+}
+
+.p5-page-info:hover .p5-page-prefix {
+    background: var(--p5-white);
+    color: var(--p5-black);
+}
+
+.p5-page-num.current {
+    font-size: 1.25rem;
+    color: var(--p5-white);
+    font-weight: 900;
+    line-height: 1;
+}
+
+.p5-page-slash {
+    font-size: 1.15rem;
+    color: var(--p5-red);
+    font-weight: 900;
+    line-height: 1;
+    margin: 0 1px;
+    transition: color 0.18s ease;
+}
+
+.p5-page-info:hover .p5-page-slash {
+    color: var(--p5-white);
+}
+
+.p5-page-num.total {
+    font-size: 1.05rem;
+    color: rgba(240, 240, 240, 0.65);
+    font-weight: 900;
+    line-height: 1;
 }
 
 /* ── Pagination Transition: Fade Left Out & Fade In ── */
@@ -696,6 +757,8 @@ body.heist-success .project-panel {
 
 .cc-actions {
     margin-top: 10px;
+    padding-left: 14px;
+    padding-bottom: 8px;
 }
 
 .calling-card:hover {
@@ -1241,12 +1304,32 @@ body.heist-success .project-panel {
         padding: 8px 24px;
         font-size: 1rem;
     }
+
+    .p5-page-btn {
+        padding: 5px 14px;
+        font-size: 1rem;
+    }
+
+    .p5-page-info {
+        padding: 4px 12px;
+        font-size: 1rem;
+        gap: 6px;
+    }
+
+    .p5-page-prefix {
+        font-size: 0.65rem;
+        padding: 1px 5px;
+    }
+
+    .p5-page-num.current {
+        font-size: 1.1rem;
+    }
 }
 
 @media (prefers-reduced-motion: reduce) {
     .p5-bg-dots, .target-card, .bg-layer, .title-group,
     .project-panel, .repo-link, .escape-btn,
-    .cc-title-block, .cc-intro-arrow {
+    .cc-title-block, .cc-intro-arrow, .p5-page-info {
         animation: none !important;
         transition-duration: 0.01ms !important;
     }
