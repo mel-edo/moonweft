@@ -90,16 +90,27 @@
                 tag: "TARGET II",
                 title: "GB EMULATOR",
                 category: ["RUST"],
-                shortDesc: "A Game Boy emulator in Rust for desktop & web.",
-                longDesc: "<p>A work-in-progress Game Boy emulator written in Rust. The project is split into a core emulation library, a native desktop frontend using SDL2, and WebAssembly bindings that allow it to run entirely in the browser. Low-level hardware emulation is an incredible way to truly understand how computers work.</p>",
+                shortDesc: "A Game Boy & Game Boy Color emulator in Rust for desktop & web.",
+                longDesc: "<p>A Game Boy and Game Boy Color emulator written in Rust. The project is split into a core emulation library, a native desktop frontend using SDL2, and WebAssembly bindings that allow it to run entirely in the browser. I built this to dive into emulator development—tackling CPU instruction timing, memory bank controllers, and pixel rendering to truly understand how vintage hardware works under the hood.</p>",
                 image: "",
                 repo: "https://github.com/mel-edo/gbemu-rust",
                 live: "emulator.html"
             },
             {
-                id: "warpgate",
+                id: "patchwire",
                 rank: "III",
                 tag: "TARGET III",
+                title: "PATCHWIRE",
+                category: ["RUST", "GTK4"],
+                shortDesc: "Route audio to multiple devices simultaneously.",
+                longDesc: "<p>A PipeWire daemon that automatically links audio sinks so you can play sound through multiple devices at once, no manual rewiring required every time you reboot. Built in Rust with a GTK4 interface, it watches your audio graph and handles the routing invisibly in the background. I wrote this to scratch my own itch after getting tired of constantly dragging cables in Helvum just to use my headphones and speakers simultaneously.</p>",
+                image: "assets/patchwire.png",
+                repo: "https://github.com/mel-edo/patchwire"
+            },
+            {
+                id: "warpgate",
+                rank: "IV",
+                tag: "TARGET IV",
                 title: "WARPGATE",
                 category: ["RUST", "JAVA"],
                 shortDesc: "Ephemeral multi-region cloud VPN orchestrator.",
@@ -109,25 +120,14 @@
             },
             {
                 id: "dsync",
-                rank: "IV",
-                tag: "TARGET IV",
+                rank: "V",
+                tag: "TARGET V",
                 title: "DSYNC",
                 category: ["RUST"],
                 shortDesc: "Zero-config P2P file sync for your local network.",
                 longDesc: "<p>A file sync daemon for LAN written in Rust. Peers discover each other via mDNS, authenticate using Ed25519 challenge-response, and establish an encrypted channel with X25519 + ChaCha20-Poly1305, all automatically, with no config files. File transfers use async I/O via Tokio, chunked streaming, LZ4 compression, and Blake3 for integrity checks. Wanted to build something that felt production-grade as a personal project.</p>",
                 image: "",
                 repo: "https://github.com/mel-edo/dsync"
-            },
-            {
-                id: "patchwire",
-                rank: "V",
-                tag: "TARGET V",
-                title: "PATCHWIRE",
-                category: ["RUST", "GTK4"],
-                shortDesc: "Route audio to multiple devices simultaneously.",
-                longDesc: "<p>A PipeWire daemon that automatically links audio sinks so you can play sound through multiple devices at once, no manual rewiring required every time you reboot. Built in Rust with a GTK4 interface, it watches your audio graph and handles the routing invisibly in the background. I wrote this to scratch my own itch after getting tired of constantly dragging cables in Helvum just to use my headphones and speakers simultaneously.</p>",
-                image: "assets/patchwire.png",
-                repo: "https://github.com/mel-edo/patchwire"
             },
             {
                 id: "moonweft",
