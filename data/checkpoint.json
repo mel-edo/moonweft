@@ -1,11 +1,22 @@
 [
     {
+        "id": "11",
+        "date": "12 OCT 2026",
+        "songTitle": "National Park - Pokemon HGSS",
+        "songFile": "https://files.catbox.moe/y7juiq.m4a",
+        "facts": [
+            "While newer sound designers took over many tracks in HeartGold and SoulSilver, the original composer, Go Ichinose, returned a decade later to personally arrange the National Park theme for the Nintendo DS hardware.",
+            "To match the park's tranquil atmosphere, the remake, placing a melancholic grand piano front and center, backed by nylon-string guitar and melodica rather than synthetic pads.",
+            "Using the post-game GB Sounds item plays the vintage chiptune version, but it isn't a direct audio rip from Gen II. The track was rebuilt from scratch as a dedicated MIDI sequence within the DS sound engine to emulate the original Game Boy Color sound chip."
+        ]
+    },
+    {
         "id": "10",
         "date": "15 SEP 2026",
         "songTitle": "Can you feel the sunshine? - Sonic R",
         "songFile": "https://files.catbox.moe/qnb8t1.m4a",
         "facts": [
-            "Producer Yuji Naka wanted Sonic R to stand out against Daytona USA and Mario Kart, taking a massive gamble on full vocal 90s Eurodance pop—unheard of for racing games in 1997.",
+            "Producer Yuji Naka wanted Sonic R to stand out against Daytona USA and Mario Kart, taking a massive gamble on full vocal 90s Eurodance pop\u2014unheard of for racing games in 1997.",
             "Winning a race with Sonic unlocked the Tails Doll, birthing one of the internet's earliest and most infamous gaming creepypastas: 'The Tails Doll Curse'.",
             "The game features dynamic weather where it can pour rain during the race while the lyrics ironically blast: 'Can you feel the sunshine?'."
         ]
@@ -17,7 +28,7 @@
         "songFile": "https://files.catbox.moe/wf1on0.mp3",
         "facts": [
             "Composed by Yu-Peng Chen for Genshin Impact's debut Mondstadt album City of Winds and Idylls, the track was performed live by the London Philharmonic Orchestra and recorded at London's AIR Studios.",
-            "Titled '直面' (Face-to-Face / Confrontation) in the original score, the piece serves as a signature emotional dialogue theme, notably featured in Jean's story quest (Master's Day Off).",
+            "Titled '\u76f4\u9762' (Face-to-Face / Confrontation) in the original score, the piece serves as a signature emotional dialogue theme, notably featured in Jean's story quest (Master's Day Off).",
             "The piece highlights an intimate, poignant piano melody interwoven with gentle, swelling orchestral strings and woodwinds, capturing quiet vulnerability and heartfelt resolve."
         ]
     },
@@ -28,7 +39,7 @@
         "songFile": "https://files.catbox.moe/i6inr5.m4a",
         "facts": [
             "Composer Go Ichinose wrote the acoustic guitar intro because the Game Boy Advance sound chip finally had enough polyphonic channels to strum acoustic chords instead of just 8-bit square waves.",
-            "Despite the internet's legendary '7.8/10 Too Much Water' review meme, music critics universally praise Hoenn for having the warmest and most joyful brass instrumentation in Pokémon history.",
+            "Despite the internet's legendary '7.8/10 Too Much Water' review meme, music critics universally praise Hoenn for having the warmest and most joyful brass instrumentation in Pok\u00e9mon history.",
             "Littleroot Town is one of the only starter towns in the series where your character physically moves in via a moving truck surrounded by cardboard boxes."
         ]
     },
@@ -61,7 +72,7 @@
         "songFile": "https://files.catbox.moe/szkzub.m4a",
         "facts": [
             "Musically identical to the Sherbet Land theme, but the cozy night snowfall and giant Mario snow sculptures made Frappe Snowland a seasonal Christmas staple for 90s kids.",
-            "The giant Yoshi snow sculpture in the background is completely hollow—speedrunners discovered a glitch where you could drive straight through it to skip nearly the entire track.",
+            "The giant Yoshi snow sculpture in the background is completely hollow\u2014speedrunners discovered a glitch where you could drive straight through it to skip nearly the entire track.",
             "The gentle vibraphone bells had to be compressed into tiny samples to fit within the game's strict 12-megabyte Nintendo 64 cartridge limit."
         ]
     },
