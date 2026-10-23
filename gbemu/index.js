@@ -15,8 +15,15 @@ ctx.fillRect(0, 0, canvas.width, canvas.height)
 let anim_frame = 0
 let fast_forward = false
 let current_gb = null
+let current_session_id = 0
 let save_timer = 0
 const SAVE_INTERVAL_MS = 3000
+
+// Display timing synchronization
+const TARGET_FPS = 59.73;
+const FRAME_DURATION_MS = 1000 / TARGET_FPS; // ~16.74 ms
+let last_frame_time = 0;
+let time_accumulator = 0;
 
 let audioCtx = null;
 let audioStartTime = 0;
@@ -74,101 +81,154 @@ window.addEventListener("beforeunload", () => {
     if (current_gb) flushSave(current_gb);
 });
 
-// Also expose a manual save for the built-in ROM buttons
-export function loadRomFromUrl(gb, url) {
-    return fetch(url)
-        .then(r => r.arrayBuffer())
-        .then(buf => {
-            const rom = new Uint8Array(buf);
+// Centralized ROM loader that prevents duplicate/overlapping instances
+function loadRom(romBufferPromise, romTitleHint, activeBtn) {
+    const sessionId = ++current_session_id;
+
+    // Unfocus any element so Enter / Space don't trigger buttons
+    if (document.activeElement && typeof document.activeElement.blur === "function") {
+        document.activeElement.blur();
+    }
+
+    // Stop current animation loop immediately
+    if (anim_frame !== 0) {
+        window.cancelAnimationFrame(anim_frame);
+        anim_frame = 0;
+    }
+
+    // Flush battery save of previous game before replacing
+    if (current_gb) {
+        flushSave(current_gb);
+        current_gb = null;
+    }
+
+    // Reset frame pacing timers
+    last_frame_time = 0;
+    time_accumulator = 0;
+
+    // Update active button indicator
+    document.querySelectorAll(".rom-btn").forEach(b => b.classList.remove("active"));
+    if (activeBtn) activeBtn.classList.add("active");
+
+    const uploadLabel = document.querySelector(".custom-file-upload");
+    if (uploadLabel && romTitleHint) {
+        uploadLabel.innerText = "LOADING...";
+    }
+
+    // Reset canvas display
+    ctx.fillStyle = "#FFFFFF";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+    Promise.resolve(romBufferPromise)
+        .then(buffer => {
+            // Discard if another game load was initiated while waiting
+            if (sessionId !== current_session_id) {
+                return;
+            }
+
+            const rom = new Uint8Array(buffer);
+            const gb = new wasm.GB();
             gb.load_rom(rom);
             loadSave(gb);
             current_gb = gb;
+
+            const title = gb.get_title();
+            document.title = title || "emulator ~ moonweft";
+
+            if (uploadLabel) {
+                const displayTitle = title || romTitleHint || "GAME BOY";
+                uploadLabel.innerText = displayTitle.length > 15 ? displayTitle.substring(0, 15) + "..." : displayTitle;
+            }
+
+            save_timer = 0;
+            initAudio();
+            audioStartTime = audioCtx ? audioCtx.currentTime : 0;
+            last_frame_time = performance.now();
+            time_accumulator = 0;
+
+            mainloop(gb, sessionId);
+        })
+        .catch(err => {
+            if (sessionId === current_session_id) {
+                console.error("Failed to load ROM:", err);
+                if (uploadLabel) uploadLabel.innerText = "LOAD FAILED";
+            }
         });
 }
 
+// Game key set for input filtering
+const GAME_KEYS = new Set([
+    "ArrowDown", "ArrowUp", "ArrowRight", "ArrowLeft",
+    "w", "W", "s", "S", "a", "A", "d", "D",
+    "Enter", "Backspace", " ", "Tab",
+    "x", "X", "z", "Z", "k", "K", "j", "J",
+    "Shift"
+]);
+
 async function run() {
-    await init()
-    let gb = new wasm.GB()
+    await init();
 
-    document.getElementById("fileinput").addEventListener("change", function (e) {
-        if (anim_frame != 0) {
-            // Flush save for the previous game before switching
-            if (current_gb) flushSave(current_gb);
-            window.cancelAnimationFrame(anim_frame)
+    // File input loader
+    const fileinput = document.getElementById("fileinput");
+    fileinput.addEventListener("change", function (e) {
+        this.blur();
+        if (document.activeElement && typeof document.activeElement.blur === "function") {
+            document.activeElement.blur();
         }
 
-        let file = e.target.files[0]
-        if (!file) {
-            alert("Failed to read file")
-            return
-        }
+        const file = e.target.files[0];
+        if (!file) return;
 
-        let fr = new FileReader()
-        fr.onload = function () {
-            let buffer = fr.result
-            const rom = new Uint8Array(buffer)
-            gb = new wasm.GB()
-            gb.load_rom(rom)
-            loadSave(gb)
-            current_gb = gb
+        const fr = new FileReader();
+        const filePromise = new Promise((resolve, reject) => {
+            fr.onload = () => resolve(fr.result);
+            fr.onerror = reject;
+        });
+        fr.readAsArrayBuffer(file);
 
-            let title = gb.get_title()
-            document.title = title
-            document.querySelectorAll(".rom-btn").forEach(b => b.classList.remove("active"))
-
-            save_timer = 0
-            initAudio()
-            mainloop(gb)
-        }
-
-        fr.readAsArrayBuffer(file)
-    }, false)
+        loadRom(filePromise, file.name, null);
+        this.value = "";
+    }, false);
 
     // Built-in ROM buttons
     document.querySelectorAll(".rom-btn").forEach(btn => {
-        btn.addEventListener("click", function () {
+        btn.addEventListener("click", function (e) {
+            e.preventDefault();
+            this.blur();
+            if (document.activeElement && typeof document.activeElement.blur === "function") {
+                document.activeElement.blur();
+            }
+
             const romUrl = this.dataset.rom;
             if (!romUrl) return;
 
-            if (anim_frame != 0) {
-                if (current_gb) flushSave(current_gb);
-                window.cancelAnimationFrame(anim_frame);
-            }
+            const titleHint = this.closest("li")?.querySelector(".rom-title")?.innerText || "";
+            const fetchPromise = fetch(romUrl).then(r => {
+                if (!r.ok) throw new Error(`HTTP ${r.status}`);
+                return r.arrayBuffer();
+            });
 
-            document.querySelectorAll(".rom-btn").forEach(b => b.classList.remove("active"));
-            this.classList.add("active");
-
-            fetch(romUrl)
-                .then(r => r.arrayBuffer())
-                .then(buf => {
-                    const rom = new Uint8Array(buf);
-                    gb = new wasm.GB();
-                    gb.load_rom(rom);
-                    loadSave(gb);
-                    current_gb = gb;
-
-                    let title = gb.get_title();
-                    document.title = title;
-
-                    const uploadLabel = document.querySelector('.custom-file-upload');
-                    if (uploadLabel) {
-                        uploadLabel.innerText = title.length > 15 ? title.substring(0, 15) + '...' : title;
-                    }
-
-                    save_timer = 0;
-                    initAudio();
-                    mainloop(gb);
-                })
-                .catch(err => console.error("Failed to load ROM:", err));
+            loadRom(fetchPromise, titleHint, this);
         });
     });
 
+    // Keyboard controls
     document.addEventListener("keydown", function (e) {
+        if (GAME_KEYS.has(e.key)) {
+            // Prevent browser default actions (such as Enter/Space clicking focused buttons or arrows scrolling)
+            e.preventDefault();
+            if (document.activeElement && typeof document.activeElement.blur === "function") {
+                document.activeElement.blur();
+            }
+        }
         if (e.key === "Shift") { fast_forward = true; return; }
         if (current_gb) current_gb.press_button(e, true);
     });
 
     document.addEventListener("keyup", function (e) {
+        if (GAME_KEYS.has(e.key)) {
+            e.preventDefault();
+        }
         if (e.key === "Shift") { fast_forward = false; return; }
         if (current_gb) current_gb.press_button(e, false);
     });
@@ -219,60 +279,101 @@ async function run() {
     });
 }
 
-function mainloop(gb) {
-    const ticks = fast_forward ? 4 : 1;
-    for (let t = 0; t < ticks; t++) {
-        while (true) {
-            let draw_time = gb.tick()
-            if (draw_time) {
-                if (t === ticks - 1) {
-                    gb.draw_screen()
-                    if (SCALE != 1) {
-                        let ctx = canvas.getContext('2d')
-                        ctx.imageSmoothingEnabled = false
-                        ctx.drawImage(canvas, 0, 0, WIDTH, HEIGHT, 0, 0, canvas.width, canvas.height)
-                    }
-                }
-
-                let samples = gb.get_audio_samples();
-                if (!fast_forward && samples.length > 0 && audioCtx) {
-                    if (audioCtx.state === "suspended") {
-                        audioCtx.resume().catch(console.warn);
-                    }
-                    let numFrames = samples.length / 2;
-                    let buffer = audioCtx.createBuffer(2, numFrames, 44100);
-                    let leftChannel = buffer.getChannelData(0);
-                    let rightChannel = buffer.getChannelData(1);
-
-                    for (let i = 0; i < numFrames; i++) {
-                        leftChannel[i] = samples[i * 2];
-                        rightChannel[i] = samples[i * 2 + 1];
-                    }
-
-                    let source = audioCtx.createBufferSource();
-                    source.buffer = buffer;
-                    source.connect(audioCtx.destination);
-
-                    if (audioStartTime < audioCtx.currentTime || audioStartTime > audioCtx.currentTime + 0.1) {
-                        audioStartTime = audioCtx.currentTime + 0.02;
-                    }
-
-                    source.start(audioStartTime);
-                    audioStartTime += buffer.duration;
-                }
-                break;
+function runGbFrame(gb) {
+    while (true) {
+        let draw_time = gb.tick();
+        if (draw_time) {
+            gb.draw_screen();
+            if (SCALE != 1) {
+                let ctx = canvas.getContext("2d");
+                ctx.imageSmoothingEnabled = false;
+                ctx.drawImage(canvas, 0, 0, WIDTH, HEIGHT, 0, 0, canvas.width, canvas.height);
             }
+
+            let samples = gb.get_audio_samples();
+            if (!fast_forward && samples.length > 0 && audioCtx) {
+                if (audioCtx.state === "suspended") {
+                    audioCtx.resume().catch(console.warn);
+                }
+                let numFrames = samples.length / 2;
+                let buffer = audioCtx.createBuffer(2, numFrames, 44100);
+                let leftChannel = buffer.getChannelData(0);
+                let rightChannel = buffer.getChannelData(1);
+
+                for (let i = 0; i < numFrames; i++) {
+                    leftChannel[i] = samples[i * 2];
+                    rightChannel[i] = samples[i * 2 + 1];
+                }
+
+                let source = audioCtx.createBufferSource();
+                source.buffer = buffer;
+                source.connect(audioCtx.destination);
+
+                if (audioStartTime < audioCtx.currentTime || audioStartTime > audioCtx.currentTime + 0.1) {
+                    audioStartTime = audioCtx.currentTime + 0.02;
+                }
+
+                source.start(audioStartTime);
+                audioStartTime += buffer.duration;
+            }
+            break;
+        }
+    }
+}
+
+function mainloop(gb, sessionId, timestamp) {
+    // Terminate immediately if a newer game session has taken over or this instance is stale
+    if (sessionId !== current_session_id || gb !== current_gb) {
+        return;
+    }
+
+    if (!timestamp) {
+        timestamp = performance.now();
+    }
+
+    if (last_frame_time === 0) {
+        last_frame_time = timestamp;
+    }
+
+    let delta = timestamp - last_frame_time;
+    last_frame_time = timestamp;
+
+    // Prevent catch-up spikes if tab was backgrounded or lagged
+    if (delta > 100) delta = 100;
+    if (delta < 0) delta = 0;
+
+    if (fast_forward) {
+        for (let i = 0; i < 4; i++) {
+            runGbFrame(gb);
+        }
+        time_accumulator = 0;
+    } else {
+        time_accumulator += delta;
+
+        // Run frame when accumulator passes threshold (~15.0ms)
+        // This ensures 1 frame per tick on 60Hz displays and 1 frame every 2 ticks on 120Hz displays
+        let frames_run = 0;
+        while (time_accumulator >= 15.0 && frames_run < 2) {
+            runGbFrame(gb);
+            time_accumulator -= FRAME_DURATION_MS;
+            frames_run++;
+        }
+
+        if (time_accumulator > FRAME_DURATION_MS) {
+            time_accumulator = 0;
+        } else if (time_accumulator < 0) {
+            time_accumulator = 0;
         }
     }
 
     // Periodic save flush every SAVE_INTERVAL_MS
-    save_timer += 16; // approximate ms per rAF
+    save_timer += delta;
     if (save_timer >= SAVE_INTERVAL_MS) {
         save_timer = 0;
         flushSave(gb);
     }
 
-    anim_frame = window.requestAnimationFrame(() => { mainloop(gb) });
+    anim_frame = window.requestAnimationFrame((t) => { mainloop(gb, sessionId, t); });
 }
 
 run().catch(console.error)
