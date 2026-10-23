@@ -75,8 +75,8 @@ body.gb-theme {
 
 .gameboy {
     background-color: var(--gb-shell);
-    width: 480px;
-    height: 840px;
+    width: 510px;
+    height: 870px;
     border-radius: 10px 10px 80px 10px;
     border: var(--pixel-border);
     box-shadow:
@@ -106,9 +106,9 @@ body.gb-theme {
 
 .bezel {
     background-color: var(--gb-bezel);
-    width: 400px;
-    height: 400px;
-    margin-top: 60px;
+    width: 440px;
+    height: 430px;
+    margin-top: 55px;
     border-radius: 10px 10px 50px 10px;
     border: var(--pixel-border);
     display: flex;
@@ -119,8 +119,8 @@ body.gb-theme {
 
 .battery-light {
     position: absolute;
-    left: 3px;
-    top: 132px;
+    left: 4px;
+    top: 145px;
     width: 8px;
     height: 8px;
     background-color: #ff3b30;
@@ -130,8 +130,8 @@ body.gb-theme {
 
 .battery-waves {
     position: absolute;
-    left: 17px;
-    top: 128px;
+    left: 18px;
+    top: 141px;
     color: #a0a0a0;
     font-size: 0.9rem;
     font-weight: bold;
@@ -139,15 +139,15 @@ body.gb-theme {
 
 .battery-text {
     position: absolute;
-    left: 2px;
-    top: 155px;
+    left: 3px;
+    top: 168px;
     color: #a0a0a0;
     font-size: 0.9rem;
     letter-spacing: 1px;
 }
 
 .screen-glass {
-    margin-top: 30px;
+    margin-top: 24px;
     border: var(--pixel-border);
     background-color: var(--gb-screen-bg);
 }
@@ -156,8 +156,8 @@ body.gb-theme {
     display: block;
     image-rendering: pixelated;
     background-color: var(--gb-screen-bg);
-    width: 320px;
-    height: 288px;
+    width: 360px;
+    height: 324px;
 }
 
 .gb-logo {
@@ -360,7 +360,7 @@ body.gb-theme {
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    gap: 40px;
+    gap: 30px;
     width: 100%;
     max-width: 1400px;
 }
@@ -369,14 +369,14 @@ body.gb-theme {
     display: flex;
     flex-direction: column;
     align-items: center;
-    transform: scale(0.9);
+    transform: scale(0.95);
 }
 
 .side-panel {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 320px;
+    width: 380px;
 }
 
 .emulator-note {
@@ -384,11 +384,11 @@ body.gb-theme {
     color: #e5d9f2;
     border: var(--pixel-border);
     box-shadow: 10px 10px 0px #000;
-    padding: 25px;
+    padding: 20px;
     border-radius: 5px 30px 5px 30px;
     font-size: 1.1rem;
     line-height: 1.4;
-    width: 320px;
+    width: 380px;
     box-sizing: border-box;
 }
 
@@ -500,12 +500,15 @@ body.gb-theme {
 .rom-info {
     display: flex;
     flex-direction: column;
+    flex: 1;
+    min-width: 0;
 }
 
 .rom-title {
     font-size: 1.3rem;
     font-weight: bold;
     color: #e5d9f2;
+    white-space: nowrap;
 }
 
 .rom-author {
@@ -538,6 +541,7 @@ body.gb-theme {
     vertical-align: middle;
     letter-spacing: 0.5px;
     line-height: 1.2;
+    white-space: nowrap;
 }
 
 .rom-tag.dmg {
@@ -547,16 +551,15 @@ body.gb-theme {
 }
 
 .rom-tag.gbc {
-    background: linear-gradient(135deg, #ed1c24, #ff7f00, #ffeb3b, #4caf50, #2196f3);
-    color: #000;
-    font-weight: 900;
-    border: 1px solid rgba(0, 0, 0, 0.4);
-    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
+    background: #5a1e6b;
+    color: #f3ebfa;
+    border: 1px solid #9c44b3;
+    font-weight: bold;
 }
 
 /* ─── RESPONSIVE ─────────────────────────────────────────────── */
 
-@media (max-width: 1080px) {
+@media (max-width: 1300px) {
     .layout-container {
         flex-direction: column;
         gap: 20px;
