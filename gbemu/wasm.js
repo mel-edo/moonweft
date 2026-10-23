@@ -307,6 +307,15 @@ export class GB {
             wasm.__wbindgen_free(deferred1_0, deferred1_1, 1);
         }
     }
+    /**
+     * @param {string} btn
+     * @param {boolean} pressed
+     */
+    press_btn(btn, pressed) {
+        const ptr0 = passStringToWasm0(btn, wasm.__wbindgen_malloc, wasm.__wbindgen_realloc);
+        const len0 = WASM_VECTOR_LEN;
+        wasm.gb_press_btn(this.__wbg_ptr, ptr0, len0, pressed);
+    }
 }
 if (Symbol.dispose) GB.prototype[Symbol.dispose] = GB.prototype.free;
 

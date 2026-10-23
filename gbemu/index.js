@@ -24,8 +24,11 @@ let audioStartTime = 0;
 function initAudio() {
     if (!audioCtx) {
         audioCtx = new (window.AudioContext || window.webkitAudioContext)({ sampleRate: 44100 });
-        audioStartTime = audioCtx.currentTime;
     }
+    if (audioCtx.state === "suspended") {
+        audioCtx.resume().catch(console.warn);
+    }
+    audioStartTime = audioCtx.currentTime;
 }
 
 // --- Save helpers ---
@@ -162,13 +165,58 @@ async function run() {
 
     document.addEventListener("keydown", function (e) {
         if (e.key === "Shift") { fast_forward = true; return; }
-        gb.press_button(e, true)
-    })
+        if (current_gb) current_gb.press_button(e, true);
+    });
 
     document.addEventListener("keyup", function (e) {
         if (e.key === "Shift") { fast_forward = false; return; }
-        gb.press_button(e, false)
-    })
+        if (current_gb) current_gb.press_button(e, false);
+    });
+
+    // On-screen Game Boy controls
+    const bindBtn = (selector, btnName) => {
+        const el = document.querySelector(selector);
+        if (!el) return;
+        const press = (e) => {
+            e.preventDefault();
+            if (current_gb) current_gb.press_btn(btnName, true);
+        };
+        const release = (e) => {
+            e.preventDefault();
+            if (current_gb) current_gb.press_btn(btnName, false);
+        };
+        el.addEventListener("mousedown", press);
+        el.addEventListener("mouseup", release);
+        el.addEventListener("mouseleave", release);
+        el.addEventListener("touchstart", press, { passive: false });
+        el.addEventListener("touchend", release, { passive: false });
+    };
+
+    bindBtn(".arr-up", "up");
+    bindBtn(".arr-down", "down");
+    bindBtn(".arr-left", "left");
+    bindBtn(".arr-right", "right");
+    bindBtn(".btn-a", "a");
+    bindBtn(".btn-b", "b");
+
+    document.querySelectorAll(".sys-btn-wrapper").forEach(wrapper => {
+        const label = wrapper.querySelector(".sys-label")?.innerText.trim();
+        const btnName = label === "ENTER" ? "start" : "select";
+        const btnEl = wrapper.querySelector(".sys-btn") || wrapper;
+        const press = (e) => {
+            e.preventDefault();
+            if (current_gb) current_gb.press_btn(btnName, true);
+        };
+        const release = (e) => {
+            e.preventDefault();
+            if (current_gb) current_gb.press_btn(btnName, false);
+        };
+        btnEl.addEventListener("mousedown", press);
+        btnEl.addEventListener("mouseup", release);
+        btnEl.addEventListener("mouseleave", release);
+        btnEl.addEventListener("touchstart", press, { passive: false });
+        btnEl.addEventListener("touchend", release, { passive: false });
+    });
 }
 
 function mainloop(gb) {
@@ -188,11 +236,15 @@ function mainloop(gb) {
 
                 let samples = gb.get_audio_samples();
                 if (!fast_forward && samples.length > 0 && audioCtx) {
-                    let buffer = audioCtx.createBuffer(2, samples.length / 2, 44100);
+                    if (audioCtx.state === "suspended") {
+                        audioCtx.resume().catch(console.warn);
+                    }
+                    let numFrames = samples.length / 2;
+                    let buffer = audioCtx.createBuffer(2, numFrames, 44100);
                     let leftChannel = buffer.getChannelData(0);
                     let rightChannel = buffer.getChannelData(1);
 
-                    for (let i = 0; i < samples.length / 2; i++) {
+                    for (let i = 0; i < numFrames; i++) {
                         leftChannel[i] = samples[i * 2];
                         rightChannel[i] = samples[i * 2 + 1];
                     }
@@ -201,8 +253,8 @@ function mainloop(gb) {
                     source.buffer = buffer;
                     source.connect(audioCtx.destination);
 
-                    if (audioStartTime < audioCtx.currentTime) {
-                        audioStartTime = audioCtx.currentTime;
+                    if (audioStartTime < audioCtx.currentTime || audioStartTime > audioCtx.currentTime + 0.1) {
+                        audioStartTime = audioCtx.currentTime + 0.02;
                     }
 
                     source.start(audioStartTime);
@@ -220,19 +272,7 @@ function mainloop(gb) {
         flushSave(gb);
     }
 
-    // If audio is too far ahead (e.g. > 50ms), wait before scheduling the next frame
-    let delay = 0;
-    if (!fast_forward && audioCtx && (audioStartTime - audioCtx.currentTime) > 0.05) {
-        delay = Math.max(0, (audioStartTime - audioCtx.currentTime - 0.05) * 1000);
-    }
-
-    if (delay > 0) {
-        setTimeout(() => {
-            anim_frame = window.requestAnimationFrame(() => { mainloop(gb) })
-        }, delay);
-    } else {
-        anim_frame = window.requestAnimationFrame(() => { mainloop(gb) })
-    }
+    anim_frame = window.requestAnimationFrame(() => { mainloop(gb) });
 }
 
 run().catch(console.error)
