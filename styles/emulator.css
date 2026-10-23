@@ -522,6 +522,38 @@ body.gb-theme {
     text-decoration: underline;
 }
 
+.rom-btn.active {
+    background: #92c900;
+    box-shadow: 0 0 0 #000;
+    transform: translate(1px, 1px);
+}
+
+.rom-tag {
+    display: inline-block;
+    font-size: 0.75rem;
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-weight: bold;
+    margin-left: 6px;
+    vertical-align: middle;
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+}
+
+.rom-tag.dmg {
+    background: #8bac0f;
+    color: #0f380f;
+    border: 1px solid #306230;
+}
+
+.rom-tag.gbc {
+    background: linear-gradient(135deg, #ed1c24, #ff7f00, #ffeb3b, #4caf50, #2196f3);
+    color: #000;
+    font-weight: 900;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
 /* ─── RESPONSIVE ─────────────────────────────────────────────── */
 
 @media (max-width: 1080px) {

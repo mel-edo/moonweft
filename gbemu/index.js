@@ -111,6 +111,7 @@ async function run() {
 
             let title = gb.get_title()
             document.title = title
+            document.querySelectorAll(".rom-btn").forEach(b => b.classList.remove("active"))
 
             save_timer = 0
             initAudio()
@@ -131,6 +132,9 @@ async function run() {
                 window.cancelAnimationFrame(anim_frame);
             }
 
+            document.querySelectorAll(".rom-btn").forEach(b => b.classList.remove("active"));
+            this.classList.add("active");
+
             fetch(romUrl)
                 .then(r => r.arrayBuffer())
                 .then(buf => {
@@ -142,6 +146,11 @@ async function run() {
 
                     let title = gb.get_title();
                     document.title = title;
+
+                    const uploadLabel = document.querySelector('.custom-file-upload');
+                    if (uploadLabel) {
+                        uploadLabel.innerText = title.length > 15 ? title.substring(0, 15) + '...' : title;
+                    }
 
                     save_timer = 0;
                     initAudio();
