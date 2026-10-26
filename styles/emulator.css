@@ -377,6 +377,11 @@ body.gb-theme {
     flex-direction: column;
     align-items: center;
     width: 380px;
+    gap: 20px;
+}
+
+.right-panel {
+    margin-top: 50px;
 }
 
 .emulator-note {
@@ -392,15 +397,124 @@ body.gb-theme {
     box-sizing: border-box;
 }
 
+.emulator-note a {
+    color: #92c900;
+    text-decoration: none;
+}
+
+.emulator-note a:hover {
+    text-decoration: underline;
+}
+
+.credits-panel {
+    background-color: #1a241a;
+    color: #d4e5c3;
+    border-radius: 30px 5px 30px 5px;
+    padding: 18px 20px;
+}
+
+.credits-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 12px;
+    border-bottom: 2px solid rgba(146, 201, 0, 0.25);
+    padding-bottom: 6px;
+}
+
+.emulator-note.credits-panel h2,
+.credits-panel h2 {
+    color: #92c900;
+    font-size: 1.8rem;
+    margin: 0;
+    letter-spacing: 1px;
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.credits-badge {
+    font-size: 0.85rem;
+    color: #0f240f;
+    background: #92c900;
+    padding: 2px 7px;
+    border-radius: 4px;
+    font-weight: bold;
+    letter-spacing: 0.5px;
+    box-shadow: 1px 1px 0px #000;
+}
+
+.credits-list {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.credits-list li {
+    background: rgba(0, 0, 0, 0.35);
+    padding: 7px 10px;
+    border-radius: 6px;
+    border: 1px solid rgba(146, 201, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    transition: background 0.15s, border-color 0.15s;
+}
+
+.credits-list li:hover {
+    background: rgba(0, 0, 0, 0.55);
+    border-color: rgba(146, 201, 0, 0.4);
+}
+
+.credit-item {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.credit-item a,
+.credit-item .credit-title {
+    color: #92c900;
+    font-weight: bold;
+    font-size: 1.15rem;
+    text-decoration: none;
+}
+
+.credit-item a:hover {
+    text-decoration: underline;
+}
+
+.credit-by {
+    color: #8da47e;
+    font-size: 0.95rem;
+    white-space: nowrap;
+}
+
+.credit-desc {
+    color: #b5c7a5;
+    font-size: 0.95rem;
+    line-height: 1.25;
+}
+
 .rom-library-panel {
     background-color: #2b2b2b;
     border-color: #000;
 }
 
-.emulator-note h2 {
+.emulator-note:not(.credits-panel) h2 {
     margin-top: 0;
+    margin-bottom: 12px;
+    padding-bottom: 6px;
+    border-bottom: 2px solid rgba(229, 217, 242, 0.25);
     font-size: 2.2rem;
     text-transform: uppercase;
+}
+
+.emulator-note p {
+    margin-top: 10px;
 }
 
 .note-mw {
@@ -588,6 +702,10 @@ body.gb-theme {
         max-width: 480px;
     }
 
+    .right-panel {
+        margin-top: 0;
+    }
+
     .emulator-note {
         width: 100%;
         max-width: 480px;
@@ -624,6 +742,10 @@ body.gb-theme {
 
     .emulator-note h2 {
         font-size: 1.6rem;
+    }
+
+    .credits-panel h2 {
+        font-size: 1.4rem;
     }
 }
 
