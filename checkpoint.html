@@ -435,7 +435,12 @@
             });
 
             
-            startBtn.addEventListener('click', () => {
+            let hasEntered = false;
+
+            function enterCheckpoint() {
+                if (hasEntered) return;
+                hasEntered = true;
+
                 syncCardHeight();
                 startScreen.style.opacity = '0';
                 startScreen.style.pointerEvents = 'none';
@@ -446,6 +451,13 @@
                 setTimeout(() => {
                     startScreen.style.display = 'none';
                 }, 1000);
+            }
+
+            startBtn.addEventListener('click', enterCheckpoint);
+            window.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    enterCheckpoint();
+                }
             });
         </script>
 
