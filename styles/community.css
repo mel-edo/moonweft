@@ -1024,28 +1024,15 @@ body {
 .ticket-grid {
     display: flex;
     flex-wrap: nowrap;
-    gap: 14px 10px;
-    /* More vertical gap for paperclips */
-    margin-top: 14px;
-    padding-top: 16px;
-    overflow-x: auto;
-    padding-bottom: 12px;
-    /* Extra padding for scrollbar space */
-}
-
-/* Custom scrollbar for ticket-grid */
-.ticket-grid::-webkit-scrollbar {
-    height: 6px;
-}
-
-.ticket-grid::-webkit-scrollbar-track {
-    background: rgba(0, 0, 0, 0.05);
-    border-radius: 4px;
-}
-
-.ticket-grid::-webkit-scrollbar-thumb {
-    background: rgba(0, 0, 0, 0.2);
-    border-radius: 4px;
+    justify-content: center;
+    align-items: center;
+    gap: clamp(4px, 1vw, 8px);
+    margin-top: 10px;
+    padding-top: 14px;
+    padding-bottom: 6px;
+    width: 100%;
+    box-sizing: border-box;
+    overflow: visible;
 }
 
 .ticket {
@@ -1053,18 +1040,18 @@ body {
     display: inline-flex;
     flex-direction: column;
     align-items: center;
-    flex-shrink: 0;
+    justify-content: center;
+    flex: 0 1 auto;
     --t-bg: #e8e3d8;
     /* aged paper base */
     background:
-        radial-gradient(circle at 0 50%, transparent 5px, var(--t-bg) 6px) 0 0 / 51% 100% no-repeat,
-        radial-gradient(circle at 100% 50%, transparent 5px, var(--t-bg) 6px) 100% 0 / 51% 100% no-repeat;
+        radial-gradient(circle at 0 50%, transparent 3px, var(--t-bg) 3.5px) 0 0 / 51% 100% no-repeat,
+        radial-gradient(circle at 100% 50%, transparent 3px, var(--t-bg) 3.5px) 100% 0 / 51% 100% no-repeat;
     color: var(--ink);
     text-decoration: none;
     font-family: 'Courier New', monospace;
-    font-size: 0.88rem;
     font-weight: bold;
-    padding: 8px 12px;
+    padding: 3px clamp(4px, 0.7vw, 7px);
     filter: drop-shadow(1px 2px 3px rgba(0, 0, 0, 0.15));
     transition: filter 0.2s, transform 0.2s;
     border: 1px dashed rgba(0, 0, 0, 0.1);
@@ -1074,14 +1061,14 @@ body {
 .ticket::after {
     content: '';
     position: absolute;
-    top: -12px;
+    top: -10px;
     left: 50%;
-    margin-left: -5px;
+    margin-left: -4px;
     /* center */
-    width: 8px;
-    height: 18px;
+    width: 7px;
+    height: 15px;
     border: 2px solid #b5b5b5;
-    border-radius: 6px;
+    border-radius: 5px;
     border-bottom: 2px solid transparent;
     /* open end of clip */
     transform: rotate(15deg);
@@ -1090,18 +1077,26 @@ body {
 
 .ticket:hover {
     filter: drop-shadow(2px 4px 6px rgba(0, 0, 0, 0.25)) brightness(0.95);
+    transform: scale(1.08) translateY(-2px) !important;
     z-index: 10;
 }
 
 .ticket-type {
-    font-size: 0.6rem;
+    font-size: clamp(0.48rem, 0.65vw, 0.54rem);
     text-transform: uppercase;
     color: var(--ink-muted);
-    letter-spacing: 1px;
+    letter-spacing: 0.5px;
     border-bottom: 1px dashed rgba(0, 0, 0, 0.15);
-    margin-bottom: 4px;
-    padding-bottom: 2px;
+    margin-bottom: 2px;
+    padding-bottom: 1px;
     width: 100%;
+    text-align: center;
+    white-space: nowrap;
+}
+
+.ticket-name {
+    font-size: clamp(0.66rem, 0.92vw, 0.74rem);
+    white-space: nowrap;
     text-align: center;
 }
 
@@ -1133,6 +1128,16 @@ body {
 .ticket-bkg .ticket-type {
     color: #508c69;
     border-color: rgba(43, 92, 65, 0.2);
+}
+
+.ticket-lbox {
+    --t-bg: #faecdf;
+    color: #7d3a14;
+}
+
+.ticket-lbox .ticket-type {
+    color: #b55d28;
+    border-color: rgba(125, 58, 20, 0.2);
 }
 
 .ticket-anilist {
@@ -1976,5 +1981,15 @@ body {
 
     .board-frame {
         overflow-x: hidden;
+    }
+}
+
+@media (max-width: 480px) {
+    .ticket-grid {
+        gap: 3px;
+        padding-top: 12px;
+    }
+    .ticket {
+        padding: 3px 3px;
     }
 }
